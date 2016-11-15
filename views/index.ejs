@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <% include template/header.ejs%>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <% include template/nav.ejs %>
+    <% include template/rightbar.ejs%>
+    <% if(success_msg){%>
+      <h2><%= success_msg%></h2>
+    <% }%>
+    <!--START BODY-->
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+    <!--END BODY-->
+    <% include template/footer.ejs%>
+  </body>
+</html>
