@@ -2,10 +2,11 @@
  * Created by Admin on 17/11/2016.
  */
 "use strict";
+var bcrypt = require('bcryptjs');
 
 module.exports = function(sequelize, DataTypes) {
     var Khoa = sequelize.define("Khoa", {
-        kh: {
+        id: {
             type: DataTypes.STRING(15),
             primaryKey: true
         },
@@ -22,6 +23,22 @@ module.exports = function(sequelize, DataTypes) {
                 this.hasMany(models.GiangVien);
                 this.hasMany(models.NganhHoc);
                 this.hasMany(models.PhongThiNghiem);
+            },
+            getKhoaByTaiKhoan : function (username,callback) {
+                this.findOne({
+                    where : {
+                        taiKhoan : username
+                    }
+                }).then(callback)
+            },
+            comparePassword : function(candidatePassword, hash, callback) {
+                if(candidatePassword == hash)
+                    callback(null,true)
+                else callback(null,false)
+                // bcrypt.compare(candidatePassword, hash, function (err, isMatch) {
+                //     if (err) throw err;
+                //     callback(null, isMatch);
+                // });
             }
         }
     });
