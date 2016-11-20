@@ -1,6 +1,8 @@
 /**
  * Created by Admin on 19/11/2016.
  */
+var utility = require('../Utility/utility');
+
 module.exports.reqIsSV = function (req,res,next) {
     if(req.isAuthenticated()&& req.user.tenSinhVien){
         return next();
@@ -50,5 +52,30 @@ module.exports.userIsKhoa = function (user) {
         return true
     } else {
         return false
+    }
+}
+module.exports.reqIsAuthen = function (req,res,next) {
+    if (req.isAuthenticated()){
+        return next();
+    }
+    else {
+        res.redirect('/users/login')
+    }
+}
+module.exports.reqIsWho = function (req,res,next,doSomething) {
+    if (req.isAuthenticated()){
+        if(utility.userIsKhoa(req.user)){
+            doSomething()
+        }
+        if(utility.userIsSV(req.user)){
+            doSomething()
+        }
+        if(utility.userIsGV(req.user)){
+            doSomething()
+        }
+        return next();
+    }
+    else {
+        res.redirect('/users/login')
     }
 }

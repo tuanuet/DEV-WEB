@@ -1,0 +1,11 @@
+<% if(success_msg){%>
+<p><%= success_msg%></p>
+<%}%>
+<% if(error){%>
+<p><%= error%></p>
+<%}%>
+<form action="/users/login" method="post">
+    <p><lable>Username:</lable><input type="text" name="username"/></p>
+    <p><lable>Password:</lable><input type="password" name="password"></p>
+    <p><input type="submit" value="submit"></p>
+</form>

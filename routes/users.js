@@ -4,17 +4,14 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var utility = require('../Utility/utility')
 var models = require('../models');
-
+var khoa = require('../routes/admin/khoa')
+var giangvien = require('../routes/giangvien/giangvien')
+var sinhvien = require('../routes/sinhvien/sinhvien')
 // Login
 router.get('/login', function(req, res){
-    res.json({
-        status : 304,
-        msg : "dang nhap loi"
+    res.render('login',{
+        title : "Login"
     })
-});
-
-router.get('/',utility.reqIsGV,function(req, res){
-    res.send( "ban la giang vien");
 });
 
 /*
@@ -69,18 +66,50 @@ passport.use(new LocalStrategy(
     }));
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+    if(utility.userIsGV(user)){
+        done(null,{
+            id : user.id,
+            type : 1
+        })
+    }
+    else if( utility.userIsKhoa(user)){
+        done(null,{
+            id : user.id,
+            type : 2
+        })
+    }else {
+        done(null,{
+            id : user.id,
+            type : 0
+        })
+    }
+
 });
 
-passport.deserializeUser(function(user, done) {
-    done(null, user);
+passport.deserializeUser(function(token, done) {
+    switch (token.type){
+        case 2:{
+            models.Khoa.getKhoaByID(token.id,function (user) {
+                done(null, user);
+            })
+        }
+        case 1: {
+            models.GiangVien.getGVByID(token.id,function (user) {
+                done(null, user);
+            })
+        }
+            models.SinhVien.getSVByID(token.id,function (user) {
+                done(null, user);
+            })
+    }
+
 });
 
 //Post username va password
 router.post('/login',
-    passport.authenticate('local', {successRedirect:'/users', failureRedirect:'/users/login',failureFlash: true}),
+    passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
     function(req, res) {
-        res.redirect('/users');
+        res.redirect('/');
     });
 //
 
@@ -91,13 +120,7 @@ router.get('/logout', function(req, res){
 
     res.redirect('/users/login');
 });
-function reqAuthenticated(req, res, next){
-        if(req.isAuthenticated()){
-            return next();
-        } else {
-            //req.flash('error_msg','You are not logged in');
-            res.redirect('/users/login');
-        }
-}
-
+router.use('/admin',khoa)
+router.use('/giangvien',giangvien)
+router.use('/sinhvien',sinhvien)
 module.exports = router;

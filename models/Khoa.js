@@ -39,6 +39,13 @@ module.exports = function(sequelize, DataTypes) {
                 //     if (err) throw err;
                 //     callback(null, isMatch);
                 // });
+            },
+            getKhoaByID : function (idKhoa,callback) {
+                this.findOne({
+                    where : {
+                        id : idKhoa
+                    }
+                }).then(callback)
             }
         }
     });
