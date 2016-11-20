@@ -3,7 +3,7 @@
  */
 "use strict";
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var PhongThiNghiem = sequelize.define("PhongThiNghiem", {
         tenPhongThiNghiem: {
             type: DataTypes.STRING,
@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         timestamps: false,
         classMethods: {
-            associate: function(models) {
+            associate: function (models) {
                 this.belongsTo(models.Khoa, {
                     onDelete: "CASCADE",
                     foreignKey: {

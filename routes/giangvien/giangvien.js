@@ -6,7 +6,7 @@ var router = express.Router();
 var utility = require('../../Utility/utility')
 var models = require('../../models');
 
-router.get('/',utility.reqIsAuthen,function (req,res) {
+router.get('/', utility.reqIsAuthen, function (req, res) {
     res.send('day la trang giang vien')
 })
 module.exports = router;

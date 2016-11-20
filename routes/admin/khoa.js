@@ -7,7 +7,7 @@ var utility = require('../../Utility/utility')
 var models = require('../../models');
 
 
-router.get('/',utility.reqIsAuthen,function (req,res) {
+router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.send('day la trang admin-khoa')
 })
 module.exports = router;

@@ -3,8 +3,8 @@
  */
 var utility = require('../Utility/utility');
 
-module.exports.reqIsSV = function (req,res,next) {
-    if(req.isAuthenticated()&& req.user.tenSinhVien){
+module.exports.reqIsSV = function (req, res, next) {
+    if (req.isAuthenticated() && req.user.tenSinhVien) {
         return next();
     } else {
         //tra lai 1 trang voi noi dung
@@ -13,8 +13,8 @@ module.exports.reqIsSV = function (req,res,next) {
         res.send("Ban ko phai sinh vien")
     }
 }
-module.exports.reqIsKhoa = function (req,res,next) {
-    if(req.isAuthenticated()&& req.user.tenKhoa){
+module.exports.reqIsKhoa = function (req, res, next) {
+    if (req.isAuthenticated() && req.user.tenKhoa) {
         return next();
     } else {
         //tra lai 1 trang voi noi dung
@@ -23,8 +23,8 @@ module.exports.reqIsKhoa = function (req,res,next) {
         res.send("Ban ko phai khoa")
     }
 }
-module.exports.reqIsGV = function (req,res,next) {
-    if(req.isAuthenticated()&& req.user.tenGiangVien){
+module.exports.reqIsGV = function (req, res, next) {
+    if (req.isAuthenticated() && req.user.tenGiangVien) {
         return next();
     } else {
         //tra lai 1 trang voi noi dung
@@ -54,23 +54,31 @@ module.exports.userIsKhoa = function (user) {
         return false
     }
 }
-module.exports.reqIsAuthen = function (req,res,next) {
-    if (req.isAuthenticated()){
+module.exports.reqIsAuthen = function (req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
     }
     else {
         res.redirect('/users/login')
     }
 }
-module.exports.reqIsWho = function (req,res,next,doSomething) {
-    if (req.isAuthenticated()){
-        if(utility.userIsKhoa(req.user)){
+module.exports.reqIsNotAuthen = function (req, res, next) {
+    if (req.isUnauthenticated()) {
+        return next();
+    }
+    else {
+        res.redirect('/')
+    }
+}
+module.exports.reqIsWho = function (req, res, next, doSomething) {
+    if (req.isAuthenticated()) {
+        if (utility.userIsKhoa(req.user)) {
             doSomething()
         }
-        if(utility.userIsSV(req.user)){
+        if (utility.userIsSV(req.user)) {
             doSomething()
         }
-        if(utility.userIsGV(req.user)){
+        if (utility.userIsGV(req.user)) {
             doSomething()
         }
         return next();

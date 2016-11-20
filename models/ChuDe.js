@@ -3,7 +3,7 @@
  */
 "use strict";
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var ChuDe = sequelize.define("ChuDe", {
         id: {
             type: DataTypes.INTEGER,
@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         timestamps: false,
         classMethods: {
-            associate: function(models) {
+            associate: function (models) {
                 this.hasMany(models.ChuDeLienQuan);
                 this.belongsTo(models.LinhVuc, {
                     onDelete: "CASCADE",

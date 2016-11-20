@@ -6,20 +6,20 @@
  */
 "use strict";
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var SinhVien = sequelize.define("SinhVien", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true
         },
         tenSinhVien: DataTypes.STRING(45),
-        vnuMail : DataTypes.STRING(45),
-        matKhau : DataTypes.STRING(45),
-        duocDangKiKhoaLuanKhong : DataTypes.INTEGER(1)
+        vnuMail: DataTypes.STRING(45),
+        matKhau: DataTypes.STRING(45),
+        duocDangKiKhoaLuanKhong: DataTypes.INTEGER(1)
     }, {
         timestamps: false,
         classMethods: {
-            associate: function(models) {
+            associate: function (models) {
                 this.belongsTo(models.NganhHoc, {
                     onDelete: "CASCADE",
                     foreignKey: {
@@ -33,26 +33,26 @@ module.exports = function(sequelize, DataTypes) {
                     }
                 });
             },
-            getSinhVienByTaiKhoan : function (taiKhoan,callback) {
+            getSinhVienByTaiKhoan: function (taiKhoan, callback) {
                 this.findOne({
-                    where : {
-                        vnuMail : taiKhoan
+                    where: {
+                        vnuMail: taiKhoan
                     }
                 }).then(callback)
             },
-            comparePassword : function(candidatePassword, hash, callback) {
-                if(candidatePassword == hash)
-                    callback(null,true)
-                else callback(null,false)
+            comparePassword: function (candidatePassword, hash, callback) {
+                if (candidatePassword == hash)
+                    callback(null, true)
+                else callback(null, false)
                 // bcrypt.compare(candidatePassword, hash, function (err, isMatch) {
                 //     if (err) throw err;
                 //     callback(null, isMatch);
                 // });
             },
-            getSVByID : function (idKhoa,callback) {
+            getSVByID: function (idKhoa, callback) {
                 this.findOne({
-                    where : {
-                        id : idKhoa
+                    where: {
+                        id: idKhoa
                     }
                 }).then(callback)
             }
