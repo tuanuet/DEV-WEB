@@ -5,7 +5,8 @@
 
 module.exports = function(sequelize, DataTypes) {
     var LinhVucLienQuan = sequelize.define("LinhVucLienQuan", {
-
+        GiangVienId: DataTypes.STRING(11) ,
+        LinhVucId : DataTypes.INTEGER(11)
     }, {
         timestamps: false,
         classMethods: {

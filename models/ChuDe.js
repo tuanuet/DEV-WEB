@@ -10,7 +10,8 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        tenChuDe: DataTypes.STRING(45)
+        tenChuDe: DataTypes.STRING(255),
+        LinhVucId :DataTypes.INTEGER(11)
     }, {
         timestamps: false,
         classMethods: {

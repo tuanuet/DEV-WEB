@@ -9,8 +9,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(15),
             primaryKey: true
         },
-        tenNganhHoc: DataTypes.STRING(45),
-        moTa: DataTypes.TEXT
+        tenNganhHoc: DataTypes.STRING(100),
+        moTa: DataTypes.TEXT,
+        KhoaId : DataTypes.STRING(45)
 
     }, {
         timestamps: false,

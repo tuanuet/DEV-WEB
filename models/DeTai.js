@@ -10,6 +10,8 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
+        GiangVienId : DataTypes.STRING(11),
+        SinhVienId: DataTypes.INTEGER(11),
         tenDeTai: DataTypes.STRING(225),
         thoiGianNop: DataTypes.TIME,
         thoiGianSua: DataTypes.TIME,

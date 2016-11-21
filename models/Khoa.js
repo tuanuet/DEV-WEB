@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(15),
             primaryKey: true
         },
-        tenKhoa: DataTypes.STRING(15),
+        tenKhoa: DataTypes.STRING(100),
         vanPhongKhoa: DataTypes.STRING(15),
         taiKhoan: DataTypes.STRING(30),
         matKhau: DataTypes.STRING(30),
@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 this.hasMany(models.BoMon);
-                this.hasMany(models.GiangVien);
+                this.hasMany(models.DonVi);
                 this.hasMany(models.NganhHoc);
                 this.hasMany(models.PhongThiNghiem);
             },

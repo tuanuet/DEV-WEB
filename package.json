@@ -9,6 +9,7 @@
     "bcryptjs": "*",
     "body-parser": "~1.15.2",
     "connect-flash": "^0.1.1",
+    "connect-multiparty": "^2.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.5.2",
@@ -24,6 +25,7 @@
     "sequelize": "*",
     "sequelize-cli": "*",
     "serve-favicon": "~2.3.0",
-    "sqlite3": "*"
+    "sqlite3": "*",
+    "xlsx": "^0.8.0"
   }
 }

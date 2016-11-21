@@ -5,7 +5,9 @@
 
 module.exports = function (sequelize, DataTypes) {
     var ChuDeLienQuan = sequelize.define("ChuDeLienQuan", {
-        moTa: DataTypes.TEXT
+        moTa: DataTypes.TEXT,
+        ChuDeId : DataTypes.INTEGER(11),
+        GiangVienId : DataTypes.STRING(11)
     }, {
         timestamps: false,
         classMethods: {

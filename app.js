@@ -11,7 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var index = require('./routes/index');
 var user = require('./routes/users');
-
+var utility = require('./Utility/utility')
 
 var app = express();
 
@@ -65,6 +65,7 @@ app.use(function (req, res, next) {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
+  res.locals.typeuser = utility.userIsWho(req);
   next();
 });
 

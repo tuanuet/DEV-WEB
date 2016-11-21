@@ -89,17 +89,17 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (token, done) {
     if (token.type == 2) {
         models.Khoa.getKhoaByID(token.id, function (user) {
-            done(null, user);
+            done(null, user.dataValues);
         })
     }
     else if (token.type == 1) {
         models.GiangVien.getGVByID(token.id, function (user) {
-            done(null, user);
+            done(null, user.dataValues);
         })
     }
     else {
         models.SinhVien.getSVByID(token.id, function (user) {
-            done(null, user);
+            done(null, user.dataValues);
         })
     }
 
@@ -120,7 +120,7 @@ router.get('/logout', function (req, res) {
 
     res.redirect('/users/login');
 });
-router.use('/admin', khoa)
+router.use('/khoa', khoa)
 router.use('/giangvien', giangvien)
 router.use('/sinhvien', sinhvien)
 

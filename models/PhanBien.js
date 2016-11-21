@@ -6,6 +6,8 @@
 module.exports = function (sequelize, DataTypes) {
     var PhanBien = sequelize.define("PhanBien", {
         yKien: DataTypes.TEXT,
+        GiangVienId : DataTypes.STRING(11),
+        DeTaiId : DataTypes.INTEGER(11),
         diem: DataTypes.INTEGER(3)
     }, {
         timestamps: false,

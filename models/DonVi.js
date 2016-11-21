@@ -4,12 +4,13 @@
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
-    var BoMon = sequelize.define("BoMon", {
-        tenBoMon: {
-            type: DataTypes.STRING(45),
-            primaryKey: true
+    var DonVi = sequelize.define("DonVi", {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
-        moTa: DataTypes.TEXT,
+        tenDonVi : DataTypes.STRING,
         KhoaId : DataTypes.STRING(45)
     }, {
         timestamps: false,
@@ -21,9 +22,10 @@ module.exports = function (sequelize, DataTypes) {
                         allowNull: false
                     }
                 });
+                this.hasMany(models.GiangVien);
             }
         }
     });
 
-    return BoMon;
+    return DonVi;
 };

@@ -1,9 +1,7 @@
 /**
  * Created by Admin on 17/11/2016.
  */
-/**
- * Created by Admin on 17/11/2016.
- */
+
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
@@ -15,7 +13,9 @@ module.exports = function (sequelize, DataTypes) {
         tenSinhVien: DataTypes.STRING(45),
         vnuMail: DataTypes.STRING(45),
         matKhau: DataTypes.STRING(45),
-        duocDangKiKhoaLuanKhong: DataTypes.INTEGER(1)
+        duocDangKiKhoaLuanKhong: DataTypes.INTEGER(1),
+        KhoaHocKh : DataTypes.STRING,
+        NganhHocKh : DataTypes.STRING(15)
     }, {
         timestamps: false,
         classMethods: {

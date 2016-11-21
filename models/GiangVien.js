@@ -6,17 +6,18 @@
 module.exports = function (sequelize, DataTypes) {
     var GiangVien = sequelize.define("GiangVien", {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(11),
             primaryKey: true
         },
-        tenGiangVien: DataTypes.STRING(45),
+        tenGiangVien: DataTypes.STRING(100),
         vnuMail: DataTypes.STRING(45),
-        matKhau: DataTypes.STRING(45)
+        matKhau: DataTypes.STRING(45),
+        DonViId : DataTypes.INTEGER(11)
     }, {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                this.belongsTo(models.Khoa, {
+                this.belongsTo(models.DonVi, {
                     onDelete: "CASCADE",
                     foreignKey: {
                         allowNull: false
@@ -25,6 +26,10 @@ module.exports = function (sequelize, DataTypes) {
                 this.hasMany(models.LinhVucLienQuan);
                 this.hasMany(models.ChuDeLienQuan);
 
+            },
+            insertBulkGV : function (gvs,callback) {
+                console.log(gvs)
+                this.bulkCreate(gvs).then(callback)
             },
             getGiangVienByTaiKhoan: function (taiKhoan, callback) {
                 this.findOne({

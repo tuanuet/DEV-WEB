@@ -87,3 +87,16 @@ module.exports.reqIsWho = function (req, res, next, doSomething) {
         res.redirect('/users/login')
     }
 }
+module.exports.userIsWho = function (req) {
+    if (req.isAuthenticated()) {
+        if (utility.userIsKhoa(req.user)) {
+            return 2;
+        }
+        if (utility.userIsSV(req.user)) {
+            return 0;
+        }
+        if (utility.userIsGV(req.user)) {
+            return 1;
+        }
+    }
+}
