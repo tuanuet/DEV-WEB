@@ -90,6 +90,7 @@ function getArrayGVFromXlsx(req,res,next) {
 function insertDataToGiangVien(data,req,res,next) {
     var gvs = new Array();
     // validate data
+    //chua validate dau, vẫn phải code
     //start
     for(var i=0;i<data.length;i++){
         var gv = {
