@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true
         },
         tenKhoa: DataTypes.STRING(100),
-        vanPhongKhoa: DataTypes.STRING(15),
+        vanPhongKhoa: DataTypes.STRING(45),
         taiKhoan: DataTypes.STRING(30),
         matKhau: DataTypes.STRING(30),
         moTa: DataTypes.TEXT

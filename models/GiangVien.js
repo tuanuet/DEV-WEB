@@ -9,10 +9,17 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(11),
             primaryKey: true
         },
-        tenGiangVien: DataTypes.STRING(100),
+        tenGiangVien: {
+          type: DataTypes.STRING(100),
+          allowNull :false
+        },
         vnuMail: DataTypes.STRING(45),
         matKhau: DataTypes.STRING(45),
-        DonViId : DataTypes.INTEGER(11)
+        DonViId : DataTypes.INTEGER(11),
+        chuDeHuongNghienCuu : {
+          type:DataTypes.TEXT,
+          allowNull : false
+        }
     }, {
         timestamps: false,
         classMethods: {
@@ -23,9 +30,8 @@ module.exports = function (sequelize, DataTypes) {
                         allowNull: false
                     }
                 });
-                this.hasMany(models.LinhVucLienQuan);
-                this.hasMany(models.ChuDeLienQuan);
-
+                this.belongsToMany(models.LinhVuc, {through : 'LinhVucLienQuans', timestamps: false});
+                this.belongsToMany(models.DeTai, {through : 'PhanBien'});
             },
             insertBulkGV : function (gvs,callback) {
                 console.log(gvs)

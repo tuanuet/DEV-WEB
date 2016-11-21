@@ -10,12 +10,19 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             primaryKey: true
         },
-        tenSinhVien: DataTypes.STRING(45),
-        vnuMail: DataTypes.STRING(45),
-        matKhau: DataTypes.STRING(45),
-        duocDangKiKhoaLuanKhong: DataTypes.INTEGER(1),
-        KhoaHocKh : DataTypes.STRING,
-        NganhHocKh : DataTypes.STRING(15)
+        tenSinhVien: {
+          type: DataTypes.STRING(45),
+          allowNull : false
+        },
+        vnuMail: {
+          type: DataTypes.STRING(45),
+          allowNull : false
+        },
+        matKhau: {
+          type: DataTypes.STRING(45),
+          allowNull : false
+        },
+        duocDangKiKhoaLuanKhong: DataTypes.INTEGER(1)
     }, {
         timestamps: false,
         classMethods: {

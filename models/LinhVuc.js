@@ -10,13 +10,20 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        tenLinhVuc: DataTypes.STRING(45)
+        tenLinhVuc: DataTypes.STRING(45),
+        idTrai : {
+          type:DataTypes.INTEGER,
+          allowNull : false
+        },
+        idPhai : {
+          type: DataTypes.INTEGER,
+          allowNull : false
+        }
     }, {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                this.hasMany(models.LinhVucLienQuan)
-                this.hasMany(models.ChuDe)
+                this.belongsToMany(models.GiangVien, {through : 'LinhVucLienQuans',timestamps: false});
             }
         }
     });
