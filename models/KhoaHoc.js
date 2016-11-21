@@ -9,8 +9,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             primaryKey: true
         },
-        thoiGianBatDau : DataTypes.TIME,
-        thoiGianKetThuc : DataTypes.TIME,
+        thoiGianBatDau : DataTypes.DATE,
+        thoiGianKetThuc : DataTypes.DATE,
         moTa : DataTypes.TEXT
     }, {
         timestamps: false,

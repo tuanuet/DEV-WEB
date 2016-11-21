@@ -8,9 +8,6 @@ var models = require('../../models');
 var XLSX = require('xlsx');
 var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
-var fs = require('fs')
-
-router.use('/public/xlsx', express.static(__dirname + '/users/khoa/insertbulkgv'));
 
 router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.send('day la trang admin-khoa')
@@ -18,21 +15,41 @@ router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
 router.get('/insertgv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('upload-xlsx-giangvien')
 })
+router.get('/insertsv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    res.render('upload-xlsx-sinhvien')
+})
+
+
 /*
- * them du lieu giao vien bang file xlsx
+ * them du lieu Sinh vien bang file xlsx
  *
  * can kiem tra dau vao de insert vao bang
  */
 router.post('/insertbulkgv',utility.reqIsAuthen,
     utility.reqIsKhoa,
     multipartMiddleware,
-    getArrayGVFromXlsx,
+    getArrayFromXlsx,
     insertDataToGiangVien,
     function (req, res) {
     res.send('day la trang admin-khoa')
 })
+/*
+ * them du lieu giao vien bang file xlsx
+ *
+ * can kiem tra dau vao de insert vao bang
+*/
+router.post('/insertbulksv',utility.reqIsAuthen,
+    utility.reqIsKhoa,
+    multipartMiddleware,
+    getArrayFromXlsx,
+    insertDataToSinhVien,
+    function (req, res) {
+        res.send('day la trang admin-khoa')
+    })
 
-function getArrayGVFromXlsx(req,res,next) {
+
+
+function getArrayFromXlsx(req,res,next) {
 
     var file = req.files.file;
 
@@ -106,6 +123,31 @@ function insertDataToGiangVien(data,req,res,next) {
     models.GiangVien.insertBulkGV(gvs,function () {
         console.log("insert Thanh cong")
         return next();
+    })
+}
+function insertDataToSinhVien(data,req,res,next) {
+    var svs = new Array();
+    // validate data
+    //chua validate dau, vẫn phải code
+    //start
+    for(var i=0;i<data.length;i++){
+        var sv = {
+            id : data[i].id,
+            tenSinhVien : data[i].tenSinhVien,
+            vnuMail : data[i].vnuMail,
+            duocDangKiKhoaLuanKhong : 0,
+            KhoaHocKh : data[i].KhoaHoc,
+            NganhHocKh : data[i].NganhHoc,
+            matKhau : "12345"
+        }
+        svs.push(sv)
+    }
+    //end
+    models.SinhVien.insertBulkSV(svs,function () {
+        console.log("insert Thanh cong")
+        return next();
+    },function (error) {
+        res.send('import file bi loi')
     })
 }
 
