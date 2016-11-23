@@ -19,10 +19,10 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                this.hasMany(models.BoMon);
                 this.hasMany(models.DonVi);
                 this.hasMany(models.NganhHoc);
                 this.hasMany(models.PhongThiNghiem);
+                this.hasMany(models.LinhVuc);
             },
             getKhoaByTaiKhoan: function (username, callback) {
                 this.findOne({

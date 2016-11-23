@@ -11,6 +11,7 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true
         },
         tenLinhVuc: DataTypes.STRING(45),
+        KhoaId : DataTypes.STRING(15),
         idTrai : {
           type:DataTypes.INTEGER,
           allowNull : false
@@ -24,6 +25,12 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 this.belongsToMany(models.GiangVien, {through : 'LinhVucLienQuans',timestamps: false});
+                this.belongsTo(models.Khoa, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull: false
+                    }
+                });
             }
         }
     });

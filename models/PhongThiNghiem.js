@@ -8,7 +8,8 @@ module.exports = function (sequelize, DataTypes) {
         tenPhongThiNghiem: {
             type: DataTypes.STRING,
             primaryKey: true
-        }
+        },
+        KhoaId : DataTypes.STRING(45)
     }, {
         timestamps: false,
         classMethods: {
