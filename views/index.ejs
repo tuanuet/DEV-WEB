@@ -1,89 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-  <% include template/head-link.ejs %>
+<% include template/head-link.ejs %>
   <!-- BEGIN BODY -->
   <body class="page-header-menu-fixed">
     <% include template/nav.ejs %>
-    <!-- BEGIN PAGE CONTAINER -->
-    <div class="page-container">
-      <!-- BEGIN PAGE CONTENT INNER -->
-      <div class="page-content">
-        <div class="container">
-          <!-- BEGIN CONTENT NEWS -->
-          <div class="portlet light">
-            <div class="portlet-body">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="col-md-8">
-                    <h3 class="caption-subject font-blue-madison bold uppercase">Nổi Bật</h3>
-                    <hr>
-                    <img src="/assets/admin/pages/media/gallery/item_img1.jpg" class="img-responsive" alt="">
-                    <h3 style="margin-bottom: -20px">Chào mừng đến với Trường Đại học Công Nghệ</h3>
-                    <hr style="width: 50%;">
-                    <p style="text-indent: 30px;">
-                      Được thành lập vào năm 1995 nhưng Khoa CNTT có truyền thống hơn 50 năm phát triển từ năm 1965 với việc đào tạo chuyên ngành Máy tính tại Khoa Toán Cơ thuộc Trường Đại học Tổng hợp Hà Nội. Với sự nỗ lực cố gắng của tập thể các cán bộ giảng viên, các thế hệ sinh viên, học viên và nghiên cứu sinh; dưới sự chỉ đạo sát sao, ủng hộ và tạo điều kiện của các thế hệ lãnh đạo Trường ĐHCN và ĐHQGHN, Khoa CNTT ngày hôm nay đã đạt được nhiều thành tích nổi bật trong hoạt động đào tạo, bồi dưỡng nhân tài và nghiên cứu khoa học tiếp cận trình độ tiên tiến trong khu vực và thế giới.
-                    </p>
-                  </div>
-                  <div class="col-md-4">
-                    <h3 class="caption-subject font-blue-madison bold">Tin gần đây</h3>
-                    <hr>
-                    <div class="scroller" style="max-height: 400px;" data-always-visible="0" data-rail-visible="0" data-handle-color="#dae3e7">
-                      <div class="blog-twitter">
-                        <div class="blog-twitter-block">
-                          <a href="">Tin 1</a>
-                          <p>
-                            At vero eos et accusamus et iusto odio.
-                          </p>
-                          <span>5 hours ago </span>
-                        </div>
-                        <div class="blog-twitter-block">
-                          <a href="">Tin 1</a>
-                          <p>
-                            At vero eos et accusamus et iusto odio.
-                          </p>
-                          <span>5 hours ago </span>
-                        </div>
-                        <div class="blog-twitter-block">
-                          <a href="">Tin 1</a>
-                          <p>
-                            At vero eos et accusamus et iusto odio.
-                          </p>
-                          <span>5 hours ago </span>
-                        </div>
-                        <div class="blog-twitter-block">
-                          <a href="">Tin 1</a>
-                          <p>
-                            At vero eos et accusamus et iusto odio.
-                          </p>
-                          <span>5 hours ago </span>
-                        </div>
-                        <div class="blog-twitter-block">
-                          <a href="">Tin 1</a>
-                          <p>
-                            At vero eos et accusamus et iusto odio.
-                          </p>
-                          <span>5 hours ago </span>
-                        </div>
-                        <div class="blog-twitter-block">
-                          <a href="">Tin 1</a>
-                          <p>
-                            At vero eos et accusamus et iusto odio.
-                          </p>
-                          <span>5 hours ago </span>
-                        </div>
-                        <div class="blog-twitter-block">
-                          <a href="">Tin 1</a>
-                          <p>
-                            At vero eos et accusamus et iusto odio.
-                          </p>
-                          <span>5 hours ago </span>
-                        </div>
-                        <div class="blog-twitter-block">
-                          <a href="">Tin 1</a>
-                          <p>
-                            At vero eos et accusamus et iusto odio.
-                          </p>
-                          <span>5 hours ago </span>
+      <!-- BEGIN PAGE CONTAINER -->
+      <div class="page-container">
+        <!-- BEGIN PAGE HEAD -->
+        <div class="page-head container">
+          <div class="page-title">
+            <h1>
+              <%= title%>
+            </h1>
+          </div>
+        </div>
+        <!-- END PAGE HEAD -->
+        <!-- BEGIN PAGE CONTENT INNER -->
+        <div class="page-content">
+          <div class="container">
+            <!-- BEGIN CONTENT NEWS -->
+            <div class="portlet light">
+              <div class="portlet-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-8">
+                      <h3 class="caption-subject font-blue-madison bold uppercase">Nổi Bật</h3>
+                      <hr>
+                      <img src="/assets/admin/pages/media/gallery/item_img1.jpg" class="img-responsive" alt="">
+                      <h3 style="margin-bottom: -20px">Chào mừng đến với Trường Đại học Công Nghệ</h3>
+                      <hr style="width: 50%;">
+                      <p style="text-indent: 30px;">
+                        Được thành lập vào năm 1995 nhưng Khoa CNTT có truyền thống hơn 50 năm phát triển từ năm 1965 với việc đào tạo chuyên ngành
+                        Máy tính tại Khoa Toán Cơ thuộc Trường Đại học Tổng hợp Hà Nội. Với sự nỗ lực cố gắng của tập thể
+                        các cán bộ giảng viên, các thế hệ sinh viên, học viên và nghiên cứu sinh; dưới sự chỉ đạo sát sao,
+                        ủng hộ và tạo điều kiện của các thế hệ lãnh đạo Trường ĐHCN và ĐHQGHN, Khoa CNTT ngày hôm nay đã
+                        đạt được nhiều thành tích nổi bật trong hoạt động đào tạo, bồi dưỡng nhân tài và nghiên cứu khoa
+                        học tiếp cận trình độ tiên tiến trong khu vực và thế giới.
+                      </p>
+                    </div>
+                    <div class="col-md-4">
+                      <h3 class="caption-subject font-blue-madison bold">Tin gần đây</h3>
+                      <hr>
+                      <div class="scroller" style="max-height: 400px;" data-always-visible="0" data-rail-visible="0" data-handle-color="#dae3e7">
+                        <div class="blog-twitter">
+                          <div class="blog-twitter-block">
+                            <a href="">Tin 1</a>
+                            <p>
+                              At vero eos et accusamus et iusto odio.
+                            </p>
+                            <span>5 hours ago </span>
+                          </div>
+                          <div class="blog-twitter-block">
+                            <a href="">Tin 1</a>
+                            <p>
+                              At vero eos et accusamus et iusto odio.
+                            </p>
+                            <span>5 hours ago </span>
+                          </div>
+                          <div class="blog-twitter-block">
+                            <a href="">Tin 1</a>
+                            <p>
+                              At vero eos et accusamus et iusto odio.
+                            </p>
+                            <span>5 hours ago </span>
+                          </div>
+                          <div class="blog-twitter-block">
+                            <a href="">Tin 1</a>
+                            <p>
+                              At vero eos et accusamus et iusto odio.
+                            </p>
+                            <span>5 hours ago </span>
+                          </div>
+                          <div class="blog-twitter-block">
+                            <a href="">Tin 1</a>
+                            <p>
+                              At vero eos et accusamus et iusto odio.
+                            </p>
+                            <span>5 hours ago </span>
+                          </div>
+                          <div class="blog-twitter-block">
+                            <a href="">Tin 1</a>
+                            <p>
+                              At vero eos et accusamus et iusto odio.
+                            </p>
+                            <span>5 hours ago </span>
+                          </div>
+                          <div class="blog-twitter-block">
+                            <a href="">Tin 1</a>
+                            <p>
+                              At vero eos et accusamus et iusto odio.
+                            </p>
+                            <span>5 hours ago </span>
+                          </div>
+                          <div class="blog-twitter-block">
+                            <a href="">Tin 1</a>
+                            <p>
+                              At vero eos et accusamus et iusto odio.
+                            </p>
+                            <span>5 hours ago </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -91,156 +106,156 @@
                 </div>
               </div>
             </div>
+            <!-- END CONTENT NEWS -->
+            <!-- BEGIN CONTENT INTRO -->
+            <div class="row col-md-12">
+              <!-- BEGIN list bộ môn -->
+              <div class="col-md-6">
+                <div class="portlet box blue-hoki">
+                  <div class="portlet-title">
+                    <div class="caption">
+                      Khoa Công Nghệ Thông Tin
+                    </div>
+                    <div class="tools">
+                      <a href="javascript:;" class="collapse" data-original-title="" title="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="portlet-body" style="display: block;">
+                    <ol>
+                      <li>
+                        Bộ môn Công Nghệ Phần Mềm
+                      </li>
+                      <li>
+                        Bộ môn Các Hệ thống Thông tin
+                      </li>
+                      <li>
+                        Bộ môn Khoa học Máy tính
+                      </li>
+                      <li>
+                        Bộ môn Mạng và Truyền thông Máy tính
+                      </li>
+                      <li>
+                        Bộ môn Khoa học và Kỹ thuật tính toán
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+              <!-- END LIST BỘ MÔN -->
+              <!-- BEGIN list bộ môn -->
+              <div class="col-md-6">
+                <div class="portlet box blue-hoki">
+                  <div class="portlet-title">
+                    <div class="caption">
+                      Khoa Công Nghệ Thông Tin
+                    </div>
+                    <div class="tools">
+                      <a href="javascript:;" class="collapse" data-original-title="" title="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="portlet-body" style="display: block;">
+                    <ol>
+                      <li>
+                        Bộ môn Công Nghệ Phần Mềm
+                      </li>
+                      <li>
+                        Bộ môn Các Hệ thống Thông tin
+                      </li>
+                      <li>
+                        Bộ môn Khoa học Máy tính
+                      </li>
+                      <li>
+                        Bộ môn Mạng và Truyền thông Máy tính
+                      </li>
+                      <li>
+                        Bộ môn Khoa học và Kỹ thuật tính toán
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+              <!-- END LIST BỘ MÔN -->
+              <!-- BEGIN list bộ môn -->
+              <div class="col-md-6">
+                <div class="portlet box blue-hoki">
+                  <div class="portlet-title">
+                    <div class="caption">
+                      Khoa Công Nghệ Thông Tin
+                    </div>
+                    <div class="tools">
+                      <a href="javascript:;" class="collapse" data-original-title="" title="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="portlet-body" style="display: block;">
+                    <ol>
+                      <li>
+                        Bộ môn Công Nghệ Phần Mềm
+                      </li>
+                      <li>
+                        Bộ môn Các Hệ thống Thông tin
+                      </li>
+                      <li>
+                        Bộ môn Khoa học Máy tính
+                      </li>
+                      <li>
+                        Bộ môn Mạng và Truyền thông Máy tính
+                      </li>
+                      <li>
+                        Bộ môn Khoa học và Kỹ thuật tính toán
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+              <!-- END LIST BỘ MÔN -->
+              <!-- BEGIN list bộ môn -->
+              <div class="col-md-6">
+                <div class="portlet box blue-hoki">
+                  <div class="portlet-title">
+                    <div class="caption">
+                      Khoa Công Nghệ Thông Tin
+                    </div>
+                    <div class="tools">
+                      <a href="javascript:;" class="collapse" data-original-title="" title="">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="portlet-body" style="display: block;">
+                    <ol>
+                      <li>
+                        Bộ môn Công Nghệ Phần Mềm
+                      </li>
+                      <li>
+                        Bộ môn Các Hệ thống Thông tin
+                      </li>
+                      <li>
+                        Bộ môn Khoa học Máy tính
+                      </li>
+                      <li>
+                        Bộ môn Mạng và Truyền thông Máy tính
+                      </li>
+                      <li>
+                        Bộ môn Khoa học và Kỹ thuật tính toán
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+              <!-- END LIST BỘ MÔN -->
+            </div>
           </div>
-          <!-- END CONTENT NEWS -->
-          <!-- BEGIN CONTENT INTRO -->
-          <div class="row col-md-12">
-            <!-- BEGIN list bộ môn -->
-            <div class="col-md-6">
-              <div class="portlet box blue-hoki">
-                <div class="portlet-title">
-                  <div class="caption">
-                    Khoa Công Nghệ Thông Tin
-                  </div>
-                  <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title="">
-                    </a>
-                  </div>
-                </div>
-                <div class="portlet-body" style="display: block;">
-                  <ol>
-                    <li>
-                      Bộ môn Công Nghệ Phần Mềm
-                    </li>
-                    <li>
-                      Bộ môn Các Hệ thống Thông tin
-                    </li>
-                    <li>
-                      Bộ môn Khoa học Máy tính
-                    </li>
-                    <li>
-                      Bộ môn Mạng và Truyền thông Máy tính
-                    </li>
-                    <li>
-                      Bộ môn Khoa học và Kỹ thuật tính toán
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-            <!-- END LIST BỘ MÔN -->
-            <!-- BEGIN list bộ môn -->
-            <div class="col-md-6">
-              <div class="portlet box blue-hoki">
-                <div class="portlet-title">
-                  <div class="caption">
-                    Khoa Công Nghệ Thông Tin
-                  </div>
-                  <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title="">
-                    </a>
-                  </div>
-                </div>
-                <div class="portlet-body" style="display: block;">
-                  <ol>
-                    <li>
-                      Bộ môn Công Nghệ Phần Mềm
-                    </li>
-                    <li>
-                      Bộ môn Các Hệ thống Thông tin
-                    </li>
-                    <li>
-                      Bộ môn Khoa học Máy tính
-                    </li>
-                    <li>
-                      Bộ môn Mạng và Truyền thông Máy tính
-                    </li>
-                    <li>
-                      Bộ môn Khoa học và Kỹ thuật tính toán
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-            <!-- END LIST BỘ MÔN -->
-            <!-- BEGIN list bộ môn -->
-            <div class="col-md-6">
-              <div class="portlet box blue-hoki">
-                <div class="portlet-title">
-                  <div class="caption">
-                    Khoa Công Nghệ Thông Tin
-                  </div>
-                  <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title="">
-                    </a>
-                  </div>
-                </div>
-                <div class="portlet-body" style="display: block;">
-                  <ol>
-                    <li>
-                      Bộ môn Công Nghệ Phần Mềm
-                    </li>
-                    <li>
-                      Bộ môn Các Hệ thống Thông tin
-                    </li>
-                    <li>
-                      Bộ môn Khoa học Máy tính
-                    </li>
-                    <li>
-                      Bộ môn Mạng và Truyền thông Máy tính
-                    </li>
-                    <li>
-                      Bộ môn Khoa học và Kỹ thuật tính toán
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-            <!-- END LIST BỘ MÔN -->
-            <!-- BEGIN list bộ môn -->
-            <div class="col-md-6">
-              <div class="portlet box blue-hoki">
-                <div class="portlet-title">
-                  <div class="caption">
-                    Khoa Công Nghệ Thông Tin
-                  </div>
-                  <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title="">
-                    </a>
-                  </div>
-                </div>
-                <div class="portlet-body" style="display: block;">
-                  <ol>
-                    <li>
-                      Bộ môn Công Nghệ Phần Mềm
-                    </li>
-                    <li>
-                      Bộ môn Các Hệ thống Thông tin
-                    </li>
-                    <li>
-                      Bộ môn Khoa học Máy tính
-                    </li>
-                    <li>
-                      Bộ môn Mạng và Truyền thông Máy tính
-                    </li>
-                    <li>
-                      Bộ môn Khoa học và Kỹ thuật tính toán
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-            <!-- END LIST BỘ MÔN -->
-          </div>
+          <!-- END CONTENT INTRO -->
         </div>
-        <!-- END CONTENT INTRO -->
       </div>
-    </div>
-    <!-- END PAGE CONTENT INNER -->
-  </div>
-  <!-- END PAGE CONTAINER -->
-  <% include template/footer.ejs %>
-  <% include template/foot-link.ejs %>
-</body>
-<!-- END BODY -->
+      <!-- END PAGE CONTENT INNER -->
+      </div>
+      <!-- END PAGE CONTAINER -->
+      <% include template/footer.ejs %>
+        <% include template/foot-link.ejs %>
+  </body>
+  <!-- END BODY -->
+
 </html>

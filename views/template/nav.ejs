@@ -16,7 +16,7 @@
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown dropdown-user dropdown-dark">
                         <a href="/users/login" class="dropdown-toggle">
-                            <img alt="" class="img-circle" src="../../assets/admin/layout3/img/avatar.png">
+                            <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
                             <span class="username">Đăng nhập </span>
                         </a>
                     </li>
@@ -44,10 +44,10 @@
             <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
             <div class="hor-menu ">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li id="index">
                         <a href="/">Trang chủ</a>
                     </li>
-                    <li class="menu-dropdown mega-menu-dropdown">
+                    <li class="menu-dropdown mega-menu-dropdown" id="introKhoa">
                         <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
                             Giới thiệu <i class="fa fa-angle-down"></i>
                         </a>
@@ -62,12 +62,12 @@
                                                     <i class="icon-home"></i> UET - VNU </a>
                                                 </li>
                                                 <li>
-                                                    <a href="" class="iconify">
+                                                    <a href="/introKhoa" class="iconify">
                                                     <i class="icon-basket"></i> Các khoa </a>
                                                 </li>
                                                 <li>
-                                                    <a href="ecommerce_orders_view.html" class="iconify">
-                                                    <i class="icon-tag"></i> Giảng viên </a>
+                                                    <a href="/" class="iconify">
+                                                    <i class="icon-tag"></i>ThesisMgr</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -76,7 +76,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-dropdown classic-menu-dropdown ">
+                    <li class="menu-dropdown classic-menu-dropdown" id="researchs">
                         <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">
                             Lĩnh vực nghiên cứu <i class="fa fa-angle-down"></i>
                         </a>
@@ -221,13 +221,9 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-dropdown">
-                        <a href="index.html" target="_blank" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Tin tức cập nhật thường xuyên">
+                    <li id="news">
+                        <a href="/" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Tin tức cập nhật thường xuyên">
                         Tin Tức </a>
-                    </li>
-                    <li class="menu-dropdown">
-                        <a href="/" target="_blank">
-                        Đăng kí khóa luận </a>
                     </li>
                 </ul>
             </div>
