@@ -41,7 +41,6 @@ module.exports = function (sequelize, DataTypes) {
                 });
             },
             insertBulkSV : function (svs,callback,callback2) {
-                console.log(svs)
                 this.bulkCreate(svs,{validate : true})
                     .then(callback)
                     .catch(callback2)

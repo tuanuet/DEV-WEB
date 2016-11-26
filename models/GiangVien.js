@@ -33,9 +33,9 @@ module.exports = function (sequelize, DataTypes) {
                 this.belongsToMany(models.LinhVuc, {through : 'LinhVucLienQuans', timestamps: false});
                 this.belongsToMany(models.DeTai, {through : 'PhanBien'});
             },
-            insertBulkGV : function (gvs,callback) {
-                console.log(gvs)
-                this.bulkCreate(gvs).then(callback)
+            insertBulkGV : function (gvs,callback,callback2) {
+
+                this.bulkCreate(gvs).then(callback).catch(callback2)
             },
             getGiangVienByTaiKhoan: function (taiKhoan, callback) {
                 this.findOne({

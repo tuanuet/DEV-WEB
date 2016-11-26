@@ -3,7 +3,7 @@ var router = express.Router();
 var utility = require('../Utility/utility')
 
 /* GET home page. */
-router.get('/',utility.reqIsAuthen ,function(req, res) {
+router.get('/',function(req, res) {
   res.render('index', { title: 'Hệ thống đăng kí khóa luận' });
 });
 

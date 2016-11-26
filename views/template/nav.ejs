@@ -14,11 +14,34 @@
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
+                    <!--NEU KHONG CO USER THI NO LA DANG NHAP
+                      --CO USER THI LA TEN TAI KHOAN
+                    -->
                     <li class="dropdown dropdown-user dropdown-dark">
-                        <a href="/users/login" class="dropdown-toggle">
-                            <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
-                            <span class="username">Đăng nhập </span>
-                        </a>
+
+                        <% if(!user){%>
+                            <a href="/users/login" class="dropdown-toggle">
+                                <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
+                                <span class="username">Đăng nhập </span>
+                            </a>
+                        <%} else {%>
+                            <% if(typeuser == 2){%>
+                                <a href="#" class="dropdown-toggle">
+                                    <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
+                                    <span class="username"><%= user.tenKhoa%></span>
+                                </a>
+                            <%} else if(typeuser == 1){%>
+                                <a href="#" class="dropdown-toggle">
+                                    <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
+                                    <span class="username"><%= user.tenGiangVien%></span>
+                                </a>
+                            <% } else  {%>
+                                <a href="#" class="dropdown-toggle">
+                                    <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
+                                    <span class="username"><%= user.tenSinhVien%></span>
+                                </a>
+                            <% } %>
+                        <% } %>
                     </li>
                     <!-- END USER LOGIN DROPDOWN -->
                 </ul>

@@ -59,7 +59,11 @@ app.use(expressValidator({
 // Connect Flash
 app.use(flash());
 
-// Global Vars
+/*
+ * Global Vars
+ * khai bao mot so bien cuc bo
+ * cac bien nay dc dung trong view
+ */
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');

@@ -8,15 +8,20 @@ var models = require('../../models');
 var XLSX = require('xlsx');
 var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var validator = require('validator')
 
 router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.send('day la trang admin-khoa')
 })
 router.get('/insertgv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
-    res.render('upload-xlsx-giangvien')
+    res.render('admin/upload-xlsx-giangvien',{
+        title : "Thêm giảng viên"
+    })
 })
 router.get('/insertsv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
-    res.render('upload-xlsx-sinhvien')
+    res.render('admin/upload-xlsx-sinhvien',{
+        title: "Thêm sinh viên"
+    })
 })
 
 
@@ -31,8 +36,12 @@ router.post('/insertbulkgv',utility.reqIsAuthen,
     getArrayFromXlsx,
     insertDataToGiangVien,
     function (req, res) {
-    res.send('day la trang admin-khoa')
-})
+        res.json({
+            msg: "Insert thanh cong"
+        })
+    }
+)
+
 /*
  * them du lieu giao vien bang file xlsx
  *
@@ -44,11 +53,89 @@ router.post('/insertbulksv',utility.reqIsAuthen,
     getArrayFromXlsx,
     insertDataToSinhVien,
     function (req, res) {
-        res.send('day la trang admin-khoa')
+        res.json({
+            msg: "Insert thanh cong"
+        })
+    }
+)
+
+
+function insertDataToGiangVien(data,req,res,next) {
+    var gvs = new Array();
+    // validate data
+    //chua validate dau, vẫn phải code
+    //start
+    for(var i=0;i<data.length;i++){
+        if (validateGV(data[i])) {
+            var gv = {
+                id : data[i].id,
+                tenGiangVien : data[i].tenGiangVien,
+                vnuMail : data[i].vnuMail,
+                DonViId : data[i].DonViId,
+                matKhau : "12345"
+            }
+            gvs.push(gv)
+        }
+        else {
+            res.json({
+                msg : "import data false! please check again !",
+                situation : i
+            })
+        }
+    }
+    //end
+    models.GiangVien.insertBulkGV(gvs,function () {
+        console.log("insert Thanh cong")
+        return next();
+    },function (error) {
+        res.json({
+            msg : " Đã tồn tại giảng viên",
+            error : error
+        })
     })
 
+}
+function insertDataToSinhVien(data,req,res,next) {
+    var svs = new Array();
+    // validate data
+    //chua validate dau, vẫn phải code
+    //start
+    for(var i=0;i<data.length;i++){
+        if(validateSV(data[i])){
+            var sv = {
+                id : data[i].id,
+                tenSinhVien : data[i].tenSinhVien,
+                vnuMail : data[i].vnuMail,
+                duocDangKiKhoaLuanKhong : 0,
+                KhoaHocKh : data[i].KhoaHoc,
+                NganhHocKh : data[i].NganhHoc,
+                matKhau : "12345"
+            }
+            svs.push(sv)
+        }
+        else {
+            res.json({
+                msg : "import data false! please check again !",
+                situation : i
+            })
+        }
 
-
+    }
+    //end
+    models.SinhVien.insertBulkSV(svs,function () {
+        console.log("insert Thanh cong")
+        return next();
+    },function (error) {
+        res.json({
+            msg : " Đã tồn tại sinh viên",
+            error : error
+        })
+    })
+}
+/*
+ * đọc dữ liệu theo hàng
+ *
+ */
 function getArrayFromXlsx(req,res,next) {
 
     var file = req.files.file;
@@ -104,51 +191,31 @@ function getArrayFromXlsx(req,res,next) {
 
     return next(data);
 }
-function insertDataToGiangVien(data,req,res,next) {
-    var gvs = new Array();
-    // validate data
-    //chua validate dau, vẫn phải code
-    //start
-    for(var i=0;i<data.length;i++){
-        var gv = {
-            id : data[i].id,
-            tenGiangVien : data[i].tenGiangVien,
-            vnuMail : data[i].vnuMail,
-            DonViId : data[i].DonViId,
-            matKhau : "12345"
-        }
-        gvs.push(gv)
-    }
-    //end
-    models.GiangVien.insertBulkGV(gvs,function () {
-        console.log("insert Thanh cong")
-        return next();
-    })
-}
-function insertDataToSinhVien(data,req,res,next) {
-    var svs = new Array();
-    // validate data
-    //chua validate dau, vẫn phải code
-    //start
-    for(var i=0;i<data.length;i++){
-        var sv = {
-            id : data[i].id,
-            tenSinhVien : data[i].tenSinhVien,
-            vnuMail : data[i].vnuMail,
-            duocDangKiKhoaLuanKhong : 0,
-            KhoaHocKh : data[i].KhoaHoc,
-            NganhHocKh : data[i].NganhHoc,
-            matKhau : "12345"
-        }
-        svs.push(sv)
-    }
-    //end
-    models.SinhVien.insertBulkSV(svs,function () {
-        console.log("insert Thanh cong")
-        return next();
-    },function (error) {
-        res.send('import file bi loi')
-    })
-}
+function validateGV(data) {
 
+    return (
+        !validator.isEmpty(data.tenGiangVien)
+        &&!validator.isEmpty(data.id)
+        &&!validator.isEmpty(data.vnuMail)
+        &&!validator.isEmpty(data.DonViId.toString())
+
+        && validator.isAscii(data.id)
+        && validator.isEmail(data.vnuMail)
+        && validator.isInt(data.DonViId.toString())
+    )
+}
+function validateSV(data) {
+
+    return (
+           !validator.isEmpty(data.id.toString())
+        && !validator.isEmpty(data.tenSinhVien)
+        && !validator.isEmpty(data.KhoaHoc.toString())
+        && !validator.isEmpty(data.NganhHoc)
+        && !validator.isEmpty(data.vnuMail)
+        && validator.isAscii(data.id.toString())
+        && validator.isEmail(data.vnuMail)
+        && validator.isAscii(data.KhoaHoc.toString())
+        && validator.isAscii(data.NganhHoc)
+    )
+}
 module.exports = router;
