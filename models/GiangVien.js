@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
         DonViId : DataTypes.INTEGER(11),
         chuDeHuongNghienCuu : {
           type:DataTypes.TEXT,
-          allowNull : false
+          allowNull : true
         }
     }, {
         timestamps: false,
@@ -59,6 +59,9 @@ module.exports = function (sequelize, DataTypes) {
                         id: idKhoa
                     }
                 }).then(callback)
+            },
+            insertOneGV : function (gv,callback,callback2) {
+                this.create(gv).then(callback).catch(callback2)
             }
         }
     });

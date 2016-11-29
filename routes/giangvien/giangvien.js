@@ -9,4 +9,5 @@ var models = require('../../models');
 router.get('/', utility.reqIsAuthen, utility.reqIsGV,function (req, res) {
     res.send('day la trang giang vien')
 })
+
 module.exports = router;

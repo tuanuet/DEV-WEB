@@ -23,9 +23,16 @@ module.exports = function (sequelize, DataTypes) {
                     }
                 });
                 this.hasMany(models.GiangVien);
+            },
+            getDonViAndGiangVienByIdDonVi : function (id,models,callback) {
+                this.findOne({
+                    where: {id : id},
+                    include : [{
+                        model : models.GiangVien
+                    }]
+                }).then(callback)
             }
         }
     });
-
     return DonVi;
 };

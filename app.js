@@ -11,6 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var index = require('./routes/index');
 var user = require('./routes/users');
+
 var utility = require('./Utility/utility')
 
 var app = express();
@@ -76,5 +77,6 @@ app.use(function (req, res, next) {
 
 app.use('/', index);
 app.use('/users',user)
+
 
 module.exports = app;

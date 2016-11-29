@@ -10,20 +10,80 @@ var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var validator = require('validator')
 
+
 router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.send('day la trang admin-khoa')
 })
-router.get('/insertgv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+router.get('/insertbulkgv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('admin/upload-xlsx-giangvien',{
         title : "Thêm giảng viên"
     })
 })
-router.get('/insertsv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+router.get('/insertbulksv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('admin/upload-xlsx-sinhvien',{
         title: "Thêm sinh viên"
     })
 })
 
+//trang Khoa => DonVi( co thong tin don vi va cac giao vien cua don vi do)
+router.get('/donvi/:idDonVi',function (req,res) {
+    var idDonVi = req.params.idDonVi;
+    console.log(idDonVi);
+    models.DonVi.getDonViAndGiangVienByIdDonVi(idDonVi,models,function (data) {
+        var donvi = data.dataValues;
+        //render
+        res.json(donvi);
+    })
+})
+
+
+//trang profile khoa
+router.get('/profile/:idKhoa',function (req,res) {
+    var idKhoa = req.params.idKhoa;
+    console.log(idKhoa);
+    models.Khoa.getKhoaAndDonViByIdKhoa(idKhoa,models,function (data) {
+        var khoa = data.dataValues;
+        //render
+        res.json(khoa)
+
+    })
+})
+
+//create 1 giang vien ~ ho tro nhap tay
+router.post('/insertonegv', function (req,res) {
+    if(req.body){
+        var data = req.body;
+        var gv = {
+            id : data.id,
+            tenGiangVien : data.tenGiangVien,
+            vnuMail : data.vnuMail,
+            DonViId : data.DonViId,
+            matKhau : "12345"
+        }
+        //kiem tra xem trong db co chua
+        // neu chua co thi insert
+        //neu co roi thì bo qua insert chay ham tiep theo
+        if(validateGV(gv)){
+            models.GiangVien.insertOneGV(gv,function (gv) {
+                res.json({
+                    msg: "insert thành công"
+                })
+            },function (error) {
+                if(error){
+                    res.json({
+                        msg: "Giảng viên đã tồn tại!",
+                        error : error.name
+                    })
+                }
+            })
+        }
+    }else {
+        res.json({
+            msg: "Thêm giảng viên bị lỗi!"
+        })
+    }
+
+})
 
 /*
  * them du lieu Sinh vien bang file xlsx
@@ -192,16 +252,14 @@ function getArrayFromXlsx(req,res,next) {
     return next(data);
 }
 function validateGV(data) {
-
     return (
         !validator.isEmpty(data.tenGiangVien)
         &&!validator.isEmpty(data.id)
         &&!validator.isEmpty(data.vnuMail)
-        &&!validator.isEmpty(data.DonViId.toString())
-
+        &&!validator.isEmpty(parseInt(data.DonViId).toString())
         && validator.isAscii(data.id)
         && validator.isEmail(data.vnuMail)
-        && validator.isInt(data.DonViId.toString())
+        && validator.isInt(parseInt(data.DonViId).toString())
     )
 }
 function validateSV(data) {
@@ -218,4 +276,5 @@ function validateSV(data) {
         && validator.isAscii(data.NganhHoc)
     )
 }
+
 module.exports = router;

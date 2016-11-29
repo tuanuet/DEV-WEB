@@ -46,6 +46,21 @@ module.exports = function (sequelize, DataTypes) {
                         id: idKhoa
                     }
                 }).then(callback)
+            },
+            getKhoaAndDonViByIdKhoa : function (idKhoa,models,callback) {
+                this.findOne({
+                    where : {id : idKhoa},
+                    include : [{
+                        model : models.DonVi
+                    }]
+                }).then(callback)
+            },
+            getAllKhoaAndDonVi : function (models,callback) {
+                this.findAll({
+                    include : [{
+                        model : models.DonVi
+                    }]
+                }).then(callback)
             }
         }
     });
