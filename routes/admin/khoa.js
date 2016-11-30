@@ -36,7 +36,6 @@ router.get('/donvi/:idDonVi',function (req,res) {
     })
 })
 
-
 //trang profile khoa
 router.get('/profile/:idKhoa',function (req,res) {
     var idKhoa = req.params.idKhoa;
@@ -49,6 +48,46 @@ router.get('/profile/:idKhoa',function (req,res) {
     })
 })
 
+router.get('/sendEmail',function (req,res) {
+    var nodemailer = require('nodemailer');
+
+    var smtpTransport = ({
+        host: "ctmail.vnu.edu.vn", // hostname
+        secure: false, // use SSL
+        port: 25, // port for secure SMTP
+        auth: {
+            user: "14020521",
+            pass: "1391996"
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    })
+
+    // create reusable transporter object using the default SMTP transport
+    var transporter = nodemailer.createTransport(smtpTransport);
+
+
+
+    // setup e-mail data with unicode symbols
+    //noi dung mail nhe
+    var mailOptions = {
+        from: '"Fred Foo ?" <14020521@vnu.edu.vn>', // sender address
+        to: '14020557@vnu.edu.vn', // list of receivers
+        subject: 'Hello ✔', // Subject line
+        text: 'Hello world ?', // plaintext body
+        html: '<b>Hello world </b>' // html body
+    };
+
+// send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(error);
+            res.send("That bai")
+        }else
+            res.send("thanh cong")
+    });
+})
 //create 1 giang vien ~ ho tro nhap tay
 router.post('/insertonegv', function (req,res) {
     if(req.body){

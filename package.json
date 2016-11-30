@@ -19,6 +19,7 @@
     "express-validator": "*",
     "morgan": "~1.7.0",
     "mysql": "^2.12.0",
+    "nodemailer": "^2.6.4",
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*",
