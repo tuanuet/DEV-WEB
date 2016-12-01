@@ -8,10 +8,28 @@ var models = require('../../models');
 router.get('/',utility.reqIsAuthen,function (req,res) {
     res.send('day la trang sinh vien')
 })
-router.get('/myprofile',function (req,res) {
-    res.render('public/userprofile')
+router.get('/myprofile',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
+    models.SinhVien.getSinhVienAndKhoaAndKhoaHocAndNganhHoc(req.user.id,models,function (sv) {
+        res.render('public/userprofile',{
+            title : "My Profile",
+            data : sv.dataValues
+        })
+
+    },function (err) {
+        res.json(err)
+    })
 })
-router.get('/settings',function (req,res) {
-    res.render('public/setting-userprofile')
+//Trang setting
+router.get('/settings',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
+    models.SinhVien.getSinhVienAndKhoaAndKhoaHocAndNganhHoc(req.user.id,models,function (sv) {
+        res.render('public/setting-userprofile',{
+            title : "Settings",
+            data : sv.dataValues
+        })
+
+    },function (err) {
+        res.json(err)
+    })
+
 })
 module.exports = router;

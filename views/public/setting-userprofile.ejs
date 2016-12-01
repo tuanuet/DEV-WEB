@@ -18,7 +18,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8"/>
-    <title>Metronic | New User Profile</title>
+    <title><%= title%></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -67,16 +67,16 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="portlet light profile-sidebar-portlet">
                             <!-- SIDEBAR USERPIC -->
                             <div class="profile-userpic">
-                                <img src="/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
+                                <img src="<%= data.avatar%>" class="img-responsive" alt="">
                             </div>
                             <!-- END SIDEBAR USERPIC -->
                             <!-- SIDEBAR USER TITLE -->
                             <div class="profile-usertitle">
                                 <div class="profile-usertitle-name">
-                                    Marcus Doe
+                                    <%= data.tenSinhVien%>
                                 </div>
                                 <div class="profile-usertitle-job">
-                                    Developer
+                                    Sinh Viên
                                 </div>
                             </div>
                             <!-- END SIDEBAR USER TITLE -->
@@ -128,29 +128,25 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="tab-pane active" id="tab_1_1">
                                                 <form role="form" action="#">
                                                     <div class="form-group">
-                                                        <label class="control-label">Tên</label>
-                                                        <input type="text" placeholder="Tuấn" class="form-control"/>
+                                                        <label class="control-label">Họ và tên</label>
+                                                        <input type="text" disabled placeholder="<%= data.tenSinhVien%>" class="form-control"/>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="control-label">Họ</label>
-                                                        <input type="text" placeholder="Trần Minh"
-                                                               class="form-control"/></div>
-                                                    <div class="form-group">
                                                         <label class="control-label">Số điện thoại</label>
-                                                        <input type="text" placeholder="0976200663"
+                                                        <input type="text" value="0976200663" placeholder="Số điện thoại"
                                                                class="form-control"/></div>
                                                     <div class="form-group">
-                                                        <label class="control-label">Khoá học</label>
-                                                        <input type="text" placeholder="Khoá học."
-                                                               class="form-control"/></div>
+                                                        <label class="control-label ">Khoá học</label>
+                                                        <input type="text" placeholder="Khoá học." value="<%= data.KhoaHoc.kh%>"
+                                                               class="form-control" disabled /></div>
                                                     <div class="form-group">
                                                         <label class="control-label">Lớp</label>
-                                                        <input type="text" placeholder="Lớp"
-                                                               class="form-control"/></div>
+                                                        <input type="text" placeholder="Lớp" value="K59-CLC"
+                                                               class="form-control" disabled/></div>
                                                     <div class="form-group">
                                                         <label class="control-label">Khoa</label>
-                                                        <input type="text" placeholder="Khoa"
-                                                               class="form-control"/></div>
+                                                        <input type="text" placeholder="Khoa" value="<%= data.NganhHoc.Khoa.tenKhoa%>"
+                                                               class="form-control" disabled/></div>
 
                                                     <div class="margiv-top-10">
                                                         <a href="javascript:;" class="btn green"> Lưu </a>

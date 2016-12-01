@@ -14,6 +14,7 @@ module.exports = function (sequelize, DataTypes) {
         vanPhongKhoa: DataTypes.STRING(45),
         taiKhoan: DataTypes.STRING(30),
         matKhau: DataTypes.STRING(30),
+        avatar : DataTypes.STRING,
         moTa: DataTypes.TEXT
     }, {
         timestamps: false,

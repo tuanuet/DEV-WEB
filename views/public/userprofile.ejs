@@ -18,7 +18,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8"/>
-    <title>Metronic | New User Profile</title>
+    <title><%= title%></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -67,16 +67,16 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="portlet light profile-sidebar-portlet">
                             <!-- SIDEBAR USERPIC -->
                             <div class="profile-userpic">
-                                <img src="/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
+                                <img src="<%= data.avatar%>" class="img-responsive" alt="">
                             </div>
                             <!-- END SIDEBAR USERPIC -->
                             <!-- SIDEBAR USER TITLE -->
                             <div class="profile-usertitle">
                                 <div class="profile-usertitle-name">
-                                    Marcus Doe
+                                    <%= data.tenSinhVien%>
                                 </div>
                                 <div class="profile-usertitle-job">
-                                    Developer
+                                    Sinh Viên
                                 </div>
                             </div>
                             <!-- END SIDEBAR USER TITLE -->
@@ -88,7 +88,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <i class="icon-home"></i>
                                             Tổng quan </a>
                                     </li>
-                                    <li>
+                                    <li >
                                         <a href="/users/sinhvien/settings">
                                             <i class="icon-settings"></i>
                                             Settings </a>

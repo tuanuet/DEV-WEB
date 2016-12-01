@@ -22,6 +22,7 @@ module.exports = function (sequelize, DataTypes) {
           type: DataTypes.STRING(45),
           allowNull : false
         },
+        avatar : DataTypes.STRING,
         duocDangKiKhoaLuanKhong: DataTypes.INTEGER(1)
     }, {
         timestamps: false,
@@ -61,12 +62,26 @@ module.exports = function (sequelize, DataTypes) {
                 //     callback(null, isMatch);
                 // });
             },
-            getSVByID: function (idKhoa, callback) {
+            getSVByID: function (id, callback) {
                 this.findOne({
                     where: {
-                        id: idKhoa
+                        id: id
                     }
                 }).then(callback)
+            },
+            getSinhVienAndKhoaAndKhoaHocAndNganhHoc : function (idSinhVien,models,success,failure) {
+                this.findOne({
+                    where: {id : idSinhVien},
+                    include : [
+                        {model : models.KhoaHoc},
+                        {
+                            model : models.NganhHoc,
+                            include : [
+                                {model : models.Khoa}
+                            ]
+                        }
+                    ]
+                }).then(success).catch(failure)
             }
         }
     });

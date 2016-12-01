@@ -16,6 +16,7 @@ module.exports = function (sequelize, DataTypes) {
         vnuMail: DataTypes.STRING(45),
         matKhau: DataTypes.STRING(45),
         DonViId : DataTypes.INTEGER(11),
+        avatar : DataTypes.STRING,
         chuDeHuongNghienCuu : {
           type:DataTypes.TEXT,
           allowNull : true

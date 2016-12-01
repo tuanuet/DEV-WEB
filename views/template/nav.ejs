@@ -26,20 +26,60 @@
                             </a>
                         <%} else {%>
                             <% if(typeuser == 2){%>
-                                <a href="#" class="dropdown-toggle">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
                                     <span class="username"><%= user.tenKhoa%></span>
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-default">
+                                    <li>
+                                        <a href="/users/khoa/myprofile">
+                                            <i class="icon-user"></i> My Profile </a>
+                                    </li>
+                                    <li>
+                                        <a href="/khoa">
+                                            <i class="icon-user"></i>Admin</a>
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li>
+                                        <a href="/users/logout">
+                                            <i class="icon-key"></i> Log Out </a>
+                                    </li>
+                                </ul>
                             <%} else if(typeuser == 1){%>
-                                <a href="#" class="dropdown-toggle">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
                                     <span class="username"><%= user.tenGiangVien%></span>
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-default">
+                                    <li>
+                                        <a href="/users/giangvien/myprofile">
+                                            <i class="icon-user"></i> My Profile </a>
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li>
+                                        <a href="/users/logout">
+                                            <i class="icon-key"></i> Log Out </a>
+                                    </li>
+                                </ul>
                             <% } else  {%>
-                                <a href="#" class="dropdown-toggle">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                     <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
-                                    <span class="username"><%= user.tenSinhVien%></span>
+                                    <span class="username username-hide-mobile"><%= user.tenSinhVien%></span>
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-default">
+                                    <li>
+                                        <a href="/users/sinhvien/myprofile">
+                                            <i class="icon-user"></i> My Profile </a>
+                                    </li>
+                                    <li class="divider">
+                                    </li>
+                                    <li>
+                                        <a href="/users/logout">
+                                            <i class="icon-key"></i> Log Out </a>
+                                    </li>
+                                </ul>
                             <% } %>
                         <% } %>
                     </li>
