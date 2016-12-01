@@ -22,7 +22,7 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-              this.belongsToMany(models.GiangVien, {through : 'PhanBien'});
+              this.hasMany(models.PhanBien);
               this.belongsTo(models.GiangVien, {
                 onDelete: "CASCADE",
                 foreignKey: {

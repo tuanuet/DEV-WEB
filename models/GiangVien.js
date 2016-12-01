@@ -31,8 +31,9 @@ module.exports = function (sequelize, DataTypes) {
                         allowNull: false
                     }
                 });
-                this.belongsToMany(models.LinhVuc, {through : 'LinhVucLienQuans', timestamps: false});
-                this.belongsToMany(models.DeTai, {through : 'PhanBien'});
+                this.hasMany(models.LinhVucLienQuan);
+                this.hasMany(models.DeTai);
+                this.hasMany(models.PhanBien)
             },
             insertBulkGV : function (gvs,callback,callback2) {
 
@@ -63,6 +64,26 @@ module.exports = function (sequelize, DataTypes) {
             },
             insertOneGV : function (gv,callback,callback2) {
                 this.create(gv).then(callback).catch(callback2)
+            },
+            getGiangVienAndKhoaAndDonViAndLinhVucLienQuan : function (id,models,success,failure) {
+                this.findOne({
+                    where : {id : id},
+                    include : [
+                        {
+                            model : models.DonVi,
+                            include: [
+                                {model : models.Khoa}
+                            ]
+                        },
+                        {
+                            model : models.LinhVucLienQuan,
+                            include : [
+                                {model :models.LinhVuc}
+                            ]
+                        }
+
+                    ]
+                }).then(success).catch(failure)
             }
         }
     });

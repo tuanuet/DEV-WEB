@@ -14,7 +14,6 @@ router.get('/myprofile',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
             title : "My Profile",
             data : sv.dataValues
         })
-
     },function (err) {
         res.json(err)
     })

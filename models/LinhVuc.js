@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                this.belongsToMany(models.GiangVien, {through : 'LinhVucLienQuans',timestamps: false});
+                this.hasMany(models.LinhVucLienQuan);
                 this.belongsTo(models.Khoa, {
                     onDelete: "CASCADE",
                     foreignKey: {
