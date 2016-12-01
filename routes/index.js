@@ -21,4 +21,21 @@ router.get("/introKhoa", utility.reqIsAuthen , function(req, res) {
     })
 })
 
-module.exports = router;
+//Profile khoa
+router.get("/profileKhoa", utility.reqIsAuthen , function(req, res) { // tạo 1 trang profileKhoa
+    res.render("public/khoaprofile", { //nó sẽ lấy file intro.ejs để sinh ra trang mình cần
+        title : "Profile Khoa", //Dữ liệu đi kèm để hiển thị
+        Object : "khoa"
+    })
+})
+
+//Setting khoa
+router.get("/settingKhoa", utility.reqIsAuthen , function(req, res) {
+    res.render("public/khoa_setting", {
+        title : "Setting khoa",
+        Object : "khoa"
+    })
+})
+
+module.exports = router; //Dòng này phải ở dưới
+
