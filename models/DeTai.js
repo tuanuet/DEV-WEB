@@ -29,12 +29,6 @@ module.exports = function (sequelize, DataTypes) {
                   allowNull : false
                 }
               });
-              this.belongsTo(models.SinhVien, {
-                    onDelete: "CASCADE",
-                    foreignKey: {
-                        allowNull: false
-                    }
-              });
             }
         }
     });

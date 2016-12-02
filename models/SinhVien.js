@@ -40,6 +40,7 @@ module.exports = function (sequelize, DataTypes) {
                         allowNull: false
                     }
                 });
+                this.hasOne(models.DeTai)
             },
             insertBulkSV : function (svs,callback,callback2) {
                 this.bulkCreate(svs,{validate : true})

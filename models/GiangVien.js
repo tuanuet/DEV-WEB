@@ -69,8 +69,7 @@ module.exports = function (sequelize, DataTypes) {
                 this.findOne({
                     where : {id : id},
                     include : [
-                        {
-                            model : models.DonVi,
+                        {   model : models.DonVi,
                             include: [
                                 {model : models.Khoa}
                             ]
@@ -81,7 +80,6 @@ module.exports = function (sequelize, DataTypes) {
                                 {model :models.LinhVuc}
                             ]
                         }
-
                     ]
                 }).then(success).catch(failure)
             }

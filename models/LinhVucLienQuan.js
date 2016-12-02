@@ -2,6 +2,11 @@
 
 module.exports = function (sequelize, DataTypes) {
     var LinhVucLienQuan = sequelize.define("LinhVucLienQuan", {
+        id: {
+            type: DataTypes.INTEGER(11),
+            primaryKey: true,
+            autoIncrement: true
+        },
             GiangVienId: DataTypes.STRING(11) ,
             LinhVucId : DataTypes.INTEGER(11)
     }, {
@@ -23,6 +28,5 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     });
-    LinhVucLienQuan.removeAttribute('id')
     return LinhVucLienQuan;
 };
