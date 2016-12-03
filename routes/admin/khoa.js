@@ -24,6 +24,12 @@ router.get('/insertbulksv', utility.reqIsAuthen, utility.reqIsKhoa, function (re
         title: "Thêm sinh viên"
     })
 })
+router.get('/updatesinhvienduocdangki', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    res.render('admin/upload-xlsx-sinhvienduocdangki',{
+        title: "Update sinh viên được đăng kí"
+    })
+})
+
 
 //trang Khoa => DonVi( co thong tin don vi va cac giao vien cua don vi do)
 router.get('/donvi/:idDonVi',function (req,res) {
@@ -157,8 +163,61 @@ router.post('/insertbulksv',utility.reqIsAuthen,
         })
     }
 )
+/*
+ * Thay đổi trang thai tu ko đc dang kí thanh duoc dang ki
+ * */
+router.post('/updatesinhvien',utility.reqIsAuthen,
+    utility.reqIsKhoa,
+    multipartMiddleware,
+    getArrayFromXlsx,
+    updateSinhVienDuocDangki,
+    function (req, res) {
+        res.json({
+            msg: "Insert thanh cong"
+        })
+    }
+)
 
+function updateSinhVienDuocDangki(data,req,res,next) {
+    var svs = new Array();
+    // validate data
+    //
+    //start
+    for(var i=0;i<data.length;i++){
+        if(validateUpdateSinhVien(data[i])){
+            var sv = {
+                id : data[i].id,
+                tenSinhVien : data[i].tenSinhVien.trim(),
+                duocDangKiKhoaLuanKhong: 1
+            }
+            svs.push(sv)
+        }
+        else {
+            res.json({
+                msg : "import data false! please check again !",
+                situation : i
+            })
+        }
+    }
+    //update
+    models.SinhVien.updateSinhVienDuocDangKi(svs,function () {
+        console.log("Update thanh cong")
+        return next();
+    },function (position) {
 
+        res.json({
+            msg : "import data false! please check again",
+            position : position
+        })
+    })
+}
+function validateUpdateSinhVien(data) {
+    return (
+        !validator.isEmpty(data.id.toString())
+        && !validator.isEmpty(data.tenSinhVien)
+        && validator.isInt(data.id.toString())
+    )
+}
 function insertDataToGiangVien(data,req,res,next) {
     var gvs = new Array();
     // validate data
@@ -168,9 +227,9 @@ function insertDataToGiangVien(data,req,res,next) {
         if (validateGV(data[i])) {
             var gv = {
                 id : data[i].id,
-                tenGiangVien : data[i].tenGiangVien,
-                vnuMail : data[i].vnuMail,
-                DonViId : data[i].DonViId,
+                tenGiangVien : data[i].tenGiangVien.trim(),
+                vnuMail : data[i].vnuMail.trim(),
+                DonViId : data[i].DonViId.trim(),
                 matKhau : "12345"
             }
             gvs.push(gv)
@@ -196,32 +255,32 @@ function insertDataToGiangVien(data,req,res,next) {
 }
 function insertDataToSinhVien(data,req,res,next) {
     var svs = new Array();
-    // validate data
-    //chua validate dau, vẫn phải code
-    //start
-    for(var i=0;i<data.length;i++){
-        if(validateSV(data[i])){
-            var sv = {
-                id : data[i].id,
-                tenSinhVien : data[i].tenSinhVien,
-                vnuMail : data[i].vnuMail,
-                duocDangKiKhoaLuanKhong : 0,
-                KhoaHocKh : data[i].KhoaHoc,
-                NganhHocKh : data[i].NganhHoc,
-                matKhau : "12345"
+        // validate data
+        //chua validate dau, vẫn phải code
+        //start
+        for(var i=0;i<data.length;i++){
+            if(validateSV(data[i])){
+                var sv = {
+                    id : data[i].id,
+                    tenSinhVien : data[i].tenSinhVien.trim(),
+                    vnuMail : data[i].vnuMail.trim(),
+                    duocDangKiKhoaLuanKhong : 0,
+                    KhoaHocKh : data[i].KhoaHoc.trim(),
+                    NganhHocKh : data[i].NganhHoc.trim(),
+                    matKhau : "12345"
+                }
+                svs.push(sv)
             }
-            svs.push(sv)
-        }
-        else {
-            res.json({
-                msg : "import data false! please check again !",
-                situation : i
-            })
-        }
+            else {
+                res.json({
+                    msg : "import data false! please check again !",
+                    situation : i
+                })
+            }
 
     }
     //end
-    models.SinhVien.insertBulkSV(svs,function () {
+    models.SinhVien.updateSinhVienDuocDangKi(svs,function () {
         console.log("insert Thanh cong")
         return next();
     },function (error) {

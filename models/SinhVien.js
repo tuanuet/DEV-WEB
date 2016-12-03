@@ -83,6 +83,22 @@ module.exports = function (sequelize, DataTypes) {
                         }
                     ]
                 }).then(success).catch(failure)
+            },
+            updateSinhVienDuocDangKi : function (svs,success,failure) {
+                var dem=0;
+                for(var i = 0;i<svs.length;i++){
+                    this.update({
+                        duocDangKiKhoaLuanKhong : 1
+                    },{where :{id : svs[i].id}}).then(function (sv) {
+                        dem+=sv[0]
+                        if(dem == svs.length){
+                            success();
+                        }
+                    }).catch(function () {
+                        return failure(i)
+                    })
+                }
+
             }
         }
     });
