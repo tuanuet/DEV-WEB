@@ -109,12 +109,12 @@
             <!-- END CONTENT NEWS -->
             <!-- BEGIN CONTENT INTRO -->
             <div class="row col-md-12">
-              <!-- BEGIN list bộ môn -->
+              <% for(var i = 0; i < allKhoa.length; i++) {%>
               <div class="col-md-6">
                 <div class="portlet box blue-hoki">
                   <div class="portlet-title">
                     <div class="caption">
-                      Khoa Công Nghệ Thông Tin
+                      Khoa <%= allKhoa[i].tenKhoa %>
                     </div>
                     <div class="tools">
                       <a href="javascript:;" class="collapse" data-original-title="" title="">
@@ -123,127 +123,16 @@
                   </div>
                   <div class="portlet-body" style="display: block;">
                     <ol>
+                      <% for(var temp = 0; temp < allKhoa[i].DonVis.length; temp++) {%>
                       <li>
-                        Bộ môn Công Nghệ Phần Mềm
+                        <%= allKhoa[i].DonVis[temp].tenDonVi %>
                       </li>
-                      <li>
-                        Bộ môn Các Hệ thống Thông tin
-                      </li>
-                      <li>
-                        Bộ môn Khoa học Máy tính
-                      </li>
-                      <li>
-                        Bộ môn Mạng và Truyền thông Máy tính
-                      </li>
-                      <li>
-                        Bộ môn Khoa học và Kỹ thuật tính toán
-                      </li>
+                      <% } %>
                     </ol>
                   </div>
                 </div>
               </div>
-              <!-- END LIST BỘ MÔN -->
-              <!-- BEGIN list bộ môn -->
-              <div class="col-md-6">
-                <div class="portlet box blue-hoki">
-                  <div class="portlet-title">
-                    <div class="caption">
-                      Khoa Công Nghệ Thông Tin
-                    </div>
-                    <div class="tools">
-                      <a href="javascript:;" class="collapse" data-original-title="" title="">
-                      </a>
-                    </div>
-                  </div>
-                  <div class="portlet-body" style="display: block;">
-                    <ol>
-                      <li>
-                        Bộ môn Công Nghệ Phần Mềm
-                      </li>
-                      <li>
-                        Bộ môn Các Hệ thống Thông tin
-                      </li>
-                      <li>
-                        Bộ môn Khoa học Máy tính
-                      </li>
-                      <li>
-                        Bộ môn Mạng và Truyền thông Máy tính
-                      </li>
-                      <li>
-                        Bộ môn Khoa học và Kỹ thuật tính toán
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-              <!-- END LIST BỘ MÔN -->
-              <!-- BEGIN list bộ môn -->
-              <div class="col-md-6">
-                <div class="portlet box blue-hoki">
-                  <div class="portlet-title">
-                    <div class="caption">
-                      Khoa Công Nghệ Thông Tin
-                    </div>
-                    <div class="tools">
-                      <a href="javascript:;" class="collapse" data-original-title="" title="">
-                      </a>
-                    </div>
-                  </div>
-                  <div class="portlet-body" style="display: block;">
-                    <ol>
-                      <li>
-                        Bộ môn Công Nghệ Phần Mềm
-                      </li>
-                      <li>
-                        Bộ môn Các Hệ thống Thông tin
-                      </li>
-                      <li>
-                        Bộ môn Khoa học Máy tính
-                      </li>
-                      <li>
-                        Bộ môn Mạng và Truyền thông Máy tính
-                      </li>
-                      <li>
-                        Bộ môn Khoa học và Kỹ thuật tính toán
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-              <!-- END LIST BỘ MÔN -->
-              <!-- BEGIN list bộ môn -->
-              <div class="col-md-6">
-                <div class="portlet box blue-hoki">
-                  <div class="portlet-title">
-                    <div class="caption">
-                      Khoa Công Nghệ Thông Tin
-                    </div>
-                    <div class="tools">
-                      <a href="javascript:;" class="collapse" data-original-title="" title="">
-                      </a>
-                    </div>
-                  </div>
-                  <div class="portlet-body" style="display: block;">
-                    <ol>
-                      <li>
-                        Bộ môn Công Nghệ Phần Mềm
-                      </li>
-                      <li>
-                        Bộ môn Các Hệ thống Thông tin
-                      </li>
-                      <li>
-                        Bộ môn Khoa học Máy tính
-                      </li>
-                      <li>
-                        Bộ môn Mạng và Truyền thông Máy tính
-                      </li>
-                      <li>
-                        Bộ môn Khoa học và Kỹ thuật tính toán
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
+              <% } %>
               <!-- END LIST BỘ MÔN -->
             </div>
           </div>

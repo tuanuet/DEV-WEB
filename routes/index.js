@@ -4,21 +4,22 @@ var utility = require('../Utility/utility')
 var models = require('../models')
 /* GET home page. */
 router.get('/',function(req, res) {
-
     models.Khoa.getAllKhoaAndDonVi(models,function (data) {
         res.render('index', {
             title: 'Hệ thống đăng kí khóa luận',
-            data : data
+            allKhoa : data,
         });
     })
 });
 
 //Intro khoa
 router.get("/introKhoa", utility.reqIsAuthen , function(req, res) {
-    res.render("public/intro", {
-        title : "Intro Khoa",
-        Object : "khoa"
-    })
+  models.Khoa.getAllKhoaAndDonVi(models,function (data) {
+      res.render("public/intro", {
+          title : "Intro Khoa",
+          allKhoa : data,
+      });
+  })
 })
 
 //Profile khoa
@@ -38,4 +39,3 @@ router.get("/settingKhoa", utility.reqIsAuthen , function(req, res) {
 })
 
 module.exports = router; //Dòng này phải ở dưới
-

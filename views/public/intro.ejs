@@ -38,51 +38,23 @@
 									<!-- SIDEBAR MENU -->
 									<div class="profile-usermenu">
 										<ul class="nav">
+											<% for(var i = 0; i < allKhoa.length; i++) {%>
 											<li>
-												<a href="#khoa1" data-toggle="collapse">
-													Khoa Công Nghệ Thông Tin
+												<a href="#<%= allKhoa[i].id %>" data-toggle="collapse">
+													<%= allKhoa[i].tenKhoa %>
 												</a>
-												<ul class="nav collapse" id="khoa1">
+												<ul class="nav collapse" id="<%= allKhoa[i].id %>">
+													  <% for(var temp = 0; temp < allKhoa[i].DonVis.length; temp++) {%>
 													<li>
 														<a href="#">
-														<i class="icon-home"></i>Công Nghệ Phần Mềm</a>
+															<i class="icon-home"></i>
+															<%= allKhoa[i].DonVis[temp].tenDonVi %>
+														</a>
 													</li>
-													<li>
-														<a href="">
-														<i class="icon-settings"></i>Công Nghệ Phần Mềm</a>
-													</li>
-													<li>
-														<a href="" target="_blank">
-														<i class="icon-check"></i>Công Nghệ Phần Mềm</a>
-													</li>
-													<li>
-														<a href="">
-														<i class="icon-info"></i>Công Nghệ Phần Mềm</a>
-													</li>
+													<% } %>
 												</ul>
 											</li>
-											<li>
-												<a href="#khoa2" data-toggle="collapse">
-												</i>Khoa Cơ kĩ Thuật</a>
-												<ul class="nav collapse" id="khoa2">
-													<li>
-														<a href="#">
-														<i class="icon-home"></i>Công Nghệ Phần Mềm</a>
-													</li>
-													<li>
-														<a href="">
-														<i class="icon-settings"></i>Công Nghệ Phần Mềm</a>
-													</li>
-													<li>
-														<a href="" target="_blank">
-														<i class="icon-check"></i>Công Nghệ Phần Mềm</a>
-													</li>
-													<li>
-														<a href="">
-														<i class="icon-info"></i>Công Nghệ Phần Mềm</a>
-													</li>
-												</ul>
-											</li>
+											<% } %>
 										</ul>
 									</div>
 									<!-- END MENU -->
