@@ -84,6 +84,23 @@ module.exports = function (sequelize, DataTypes) {
                     ]
                 }).then(success).catch(failure)
             },
+            updateSinhVienDuocDangKiByID : function (id,success,failure) {
+                this.findOne({
+                    where : {id : id}
+                }).then(function (sv) {
+                    if(sv){
+                        this.update({
+                            duocDangKiKhoaLuanKhong : 1
+                        },{
+                            where : {id : id}
+                        }).then(success).catch(failure)
+                    }else {
+                        failure();
+                    }
+
+                }).catch(failure)
+
+            },
             updateSinhVienDuocDangKi : function (svs,success,failure) {
                 var dem=0;
                 for(var i = 0;i<svs.length;i++){

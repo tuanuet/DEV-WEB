@@ -29,7 +29,22 @@ router.get('/updatesinhvienduocdangki', utility.reqIsAuthen, utility.reqIsKhoa, 
         title: "Update sinh viên được đăng kí"
     })
 })
-
+router.post('/updatesinhvienbyid', utility.reqIsAuthen, utility.reqIsKhoa,function (req,res) {
+    var id = req.body.id
+    if(validator.isInt(id.toString())&&!validator.isEmpty(id.toString())){
+        models.SinhVien.updateSinhVienDuocDangKiByID(req.body.id,function () {
+            res.json({
+                msg : "Update thanh cong",
+                status : 200
+            })
+        },function () {
+            res.json({
+                msg : "Update that bai",
+                status : 500
+            })
+        })
+    }
+})
 
 //trang Khoa => DonVi( co thong tin don vi va cac giao vien cua don vi do)
 router.get('/donvi/:idDonVi',function (req,res) {
@@ -72,7 +87,6 @@ router.get('/sendEmail',function (req,res) {
 
     // create reusable transporter object using the default SMTP transport
     var transporter = nodemailer.createTransport(smtpTransport);
-
 
 
     // setup e-mail data with unicode symbols
