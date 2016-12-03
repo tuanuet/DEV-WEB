@@ -15,7 +15,7 @@ router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.send('day la trang admin-khoa')
 })
 router.get('/insertbulkgv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
-    res.render('admin/upload-xlsx-giangvien',{
+    res.render('admin/upload-giangvien',{
         title : "Thêm giảng viên"
     })
 })
@@ -237,13 +237,14 @@ function insertDataToGiangVien(data,req,res,next) {
     // validate data
     //chua validate dau, vẫn phải code
     //start
+    console.log(data)
     for(var i=0;i<data.length;i++){
         if (validateGV(data[i])) {
             var gv = {
                 id : data[i].id,
-                tenGiangVien : data[i].tenGiangVien.trim(),
-                vnuMail : data[i].vnuMail.trim(),
-                DonViId : data[i].DonViId.trim(),
+                tenGiangVien : data[i].tenGiangVien,
+                vnuMail : data[i].vnuMail,
+                DonViId : data[i].DonViId,
                 matKhau : "12345"
             }
             gvs.push(gv)
@@ -276,11 +277,11 @@ function insertDataToSinhVien(data,req,res,next) {
             if(validateSV(data[i])){
                 var sv = {
                     id : data[i].id,
-                    tenSinhVien : data[i].tenSinhVien.trim(),
-                    vnuMail : data[i].vnuMail.trim(),
+                    tenSinhVien : data[i].tenSinhVien,
+                    vnuMail : data[i].vnuMail,
                     duocDangKiKhoaLuanKhong : 0,
-                    KhoaHocKh : data[i].KhoaHoc.trim(),
-                    NganhHocKh : data[i].NganhHoc.trim(),
+                    KhoaHocKh : data[i].KhoaHoc,
+                    NganhHocKh : data[i].NganhHoc,
                     matKhau : "12345"
                 }
                 svs.push(sv)
@@ -366,7 +367,7 @@ function getArrayFromXlsx(req,res,next) {
 function validateGV(data) {
     return (
         !validator.isEmpty(data.tenGiangVien)
-        &&!validator.isEmpty(data.id)
+        && data.id
         &&!validator.isEmpty(data.vnuMail)
         &&!validator.isEmpty(parseInt(data.DonViId).toString())
         && validator.isAscii(data.id)
@@ -377,7 +378,7 @@ function validateGV(data) {
 function validateSV(data) {
 
     return (
-           !validator.isEmpty(data.id.toString())
+        data.id
         && !validator.isEmpty(data.tenSinhVien)
         && !validator.isEmpty(data.KhoaHoc.toString())
         && !validator.isEmpty(data.NganhHoc)

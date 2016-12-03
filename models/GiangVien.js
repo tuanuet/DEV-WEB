@@ -36,7 +36,6 @@ module.exports = function (sequelize, DataTypes) {
                 this.hasMany(models.PhanBien)
             },
             insertBulkGV : function (gvs,callback,callback2) {
-
                 this.bulkCreate(gvs).then(callback).catch(callback2)
             },
             getGiangVienByTaiKhoan: function (taiKhoan, callback) {
