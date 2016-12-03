@@ -2,7 +2,7 @@
  * Created by Admin on 19/11/2016.
  */
 var utility = require('../Utility/utility');
-
+var models = require('../models')
 module.exports.reqIsSV = function (req, res, next) {
     if (req.isAuthenticated() && req.user.tenSinhVien) {
         return next();
@@ -99,4 +99,10 @@ module.exports.userIsWho = function (req) {
             return 1;
         }
     }
+}
+
+module.exports.getDataForNav = function (next) {
+    models.Khoa.getAllKhoaAndDonVi(models,function (data) {
+        return next(data);
+    })
 }

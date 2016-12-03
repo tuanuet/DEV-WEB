@@ -11,6 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var index = require('./routes/index');
 var user = require('./routes/users');
+var models = require('./models')
 
 var utility = require('./Utility/utility')
 
@@ -60,17 +61,22 @@ app.use(expressValidator({
 // Connect Flash
 app.use(flash());
 
+//lay dataKhoa do vao nav
+app.use(function (req,res,next) {
+    utility.getDataForNav(next)
+})
 /*
  * Global Vars
  * khai bao mot so bien cuc bo
  * cac bien nay dc dung trong view
  */
-app.use(function (req, res, next) {
+app.use(function (data, req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
   res.locals.typeuser = utility.userIsWho(req);
+  res.locals.nav = data
   next();
 });
 

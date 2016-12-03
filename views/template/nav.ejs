@@ -1,5 +1,6 @@
 <!-- BEGIN HEADER -->
 <div class="page-header">
+
     <!-- BEGIN HEADER TOP -->
     <div class="page-header-top">
         <div class="container">
@@ -144,144 +145,20 @@
                             Lĩnh vực nghiên cứu <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu pull-left">
-                            <li class=" dropdown-submenu">
-                                <a href=":;">
-                                <i class="icon-briefcase"></i> xxxxx </a>
-                                <ul class="dropdown-menu">
-                                    <li class=" ">
-                                        <a href="table_basic.html">
-                                        Basic Datatables </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="table_tree.html">
-                                        Tree Datatables </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="table_responsive.html">
-                                        Responsive Datatables </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="table_managed.html">
-                                        Managed Datatables </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="table_editable.html">
-                                        Editable Datatables </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="table_advanced.html">
-                                        Advanced Datatables </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="table_ajax.html">
-                                        Ajax Datatables </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class=" dropdown-submenu">
-                                <a href=":;">
-                                <i class="icon-wallet"></i> Portlets </a>
-                                <ul class="dropdown-menu">
-                                    <li class=" ">
-                                        <a href="portlet_general.html">
-                                        General Portlets </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="portlet_general2.html">
-                                            New Portlets #1 <span class="badge badge-roundless badge-danger">new</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="portlet_general3.html">
-                                            New Portlets #2 <span class="badge badge-roundless badge-danger">new</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="portlet_ajax.html">
-                                        Ajax Portlets </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="portlet_draggable.html">
-                                        Draggable Portlets </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class=" dropdown-submenu">
-                                <a href=":;">
-                                <i class="icon-bar-chart"></i> Charts </a>
-                                <ul class="dropdown-menu">
-                                    <li class=" ">
-                                        <a href="charts_amcharts.html">
-                                        amChart </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="charts_flotcharts.html">
-                                        Flotchart </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class=" dropdown-submenu">
-                                <a href=":;">
-                                <i class="icon-pointer"></i> Maps </a>
-                                <ul class="dropdown-menu">
-                                    <li class=" ">
-                                        <a href="maps_google.html">
-                                        Google Maps </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="maps_vector.html">
-                                        Vector Maps </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class=" dropdown-submenu">
-                                <a href=":;">
-                                <i class="icon-puzzle"></i> Multi Level </a>
-                                <ul class="dropdown-menu">
-                                    <li class=" ">
-                                        <a href="javascript:;">
-                                        <i class="icon-settings"></i> Item 1 </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="javascript:;">
-                                        <i class="icon-user"></i> Item 2 </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="javascript:;">
-                                        <i class="icon-globe"></i> Item 3 </a>
-                                    </li>
-                                    <li class=" dropdown-submenu">
-                                        <a href="#">
-                                        <i class="icon-folder"></i> Sub Items </a>
-                                        <ul class="dropdown-menu">
+                            <% for(var i = 0;i<nav.length;i++){%>
+                                <li class=" dropdown-submenu">
+                                    <a href="#">
+                                        <i class="icon-briefcase"></i><%= nav[i].tenKhoa%></a>
+                                    <ul class="dropdown-menu">
+                                        <%for(var j =0;j<nav[i].DonVis.length;j++){%>
                                             <li class=" ">
-                                                <a href="javascript:;">
-                                                Item 1 </a>
+                                                <a href="#">
+                                                    <%= nav[i].DonVis[j].tenDonVi%> </a>
                                             </li>
-                                            <li class=" ">
-                                                <a href="javascript:;">
-                                                Item 2 </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="javascript:;">
-                                                Item 3 </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="javascript:;">
-                                                Item 4 </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="javascript:;">
-                                        <i class="icon-share"></i> Item 4 </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="javascript:;">
-                                        <i class="icon-bar-chart"></i> Item 5 </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                        <%}%>
+                                    </ul>
+                                </li>
+                            <%}%>
                         </ul>
                     </li>
                     <li id="news">
