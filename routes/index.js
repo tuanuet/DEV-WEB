@@ -39,4 +39,19 @@ router.get("/settingKhoa", utility.reqIsAuthen , function(req, res) {
     })
 })
 
+//Nhiều tin
+router.get("/uetNews", utility.reqIsAuthen , function(req, res) {
+    res.render("public/uetnews", {
+        title : "Tin Tức",
+        Object : "khoa"
+    })
+})
+
+//Một tin
+router.get("/aNews", utility.reqIsAuthen , function(req, res) {
+    res.render("public/anews", {
+        title : "Tin Tức",
+        Object : "khoa"
+    })
+})
 module.exports = router; //Dòng này phải ở dưới
