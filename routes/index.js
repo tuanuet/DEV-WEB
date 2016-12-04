@@ -13,8 +13,13 @@ router.get('/',function(req, res) {
 });
 
 router.post("/handlerRederAdmin" , function(req, res) {
+  var data = "";
+  if(req.body.id == "khoiTaoSV")
+  {
+    data = "SSSSSSSSSSSSSSS";
+  }
   res.json({
-    htmlStr : "Trang kute"
+    htmlStr : data
   })
 })
 
