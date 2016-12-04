@@ -62,6 +62,19 @@ module.exports = function (sequelize, DataTypes) {
                         model : models.DonVi
                     }]
                 }).then(callback)
+            },
+
+            // Tìm tất cả giảng viên thuộc các đơn vị của một khoa có id là IdKhoa
+            getGiangVienOfDonViOfKhoa : function (idKhoa,models,callback) {
+                this.findOne({
+                  where : {id : idKhoa},
+                    include : [{
+                        model : models.DonVi,
+                        include : [{
+                          model : models.GiangVien,
+                        }]
+                    }]
+                }).then(callback)
             }
         }
     });

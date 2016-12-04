@@ -10,6 +10,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var index = require('./routes/index');
+var showallKhoa = require('./routes/public/showallKhoa');
 var user = require('./routes/users');
 var models = require('./models')
 
@@ -82,6 +83,7 @@ app.use(function (data, req, res, next) {
 
 
 app.use('/', index);
+app.use("/introKhoa", showallKhoa);
 app.use('/users',user)
 
 

@@ -12,18 +12,6 @@ router.get('/',function(req, res) {
     })
 });
 
-//Intro khoa
-router.get("/introKhoa", utility.reqIsAuthen , function(req, res) {
-  models.Khoa.getAllKhoaAndDonVi(models,function (data) {
-
-      res.render("public/intro", {
-          title : "Intro Khoa",
-          allKhoa : data
-      });
-  })
-})
-
-
 router.post("/handlerRederAdmin" , function(req, res) {
   res.json({
     htmlStr : "Trang kute"
