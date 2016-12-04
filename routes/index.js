@@ -26,6 +26,7 @@ router.get("/introKhoa", utility.reqIsAuthen , function(req, res) {
 
 router.post("/handlerRederAdmin" , function(req, res) {
   res.json({
+    htmlStr : "Trang kute"
   })
 })
 
