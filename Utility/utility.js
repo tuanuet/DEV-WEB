@@ -106,3 +106,16 @@ module.exports.getDataForNav = function (next) {
         return next(data);
     })
 }
+//Xu ly ten giang vien
+module.exports.chuyendoichuhoa =function(str)
+{
+    var strchuyendoi = "";
+    var laytu = str.split(' ');
+    var kytudau = "";
+    for (var i = 0; i < laytu.length; i++)
+    {
+        kytudau = laytu[i].substring(0,1)
+        strchuyendoi += kytudau.toUpperCase() + laytu[i].substring(1,laytu[i].length) + " ";
+    }
+    return strchuyendoi;
+}
