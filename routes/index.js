@@ -23,6 +23,12 @@ router.get("/introKhoa", utility.reqIsAuthen , function(req, res) {
   })
 })
 
+
+router.post("/handlerRederAdmin" , function(req, res) {
+  res.json({
+  })
+})
+
 //Profile khoa
 router.get("/profileKhoa", utility.reqIsAuthen , function(req, res) { // tạo 1 trang profileKhoa
     res.render("public/khoaprofile", { //nó sẽ lấy file intro.ejs để sinh ra trang mình cần
