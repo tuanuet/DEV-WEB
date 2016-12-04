@@ -295,7 +295,7 @@ function insertDataToSinhVien(data,req,res,next) {
 
     }
     //end
-    models.SinhVien.updateSinhVienDuocDangKi(svs,function () {
+    models.SinhVien.insertBulkSV(svs,function () {
         console.log("insert Thanh cong")
         return next();
     },function (error) {
