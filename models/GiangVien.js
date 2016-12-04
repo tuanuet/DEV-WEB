@@ -1,6 +1,7 @@
 /**
  * Created by Admin on 17/11/2016.
  */
+var utility = require('../Utility/utility')
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
@@ -18,8 +19,8 @@ module.exports = function (sequelize, DataTypes) {
         DonViId : DataTypes.INTEGER(11),
         avatar : DataTypes.STRING,
         chuDeHuongNghienCuu : {
-          type:DataTypes.TEXT,
-          allowNull : true
+            type:DataTypes.TEXT,
+            allowNull : true
         }
     }, {
         timestamps: false,
@@ -80,6 +81,44 @@ module.exports = function (sequelize, DataTypes) {
                             ]
                         }
                     ]
+                }).then(success).catch(failure)
+            },
+            getGiangVienByName : function (query,success,failure) {
+                var arr = query.toLowerCase().split(" ");
+                var tenGiangVien = utility.chuyendoichuhoa(query.trim()).trim();
+                this.findAll({
+                    where : {
+                        $or: [
+                            {
+                                tenGiangVien: {
+                                    $like: tenGiangVien
+                                }
+                            }
+                        ]
+                    }
+                }).then(success).catch(failure)
+            },
+            getGiangVienByHuongNghienCuu : function (query,models,success,failure) {
+                var arr = query.trim().toLowerCase().split(" ");
+                console.log(arr)
+                var query1 = query.trim().toLowerCase();
+                var query2 = utility.chuyendoichuhoa(query.trim()).trim();
+                this.findAll({
+                    where : {
+                        chuDeHuongNghienCuu: {
+                            $or: [
+                                {
+                                    $like: '%'+query1+'%'
+                                },
+                                {
+                                    $like: '%'+query2+'%'
+                                }
+                            ]
+                        }
+                    },
+                    include :{
+                        model : models.DonVi
+                    }
                 }).then(success).catch(failure)
             }
         }
