@@ -22,6 +22,14 @@ router.post("/handlerRederAdmin" , function(req, res) {
     htmlStr : data
   })
 })
+router.get("/search",searchGiangVien,searchHuongNghienCuu,function(data,req,res,next) {
+       var queryString = req.query.query;
+       res.render('public/search',{
+             title : "Search",
+            query : queryString,
+             data : data
+    })
+})
 
 //Profile khoa
 router.get("/profileKhoa", utility.reqIsAuthen , function(req, res) { // tạo 1 trang profileKhoa
@@ -54,4 +62,30 @@ router.get("/aNews", utility.reqIsAuthen , function(req, res) {
         Object : "khoa"
     })
 })
+
+function searchGiangVien(req,res,next) {
+    var name = req.query.query;
+    models.GiangVien.getGiangVienByName(name,function (gv) {
+        if(gv){
+            return next(gv);
+        }else {
+            return next(null);
+        }
+    },function (arg1) {
+        res.send("Quá trình search gặp lỗi!")
+    })
+}
+
+function searchHuongNghienCuu(gv,req,res,next) {
+   var name = req.query.query;
+       models.GiangVien.getGiangVienByHuongNghienCuu(name,models,function (huongnghiencuu) {
+            var data = {
+                GiangVien: gv,
+                HuongNghienCuu: huongnghiencuu
+            }
+           return next(data)
+       },function () {
+           res.send("Quá trình search gặp lỗi!")
+       })
+}
 module.exports = router; //Dòng này phải ở dưới

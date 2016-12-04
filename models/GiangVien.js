@@ -2,6 +2,7 @@
  * Created by Admin on 17/11/2016.
  */
 var utility = require('../Utility/utility')
+var sequelize =require('sequelize')
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
@@ -91,16 +92,19 @@ module.exports = function (sequelize, DataTypes) {
                         $or: [
                             {
                                 tenGiangVien: {
-                                    $like: tenGiangVien
+                                    $like: '%'+tenGiangVien+'%'
                                 }
                             }
                         ]
                     }
                 }).then(success).catch(failure)
+                // sequelize.query('SELECT `id`, `tenGiangVien`, `vnuMail`, `matKhau`, `DonViId`, `avatar`, `chuDeHuongNghienCuu` FROM `GiangViens` AS `GiangVien` WHERE (`GiangVien`.`tenGiangVien` LIKE N:search_name )',
+                //     { replacements: { search_name: '%'+tenGiangVien+'%'  }, type: sequelize.QueryTypes.SELECT }
+                // ).then(success).catch(failure)
+
             },
             getGiangVienByHuongNghienCuu : function (query,models,success,failure) {
                 var arr = query.trim().toLowerCase().split(" ");
-                console.log(arr)
                 var query1 = query.trim().toLowerCase();
                 var query2 = utility.chuyendoichuhoa(query.trim()).trim();
                 this.findAll({

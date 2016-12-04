@@ -142,7 +142,7 @@
                     </li>
                     <li class="menu-dropdown classic-menu-dropdown" id="researchs">
                         <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">
-                            Lĩnh vực nghiên cứu <i class="fa fa-angle-down"></i>
+                            Đơn Vị <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu pull-left">
                             <% for(var i = 0;i<nav.length;i++){%>
@@ -158,6 +158,27 @@
                                         <%}%>
                                     </ul>
                                 </li>
+                            <%}%>
+                        </ul>
+                    </li>
+                    <li class="menu-dropdown classic-menu-dropdown" id="researchs">
+                        <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">
+                            Lĩnh Vực <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-left">
+                            <% for(var i = 0;i<nav.length;i++){%>
+                            <li class=" dropdown-submenu">
+                                <a href="#">
+                                    <i class="icon-briefcase"></i><%= nav[i].tenKhoa%></a>
+                                <ul class="dropdown-menu">
+                                    <%for(var j =0;j<nav[i].DonVis.length;j++){%>
+                                    <li class=" ">
+                                        <a href="#">
+                                            <%= nav[i].DonVis[j].tenDonVi%> </a>
+                                    </li>
+                                    <%}%>
+                                </ul>
+                            </li>
                             <%}%>
                         </ul>
                     </li>
