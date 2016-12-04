@@ -3,6 +3,7 @@
  */
 var utility = require('../Utility/utility');
 var models = require('../models')
+var openPortDK = require('../config/config_Khoa_moDangKi.json')
 module.exports.reqIsSV = function (req, res, next) {
     if (req.isAuthenticated() && req.user.tenSinhVien) {
         return next();
@@ -105,6 +106,18 @@ module.exports.getDataForNav = function (next) {
     models.Khoa.getAllKhoaAndDonVi(models,function (data) {
         return next(data);
     })
+}
+    /**
+     *  khiem tra xem cong đăng kí khóa luận đã mở chưa
+     *  Chua mở thì chuyển về
+     */
+
+module.exports.checkOpenPortDK = function (req,res,next) {
+    if (openPortDK.moDangKi){
+        return next();
+    }else{
+        res.send("Chua mo cong dang ki khoa luan")
+    }
 }
 //Xu ly ten giang vien
 module.exports.chuyendoichuhoa =function(str)

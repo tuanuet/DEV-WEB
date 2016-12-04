@@ -9,51 +9,41 @@ var XLSX = require('xlsx');
 var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var validator = require('validator')
-
+var openPortDK = require('../../config/config_Khoa_moDangKi.json');
+var nodemailer = require('nodemailer');
+var smtpTransport = {
+    host: "ctmail.vnu.edu.vn", // hostname
+    secure: false, // use SSL
+    port: 25, // port for secure SMTP
+    auth: {
+        user: "14020521",
+        pass: "1391996"
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+}
+var transporter = nodemailer.createTransport(smtpTransport);
 
 router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.send('day la trang admin-khoa')
 })
+
 router.get('/insertbulkgv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('admin/upload-giangvien',{
         title : "Thêm giảng viên"
     })
 })
+
 router.get('/insertbulksv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('admin/upload-xlsx-sinhvien',{
         title: "Thêm sinh viên"
     })
 })
+
 router.get('/updatesinhvienduocdangki', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('admin/upload-xlsx-sinhvienduocdangki',{
         title: "Update sinh viên được đăng kí"
-    })
-})
-router.post('/updatesinhvienbyid', utility.reqIsAuthen, utility.reqIsKhoa,function (req,res) {
-    var id = req.body.id
-    if(validator.isInt(id.toString())&&!validator.isEmpty(id.toString())){
-        models.SinhVien.updateSinhVienDuocDangKiByID(req.body.id,function () {
-            res.json({
-                msg : "Update thanh cong",
-                status : 200
-            })
-        },function () {
-            res.json({
-                msg : "Update that bai",
-                status : 500
-            })
-        })
-    }
-})
-
-//trang Khoa => DonVi( co thong tin don vi va cac giao vien cua don vi do)
-router.get('/donvi/:idDonVi',function (req,res) {
-    var idDonVi = req.params.idDonVi;
-    console.log(idDonVi);
-    models.DonVi.getDonViAndGiangVienByIdDonVi(idDonVi,models,function (data) {
-        var donvi = data.dataValues;
-        //render
-        res.json(donvi);
     })
 })
 
@@ -69,25 +59,8 @@ router.get('/profile/:idKhoa',function (req,res) {
     })
 })
 
-router.get('/sendEmail',function (req,res) {
-    var nodemailer = require('nodemailer');
-
-    var smtpTransport = ({
-        host: "ctmail.vnu.edu.vn", // hostname
-        secure: false, // use SSL
-        port: 25, // port for secure SMTP
-        auth: {
-            user: "14020521",
-            pass: "1391996"
-        },
-        tls: {
-            rejectUnauthorized: false
-        }
-    })
-
-    // create reusable transporter object using the default SMTP transport
-    var transporter = nodemailer.createTransport(smtpTransport);
-
+//Gui mail den tat ca cac giang vien de khoi tao
+router.get('/sendmailtogiangvien',function (req,res) {
 
     // setup e-mail data with unicode symbols
     //noi dung mail nhe
@@ -99,15 +72,102 @@ router.get('/sendEmail',function (req,res) {
         html: '<b>Hello world </b>' // html body
     };
 
-// send mail with defined transport object
+    // send mail with defined transport object
     transporter.sendMail(mailOptions, function(error, info){
         if(error){
             console.log(error);
-            res.send("That bai")
+            res.json({
+                msg : "Thất bại"
+            })
         }else
-            res.send("thanh cong")
+            res.json({
+                msg:"Thành công"
+            })
     });
 })
+//Gui mail đén tất cả các sinh viên có trạng thái được đăng kí
+router.get('/sendmailtosinhvienduocdangki',function (req,res) {
+    models.SinhVien.getSinhVienDuocDangKiKhoaLuan(function (sv) {
+        if(sv){
+            var listEmail = "";
+            for(var i=0;i<sv.length;i++){
+                if(i==sv.length -1){
+                    listEmail += sv[i].vnuMail
+                }else
+                    listEmail += sv[i].vnuMail + ' ,'
+            }
+            // setup e-mail data with unicode symbols
+            //noi dung mail nhe
+            var mailOptions = {
+                from: 'Hệ thống đăng kí khóa luận', // sender address
+                to: listEmail, // list of receivers
+                subject: 'Hệ thống đăng kí khóa luận', // Subject line
+                text: 'Hệ thống thông báo, Bạn đã được phép đăng kí khóa luận trên hệ thống\n Trân trọng thông báo!'
+            };
+
+            // // send mail with defined transport object
+            // transporter.sendMail(mailOptions, function(error, info){
+            //     if(error){
+            //         console.log(error);
+            //         res.json({
+            //             msg : "Thất bại"
+            //         })
+            //     }else
+            //         res.json({
+            //             msg:"Thành công"
+            //         })
+            // });
+        }
+    },function (err) {
+        res.json({
+            msg: "Hệ thống có lỗi, vui lòng kiểm tra lại"
+        })
+    })
+
+})
+//test mo cong dang ki khoa luan
+router.get('/testopenport',utility.checkOpenPortDK,function (req,res) {
+    res.json({
+        trangthai : openPortDK.moDangKi
+    })
+})
+
+router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+    if(req.body.id){
+        var id = req.body.id
+        if(validator.isInt(id.toString())&&!validator.isEmpty(id.toString())){
+            models.SinhVien.updateSinhVienDuocDangKiByID(req.body.id,function () {
+                res.json({
+                    msg : "Update thanh cong",
+                    status : 200
+                })
+            },function () {
+                res.json({
+                    msg : "Update that bai",
+                    status : 500
+                })
+            })
+        }
+    }else{
+        res.json({
+            msg : "Update that bai",
+            status : 500
+        })
+    }
+
+})
+
+//trang Khoa => DonVi( co thong tin don vi va cac giao vien cua don vi do)
+router.get('/donvi/:idDonVi',function (req,res) {
+    var idDonVi = req.params.idDonVi;
+    console.log(idDonVi);
+    models.DonVi.getDonViAndGiangVienByIdDonVi(idDonVi,models,function (data) {
+        var donvi = data.dataValues;
+        //render
+        res.json(donvi);
+    })
+})
+
 //create 1 giang vien ~ ho tro nhap tay
 router.post('/insertonegv', function (req,res) {
     if(req.body){
@@ -139,6 +199,29 @@ router.post('/insertonegv', function (req,res) {
     }else {
         res.json({
             msg: "Thêm giảng viên bị lỗi!"
+        })
+    }
+})
+//Mo hoac dong cong dang ki
+router.post('/openport',function (req,res) {
+    if(req.body.permission){
+        if(req.body.permission == 'open'){
+            openPortDK.moDangKi = true;
+            console.log(openPortDK.moDangKi)
+            res.json({
+                msg: 'đã mở cổng đăng kí'
+            })
+        }else {
+            openPortDK.moDangKi = false;
+            console.log(openPortDK.moDangKi)
+            res.json({
+                msg: 'đã đóng cổng đăng kí'
+            })
+        }
+    }else {
+        openPortDK.moDangKi = false;
+        res.json({
+            msg: 'Có lỗi xảy ra'
         })
     }
 

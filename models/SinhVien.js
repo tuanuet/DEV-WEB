@@ -115,7 +115,13 @@ module.exports = function (sequelize, DataTypes) {
                         return failure(i)
                     })
                 }
-
+            },
+            getSinhVienDuocDangKiKhoaLuan : function (success,failure) {
+                this.findAll({
+                    where : {
+                        duocDangKiKhoaLuanKhong : 1
+                    }
+                }).then(success).catch(failure)
             }
         }
     });
