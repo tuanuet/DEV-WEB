@@ -12,16 +12,6 @@ router.get('/',function(req, res) {
     })
 });
 
-router.post("/handlerRederAdmin" , function(req, res) {
-  var data = "";
-  if(req.body.id == "khoiTaoSV")
-  {
-    data = "SSSSSSSSSSSSSSS";
-  }
-  res.json({
-    htmlStr : data
-  })
-})
 router.get("/search",searchGiangVien,searchHuongNghienCuu,function(data,req,res,next) {
        var queryString = req.query.query;
        res.render('public/search',{

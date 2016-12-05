@@ -29,6 +29,45 @@ module.exports = function (sequelize, DataTypes) {
                   allowNull : false
                 }
               });
+            },
+            /*
+             * Insert detai
+             * Kiem tra xem có bn giang vien đã đc đk đề tài < 5 thì cho đk, >=5 thì thôi
+             * Kiểm tra xem có tồn tại tenDeTai chưa nếu tồn tại thì ko cho đk
+             */
+            insertDeTai : function (data, models,success, failure) {
+                this.findAndCountAll({
+                    where : {
+                        GiangVienId : data.GiangVienId
+                    }
+                }).then(function (result) {
+                    if(result.count < 5){
+                        this.findOne({
+                            where : {
+                                $or : [{
+                                        tenDeTai :
+                                            {
+                                                $like : '%'+data.tenDeTai+'%'
+                                            }
+                                    },
+                                    {SinhVienId : data.SinhVienId}]
+                            }}
+                        ).then(function (detai) {
+                            if(detai){
+                                failure("Đã tốn tại đề tài, vui lòng đăng kí lại")
+                            }else {
+                                this.create(data).then(success).catch(function () {
+                                    failure("Quá trình đăng kí bị lỗi, vui lòng kiểm tra lại")
+                                })
+                            }
+                        })
+                    }else{
+                        failure("Giảng viên đã đủ sinh viên đăng kí, vui lòng chọn giảng viên khác")
+                    }
+                }).catch(function () {
+                    failure("Quá trình đăng kí bị lỗi, vui lòng kiểm tra lại")
+                })
+
             }
         }
     });

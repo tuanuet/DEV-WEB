@@ -132,6 +132,17 @@ router.get('/testopenport',utility.checkOpenPortDK,function (req,res) {
     })
 })
 
+//ghi file tra ve admin
+router.get('/getXLSX',function (req,res) {
+    var data = [{
+        ten : "tuan",
+        lop : "K95clc"
+    },{
+        ten : "lan",
+        lop : "k60cb"
+    }]
+    res.xls('data.xlsx',data)
+})
 router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     if(req.body.id){
         var id = req.body.id
@@ -447,6 +458,7 @@ function getArrayFromXlsx(req,res,next) {
 
     return next(data);
 }
+
 function validateGV(data) {
     return (
         !validator.isEmpty(data.tenGiangVien)

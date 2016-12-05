@@ -13,8 +13,9 @@ var index = require('./routes/index');
 var showallKhoa = require('./routes/public/showallKhoa');
 var user = require('./routes/users');
 var models = require('./models')
-
+var openportDKKL = require('./config/config_Khoa_moDangKi.json')
 var utility = require('./Utility/utility')
+var json2xls = require('json2xls');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(json2xls.middleware)
 
 // Express Session
 app.use(session({
@@ -77,7 +79,8 @@ app.use(function (data, req, res, next) {
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
   res.locals.typeuser = utility.userIsWho(req);
-  res.locals.nav = data
+  res.locals.nav = data;
+  res.locals.openportDKKL = openportDKKL.moDangKi;
   next();
 });
 
