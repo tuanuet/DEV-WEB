@@ -33,4 +33,17 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     })
 
 })
+router.get('/dangkikhoaluan',function (req,res) {
+    models.DeTai.getDeTaiAndSinhVienByGiangVienId(req.user.id,models,function (data) {
+        res.render('giangvien/dkkl_giangvien',{
+            title : "Danh sách giảng viên đăng kí khóa luận",
+            data : data
+        })
+    },function (err) {
+        res.render('error',{
+            message : "Hệ thống phát sinh lỗi vui lòng thử lại"
+        })
+    })
+
+})
 module.exports = router;

@@ -17,7 +17,8 @@ module.exports = function (sequelize, DataTypes) {
         thoiGianSua: DataTypes.DATE,
         nopHoSoChua: DataTypes.INTEGER(1),
         duocBaoVeKhong: DataTypes.INTEGER(1),
-        nopQuyenChua: DataTypes.INTEGER(1)
+        nopQuyenChua: DataTypes.INTEGER(1),
+        duocGiangVienChapNhan : DataTypes.INTEGER(1)
     }, {
         timestamps: false,
         classMethods: {
@@ -29,6 +30,12 @@ module.exports = function (sequelize, DataTypes) {
                   allowNull : false
                 }
               });
+                this.belongsTo(models.SinhVien, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull : false
+                    }
+                });
             },
             /*
              * Insert detai
@@ -36,38 +43,47 @@ module.exports = function (sequelize, DataTypes) {
              * Kiểm tra xem có tồn tại tenDeTai chưa nếu tồn tại thì ko cho đk
              */
             insertDeTai : function (data, models,success, failure) {
-                this.findAndCountAll({
+                // this.findAndCountAll({
+                //     where : {
+                //         GiangVienId : data.GiangVienId
+                //     }
+                // }).then(function (result) {
+                //     if(result.count < 5){
+                //
+                //     }else{
+                //         failure("Giảng viên đã đủ sinh viên đăng kí, vui lòng chọn giảng viên khác")
+                //     }
+                // }).catch(function () {
+                //     failure("Quá trình đăng kí bị lỗi, vui lòng kiểm tra lại")
+                // })
+                this.findOne({
                     where : {
-                        GiangVienId : data.GiangVienId
-                    }
-                }).then(function (result) {
-                    if(result.count < 5){
-                        this.findOne({
-                            where : {
-                                $or : [{
-                                        tenDeTai :
-                                            {
-                                                $like : '%'+data.tenDeTai+'%'
-                                            }
-                                    },
-                                    {SinhVienId : data.SinhVienId}]
-                            }}
-                        ).then(function (detai) {
-                            if(detai){
-                                failure("Đã tốn tại đề tài, vui lòng đăng kí lại")
-                            }else {
-                                this.create(data).then(success).catch(function () {
-                                    failure("Quá trình đăng kí bị lỗi, vui lòng kiểm tra lại")
-                                })
-                            }
+                        $or : [{
+                            tenDeTai :
+                                {
+                                    $like : '%'+data.tenDeTai+'%'
+                                }
+                            }, {SinhVienId : data.SinhVienId}
+                        ]
+                    }}
+                ).then(function (detai) {
+                    if(detai){
+                        failure("Đã tốn tại đề tài, vui lòng đăng kí lại")
+                    }else {
+                        this.create(data).then(success).catch(function () {
+                            failure("Quá trình đăng kí bị lỗi, vui lòng kiểm tra lại")
                         })
-                    }else{
-                        failure("Giảng viên đã đủ sinh viên đăng kí, vui lòng chọn giảng viên khác")
                     }
-                }).catch(function () {
-                    failure("Quá trình đăng kí bị lỗi, vui lòng kiểm tra lại")
                 })
 
+            },
+            getDeTaiAndSinhVienByGiangVienId : function (id,models,success,failure) {
+                this.findAll({
+                    where : { GiangVienId : id},
+                    include : [
+                        {model : models.SinhVien}
+                    ]
+                }).then(success).catch(failure)
             }
         }
     });
