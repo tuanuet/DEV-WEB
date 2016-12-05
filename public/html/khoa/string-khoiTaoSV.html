@@ -24,10 +24,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <form action="/users/khoa/insertbulksv" method="POST" enctype="multipart/form-data">
-                                    <input class="btn green" type="file" name="file" id="file">
+                                    <input class="btn green" type="file" name="file" id="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="checkfile(this);">
                                     <br>
                                     <button class="btn blue" type="submit">Tải lên</button>
-                                    <button class="btn red" type="reset">Xóa</button>
+                                    <button id="xoa" class="btn red" type="reset">Xóa</button>
                                 </form>
                             </div>
                         </div>
@@ -119,4 +119,28 @@
         </div> <!-- End tab-content -->
     </div> <!--End portlet-body -->
 </div> <!-- End portlet light -->
+
+ <script>
+jQuery(document).ready(function() {
+// initiate layout and plugins
+Metronic.init(); // init metronic core components
+Layout.init(); // init current layout
+Demo.init(); // init demo features
+FormValidation.init();
+});
+</script>
+
+<script type="text/javascript" language="javascript">
+    function checkfile(sender) {
+        var validExts = new Array(".xlsx", ".xls");
+    var fileExt = sender.value;
+    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+    if (validExts.indexOf(fileExt) < 0) {
+    alert( " Vui lòng chọn file Excel");
+    document.getElementById("xoa").click();
+    return false;
+    }
+    else return true;
+    }
+    </script>
 <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->

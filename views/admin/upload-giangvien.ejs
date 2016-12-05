@@ -145,19 +145,7 @@
         <script src="../../assets/admin/pages/scripts/form-validation.js"></script>
         <script src="/javascipt/admin/handler-profileKhoa.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL STYLES FORM-->
-        <script type="text/javascript" language="javascript">
-        function checkfile(sender) {
-        var validExts = new Array(".xlsx", ".xls", ".csv");
-        var fileExt = sender.value;
-        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-        if (validExts.indexOf(fileExt) < 0) {
-        alert("Invalid file selected, valid files are of " +
-        validExts.toString() + " types.");
-        return false;
-        }
-        else return true;
-        }
-        </script>
+        
         <script>
         jQuery(document).ready(function() {
         // initiate layout and plugins
