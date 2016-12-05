@@ -1,0 +1,30 @@
+<script>
+$(document).ready(function(){
+
+    $("#off").hide();
+    
+    $("#show").click(function(){
+        $("#off").show();
+        $("#on").hide();
+    });
+    $("#hide").click(function(){
+        $("#on").show();
+        $("#off").hide();
+    });
+
+});
+</script>
+
+<center id="on">
+	<h1>Mở đăng ký đề tài</h1>
+	<button type="button" id="show" class="btn btn-primary">Mở đăng ký</button>
+</center>
+<div id="off">
+	<center >
+	<h1>Đóng đăng ký đề tài</h1>
+	<button type="button" id="hide" class="btn btn-primary">Đóng đăng ký</button>
+	</center>
+	<hr>
+	<h2>Xuất danh sách sinh viên đăng ký đề tài và cán bộ hướng dẫn</h2>
+	<a>export</a>
+</div>

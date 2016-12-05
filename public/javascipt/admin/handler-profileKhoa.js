@@ -13,6 +13,9 @@ function submitButtonHandler(evt) {
         case "DKKL" :
            $('#showContentHere').load("../../html/khoa/string-uploadSVDuDK.html");
             break;
+            case "moDK" :
+           $('#showContentHere').load("../../html/khoa/string-moDK.html");
+            break;
 
         default:
     }
