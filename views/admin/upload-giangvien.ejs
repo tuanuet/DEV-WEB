@@ -12,11 +12,11 @@
     <body class="page-header-menu-fixed">
         <!-- BEGIN NAV -->
         <% include ../template/nav.ejs %>
-         <!-- BEGIN PAGE LEVEL STYLES FORM-->
-    <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/select2/select2.css"/>
-    <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css"/>
-    <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
+        <!-- BEGIN PAGE LEVEL STYLES FORM-->
+        <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/select2/select2.css"/>
+        <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css"/>
+        <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+        <link rel="stylesheet" type="text/css" href="../../assets/global/plugins/bootstrap-datepicker/css/datepicker.css"/>
         <!-- END NAV -->
         <!-- BEGIN PAGE CONTAINER -->
         <div class="page-container">
@@ -56,17 +56,16 @@
                                         <ul class="nav">
                                             <li>
                                                 <a href="#" id="tongQuan" onclick="submitButtonHandler(this)">
-                                                    Tổng Quan
+                                                    Tổng quan
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#upload" data-toggle="collapse">
-                                                    <i class="icon-settings"></i>
-                                                    UpLoad thông tin
+                                                    Khởi tạo thông tin
                                                 </a>
                                                 <ul class="nav collapse" id="upload">
                                                     <li>
-                                                        <a href="#"  onclick="submitButtonHandler(this)"  id="khoiTaoSV"> 
+                                                        <a href="#"  onclick="submitButtonHandler(this)"  id="khoiTaoSV">
                                                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>
                                                             Khởi tạo sinh viên
                                                         </a>
@@ -80,7 +79,7 @@
                                                     <li>
                                                         <a href="#" id="DKKL" onclick="submitButtonHandler(this)">
                                                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                                                            Upload SV đủ DKDKKL
+                                                            Tải lên SV đủ DKDKKL
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -110,172 +109,52 @@
                                 <div class="row">
                                     <div class="col-md-12" id="showContentHere" >
                                         <!-- Bắt đầu đoạn hiển thị sau khi kick chi tiết-->
-                                        <div class="portlet light" >
-                                            <div class="portlet-title tabbable-line">
-                                                <div class="caption caption-md">
-                                                    <i class="icon-globe theme-font hide"></i>
-                                                    <span class="caption-subject font-blue-madison bold uppercase">Khởi tạo tài khoản sinh viên</span>
-                                                </div>
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active">
-                                                        <a href="#tab_1_1" data-toggle="tab">Khởi tạo tài khoản sinh viên bằng file</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#tab_1_2" data-toggle="tab">Khởi tạo tài khoản sinh viên bằng tay</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="portlet-body">
-                                                <div class="tab-content">
-                                                    <!-- PERSONAL INFO TAB -->
-                                                    <div class="tab-pane active" id="tab_1_1">
-                                                        <!-- BEGIN PAGE CONTENT INNER -->
-                                                        <div class="portlet light">
-                                                            <div class="portlet-body">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <form action="/users/khoa/insertbulkgv" method="POST" enctype="multipart/form-data">
-                                                                            <input class="btn green" type="file" name="file" id="file">
-                                                                            <br>
-                                                                            <button class="btn blue" type="submit">Tải lên</button>
-                                                                            <button class="btn red" type="reset">Xóa</button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- END PAGE CONTENT INNER -->
-                                                    </div>
-                                                    <!-- END PERSONAL INFO TAB -->
-                                                    
-                                                    <div class="tab-pane" id="tab_1_2">
-                                                        <!-- BEGIN FORM-->
-                                                        <form action="javascript:;" id="form_sample_2" class="form-horizontal">
-                                                            <div class="form-body">
-                                                                <div class="alert alert-danger display-hide">
-                                                                    <button class="close" data-close="alert"></button>
-                                                                    Một vài thông tin chưa đúng.
-                                                                    Xin vui lòng nhập lại.
-                                                                </div>
-                                                                <div class="alert alert-success display-hide">
-                                                                    <button class="close" data-close="alert"></button>
-                                                                    Thêm thông tin sinh viên thành công.
-                                                                </div>
-                                                                <div class="form-group">
-                                                                <label class="control-label col-md-3">Mã sinh viên <span class="required">
-                                                                * </span>
-                                                            </label>
-                                                            <div class="col-md-4">
-                                                                <div class="input-icon right">
-                                                                    <i class="fa"></i>
-                                                                    <input type="text" class="form-control" name="number" placeholder="14020613"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label col-md-3">Họ tên <span class="required">
-                                                                    * </span>
-                                                                </label>
-                                                                <div class="col-md-4">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                    <label class="control-label col-md-3">Khóa học <span class="required">
-                                                                    * </span>
-                                                                </label>
-                                                                <div class="col-md-4">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="name" placeholder="QH-2014-I/CQ"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                    <label class="control-label col-md-3">Ngành học <span class="required">
-                                                                    * </span>
-                                                                </label>
-                                                                <div class="col-md-4">
-                                                                    <div class="input-icon right">
-                                                                        <i class="fa"></i>
-                                                                        <input type="text" class="form-control" name="name" placeholder="CNTT"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-3">Vnu mail <span class="required">
-                                                            * </span>
-                                                        </label>
-                                                        <div class="col-md-4">
-                                                            <div class="input-icon right">
-                                                                <i class="fa"></i>
-                                                                <input type="text" class="form-control" name="email" placeholder="trang@vnu.edu.vn"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-actions">
-                                                    <div class="row">
-                                                        <div class="col-md-offset-3 col-md-9">
-                                                            <button type="submit" class="btn green">Lưu</button>
-                                                            <button type="button" class="btn default">Hủy</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <!-- END FORM-->
-                                            </div> <!-- End tab 2 -->
-                                            </div> <!-- End tab-content -->
-                                            </div> <!--End portlet-body -->
-                                            </div> <!-- End portlet light -->
-                                            <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
-                                        </div>
-                                        
+                                         <h1>Đây là trang tổng quan</h1>
+                                         Hiển thị 1 số thông tin của admin nhưng chưa biết thông tin gì
+                                        <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
                                     </div>
+                                    
                                 </div>
-                                <!-- END PROFILE CONTENT -->
                             </div>
+                            <!-- END PROFILE CONTENT -->
                         </div>
-                        <!-- END PAGE CONTENT INNER -->
                     </div>
+                    <!-- END PAGE CONTENT INNER -->
                 </div>
             </div>
-            <!-- END PAGE CONTAINER -->
-            <!-- BEGIN FOOTER -->
-            <% include ../template/footer.ejs %>
-            <% include ../template/foot-link.ejs %>
-            <!-- BEGIN PAGE LEVEL PLUGINS FORM-->
-            <script type="text/javascript" src="../../assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
-            <script type="text/javascript" src="../../assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
-            <script type="text/javascript" src="../../assets/global/plugins/select2/select2.min.js"></script>
-            <script type="text/javascript" src="../../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-            <script type="text/javascript" src="../../assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-            <script type="text/javascript" src="../../assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-            <script type="text/javascript" src="../../assets/global/plugins/ckeditor/ckeditor.js"></script>
-            <script type="text/javascript" src="../../assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
-            <script type="text/javascript" src="../../assets/global/plugins/bootstrap-markdown/lib/markdown.js"></script>
-            <!-- END PAGE LEVEL PLUGINS FORM-->
-            <!-- BEGIN PAGE LEVEL STYLES FORM-->
-            <script src="../../assets/global/scripts/metronic.js" type="text/javascript"></script>
-            <script src="../../assets/admin/layout3/scripts/layout.js" type="text/javascript"></script>
-            <script src="../../assets/admin/layout3/scripts/demo.js" type="text/javascript"></script>
-            <script src="../../assets/admin/pages/scripts/form-validation.js"></script>
-            <script src="/javascipt/admin/handler-profileKhoa.js" type="text/javascript"></script>
-            <!-- END PAGE LEVEL STYLES FORM-->
-            <script>
-            jQuery(document).ready(function() {
-            // initiate layout and plugins
-            Metronic.init(); // init metronic core components
-            Layout.init(); // init current layout
-            Demo.init(); // init demo features
-            FormValidation.init();
-            });
-            </script>
-            <!-- END FOOTER -->
-        </body>
-        <!-- END BODY-->
-    </html>
+        </div>
+        <!-- END PAGE CONTAINER -->
+        <!-- BEGIN FOOTER -->
+        <% include ../template/footer.ejs %>
+        <% include ../template/foot-link.ejs %>
+        <!-- BEGIN PAGE LEVEL PLUGINS FORM-->
+        <script type="text/javascript" src="../../assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="../../assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
+        <script type="text/javascript" src="../../assets/global/plugins/select2/select2.min.js"></script>
+        <script type="text/javascript" src="../../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="../../assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+        <script type="text/javascript" src="../../assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+        <script type="text/javascript" src="../../assets/global/plugins/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" src="../../assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+        <script type="text/javascript" src="../../assets/global/plugins/bootstrap-markdown/lib/markdown.js"></script>
+        <!-- END PAGE LEVEL PLUGINS FORM-->
+        <!-- BEGIN PAGE LEVEL STYLES FORM-->
+        <script src="../../assets/global/scripts/metronic.js" type="text/javascript"></script>
+        <script src="../../assets/admin/layout3/scripts/layout.js" type="text/javascript"></script>
+        <script src="../../assets/admin/layout3/scripts/demo.js" type="text/javascript"></script>
+        <script src="../../assets/admin/pages/scripts/form-validation.js"></script>
+        <script src="/javascipt/admin/handler-profileKhoa.js" type="text/javascript"></script>
+        <!-- END PAGE LEVEL STYLES FORM-->
+        <script>
+        jQuery(document).ready(function() {
+        // initiate layout and plugins
+        Metronic.init(); // init metronic core components
+        Layout.init(); // init current layout
+        Demo.init(); // init demo features
+        FormValidation.init();
+        });
+        </script>
+        <!-- END FOOTER -->
+    </body>
+    <!-- END BODY-->
+</html>

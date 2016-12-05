@@ -4,9 +4,6 @@ function submitButtonHandler(evt) {
     //Sinh đoạn html
     var data = "";
     switch (evt.id) {
-        case "tongQuan":
-            $('#showContentHere').load("");
-            break;
         case "khoiTaoSV":
             $('#showContentHere').load("../../html/khoa/string-khoiTaoSV.html");
             break;
@@ -14,7 +11,7 @@ function submitButtonHandler(evt) {
             $('#showContentHere').load("../../html/khoa/string-khoiTaoGV.html");
             break;
         case "DKKL" :
-           $('#showContentHere').load("");
+           $('#showContentHere').load("../../html/khoa/string-uploadSVDuDK.html");
             break;
 
         default:
