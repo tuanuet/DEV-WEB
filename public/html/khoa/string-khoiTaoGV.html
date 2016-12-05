@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <form action="/users/khoa/insertbulkgv" method="POST" enctype="multipart/form-data">
-                                    <input class="btn green" type="file" name="file" id="file">
+                                    <input class="btn green" type="file" name="file" id="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="checkfile(this);"> 
                                     <br>
                                     <button class="btn blue" type="submit">Tải lên</button>
                                     <button class="btn red" type="reset">Xóa</button>
