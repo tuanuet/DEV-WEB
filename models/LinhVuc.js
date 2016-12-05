@@ -10,8 +10,10 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        tenLinhVuc: DataTypes.STRING(45),
-        KhoaId : DataTypes.STRING(15),
+        tenLinhVuc: {
+          type : DataTypes.STRING(45),
+          allowNull : false
+        },
         idTrai : {
           type:DataTypes.INTEGER,
           allowNull : false
@@ -25,12 +27,32 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 this.hasMany(models.LinhVucLienQuan);
-                this.belongsTo(models.Khoa, {
-                    onDelete: "CASCADE",
-                    foreignKey: {
-                        allowNull: false
-                    }
-                });
+            },
+            themLinhVuc : function(nameLV, idParent, success, failure) {
+              this.findOne({
+                where : {id : idParent}
+              }).then(function(data) {
+                if (data != null) {
+                  this.create({
+                    tenLinhVuc : nameLV,
+                    idTrai : data.idTrai,
+                    idPhai : data.idPhai + 1
+                  }).then(function(data) {
+                    this.update({
+                        idTrai : idTrai + 2,
+                        idPhai : idPhai + 2
+                      }, {
+                        where : idTrai >= data.idPhai - 1
+                      })
+                  }).then(success).catch(failure)
+                } else {
+                   this.create({
+                     tenLinhVuc : nameLV,
+                     idTrai : 0,
+                     idPhai : 1
+                   })
+                }
+              }).catch(failure)
             }
         }
     });
