@@ -157,7 +157,7 @@ router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function
 })
 
 //trang Khoa => DonVi( co thong tin don vi va cac giao vien cua don vi do)
-router.get('/donvi/:idDonVi',function (req,res) {
+router.get('/donvi/:idDonVi',   function (req,res) {
     var idDonVi = req.params.idDonVi;
     console.log(idDonVi);
     models.DonVi.getDonViAndGiangVienByIdDonVi(idDonVi,models,function (data) {
