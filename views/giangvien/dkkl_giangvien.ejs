@@ -79,16 +79,29 @@
                                     </thead>
                                     <tbody>
                                     <%for(var i=0;i<data.length;i++){%>
+                                    <% if(data[i].duocGiangVienChapNhan==0){%>
+                                        <tr>
+                                            <td><%= data[i].SinhVien.id%></td>
+                                            <td><%= data[i].SinhVien.tenSinhVien%></td>
+                                            <td><%= data[i].SinhVien.vnuMail%></td>
+                                            <td><%= data[i].tenDeTai%></td>
+                                            <td>
+                                                <button class="btn btn-primary" type="button">Chấp nhận</button>
+                                                <button class="btn btn-danger" type="button">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    <%} else{%>
                                     <tr>
                                         <td><%= data[i].SinhVien.id%></td>
                                         <td><%= data[i].SinhVien.tenSinhVien%></td>
                                         <td><%= data[i].SinhVien.vnuMail%></td>
                                         <td><%= data[i].tenDeTai%></td>
                                         <td>
-                                            <button class="btn btn-primary" type="button">Chấp nhận</button>
-                                            <button class="btn btn-danger" type="button">Xóa</button>
+                                            <button class="btn btn-primary" type="button">Đã chấp nhận</button>
+                                            <button class="btn btn-danger" style="display: none;" type="button">Xóa</button>
                                         </td>
                                     </tr>
+                                    <%}%>
                                     <%}%>
                                     </tbody>
                                 </table>
