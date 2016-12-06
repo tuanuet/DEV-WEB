@@ -100,6 +100,14 @@ module.exports = function (sequelize, DataTypes) {
                 this.destroy({
                     where : {duocGiangVienChapNhan : 0}
                 }).then(success).catch(failure)
+            },
+            getDeTaiAndSinhVienChuaNop : function (models,success,failure) {
+                this.findAll({
+                    where  : {nopHoSoChua : 0},
+                    include : [{
+                        model : models.SinhVien
+                    }]
+                }).then(success).catch(failure)
             }
         }
     });

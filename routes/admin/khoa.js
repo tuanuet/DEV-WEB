@@ -143,13 +143,24 @@ router.post('/openport',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res)
     }
 
 })
+//ghi file tra ve admin
+router.get('/getXLSX',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+    var data = [{
+        ten : "tuan",
+        lop : "K95clc"
+    },{
+        ten : "lan",
+        lop : "k60cb"
+    }]
+    res.xls('data.xlsx',data)
+})
 
 /**
  * Kiếm tra đóng cổng rồi chót đề tài
  * xóa tất cả các đề tài chưa được chấp nhận
  *
  */
-router.get('/chotdanhsach',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.get('/chotdetaiduocnhapnhan',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     models.DeTai.deleteDeTaiByKoDuocChapNhan(function () {
         res.json({
             msg : "Chốt đề tài thành công"
@@ -160,17 +171,7 @@ router.get('/chotdanhsach',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
         })
     })
 })
-//ghi file tra ve admin
-router.get('/getXLSX',function (req,res) {
-    var data = [{
-        ten : "tuan",
-        lop : "K95clc"
-    },{
-        ten : "lan",
-        lop : "k60cb"
-    }]
-    res.xls('data.xlsx',data)
-})
+//update sinh vien duoc dang ki
 router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     if(req.body.id){
         var id = req.body.id
@@ -290,6 +291,9 @@ router.post('/updatesinhvien',utility.reqIsAuthen,
         })
     }
 )
+
+
+
 
 function updateSinhVienDuocDangki(data,req,res,next) {
     var svs = new Array();
@@ -490,4 +494,9 @@ function validateSV(data) {
     )
 }
 
+
+var module4 = require('./suadoidetai');
+var module5 = require('./dangkibaove');
+router.use('/',module4)
+router.use('/',module5)
 module.exports = router;
