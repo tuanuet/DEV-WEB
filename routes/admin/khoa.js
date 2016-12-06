@@ -29,21 +29,9 @@ router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.send('day la trang admin-khoa')
 })
 
-router.get('/insertbulkgv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+router.get('/admin', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('admin/upload-giangvien',{
         title : "Thêm giảng viên"
-    })
-})
-
-router.get('/insertbulksv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
-    res.render('admin/upload-xlsx-sinhvien',{
-        title: "Thêm sinh viên"
-    })
-})
-
-router.get('/updatesinhvienduocdangki', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
-    res.render('admin/upload-xlsx-sinhvienduocdangki',{
-        title: "Update sinh viên được đăng kí"
     })
 })
 
@@ -180,6 +168,7 @@ router.get('/donvi/:idDonVi',function (req,res) {
 })
 
 //create 1 giang vien ~ ho tro nhap tay
+//users/khoa/insertonegv
 router.post('/insertonegv', function (req,res) {
     if(req.body){
         var data = req.body;
