@@ -13,9 +13,11 @@ function submitButtonHandler(evt) {
         case "DKKL" :
            $('#showContentHere').load("../../html/khoa/string-uploadSVDuDK.html");
             break;
-            case "moDK" :
+        case "moDK" :
            $('#showContentHere').load("../../html/khoa/string-moDK.html");
             break;
+        case "QLLV" :
+            $('#showContentHere').load("../../html/khoa/string-quanLyLinhVuc.html");
 
         default:
     }

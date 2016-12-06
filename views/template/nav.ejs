@@ -106,54 +106,27 @@
                     <li id="index">
                         <a href="/">Trang chủ</a>
                     </li>
-                    <li class="menu-dropdown mega-menu-dropdown" id="introKhoa">
-                        <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
-                            Giới thiệu <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu" style="min-width: 200px">
-                            <li>
-                                <div class="mega-menu-content">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <ul class="mega-menu-submenu">
-                                                <li>
-                                                    <a href="" class="iconify">
-                                                    <i class="icon-home"></i> UET - VNU </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/introKhoa" class="iconify">
-                                                    <i class="icon-basket"></i> Các khoa </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/" class="iconify">
-                                                    <i class="icon-tag"></i>ThesisMgr</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="menu-dropdown classic-menu-dropdown" id="researchs">
                         <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">
-                            Đơn Vị <i class="fa fa-angle-down"></i>
+                            Giới thiệu <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu pull-left">
-                            <% for(var i = 0;i<nav.length;i++){%>
-                                <li class=" dropdown-submenu">
-                                    <a href="#">
-                                        <i class="icon-briefcase"></i><%= nav[i].tenKhoa%></a>
-                                    <ul class="dropdown-menu">
-                                        <%for(var j =0;j<nav[i].DonVis.length;j++){%>
-                                            <li class=" ">
-                                                <a href="#">
-                                                    <%= nav[i].DonVis[j].tenDonVi%> </a>
-                                            </li>
-                                        <%}%>
-                                    </ul>
-                                </li>
-                            <%}%>
+                            <li>
+                                <a href="http://uet.vnu.edu.vn/" class="iconify">
+                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i> UET - VNU </a>
+                            </li>
+                            <li class=" dropdown-submenu">
+                                <a href="javascript:;" class="iconify">
+                                    <i class="icon-home"></i> Các khoa </a>
+                                <ul class="dropdown-menu">
+                                    <% for(var i = 0;i<nav.length;i++){%>
+                                    <li class=" ">
+                                        <a href="/introKhoa/<%= nav[i].id %>">
+                                            <i class="icon-home"></i><%= nav[i].tenKhoa%> </a>
+                                    </li>
+                                    <%}%>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li class="menu-dropdown classic-menu-dropdown" id="researchs">
