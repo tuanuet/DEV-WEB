@@ -84,6 +84,30 @@ module.exports = function (sequelize, DataTypes) {
                         {model : models.SinhVien}
                     ]
                 }).then(success).catch(failure)
+            },
+            submitDeTaiBySinhVienId : function (svId,success,failure) {
+                this.update(
+                    {duocGiangVienChapNhan : 1},
+                    {where : {SinhVienId : svId}}
+                ).then(success).catch(failure)
+            },
+            deleteDeTaiBySinhVienId : function (svId,sucess,failure) {
+                this.destroy({
+                    where: {SinhVienId: svId}
+                }).then(sucess).catch(failure)
+            },
+            deleteDeTaiByKoDuocChapNhan : function (success,failure) {
+                this.destroy({
+                    where : {duocGiangVienChapNhan : 0}
+                }).then(success).catch(failure)
+            },
+            getDeTaiAndSinhVienChuaNop : function (models,success,failure) {
+                this.findAll({
+                    where  : {nopHoSoChua : 0},
+                    include : [{
+                        model : models.SinhVien
+                    }]
+                }).then(success).catch(failure)
             }
         }
     });

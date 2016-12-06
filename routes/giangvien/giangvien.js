@@ -33,7 +33,8 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     })
 
 })
-router.get('/dangkikhoaluan',function (req,res) {
+//tra lai trang dangkikhoaluan
+router.get('/dangkikhoaluan',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     models.DeTai.getDeTaiAndSinhVienByGiangVienId(req.user.id,models,function (data) {
         res.render('giangvien/dkkl_giangvien',{
             title : "Danh sách giảng viên đăng kí khóa luận",
@@ -45,5 +46,39 @@ router.get('/dangkikhoaluan',function (req,res) {
         })
     })
 
+})
+/*
+ * post control gom
+ * + control = submit || delete
+ * + idSinhVien
+ */
+router.post('/controldetai',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
+    if(req.body&&req.body.control == 'submit'){
+        var svId = req.body.id ;
+        models.DeTai.submitDeTaiBySinhVienId(svId,function () {
+            res.json({
+                msg : "Update thành công",
+                isSubmit : true
+            })
+        },function () {
+            res.json({
+                msg : "Update thất bại",
+                isSubmit :false
+            })
+        })
+    }else if(req.body && req.body.control == 'delete'){
+        var  svId = req.body.id
+        models.DeTai.deleteDeTaiBySinhVienId(svId,function () {
+            res.json({
+                msg : "Delete thành công",
+                isDelete :true
+            })
+        },function () {
+            res.json({
+                msg : "Delete thất bại",
+                isDelete :false
+            })
+        })
+    }
 })
 module.exports = router;

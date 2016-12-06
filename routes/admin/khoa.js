@@ -48,7 +48,7 @@ router.get('/profile/:idKhoa',function (req,res) {
 })
 
 //Gui mail den tat ca cac giang vien de khoi tao
-router.get('/sendmailtogiangvien',function (req,res) {
+router.get('/sendmailtogiangvien',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
 
     // setup e-mail data with unicode symbols
     //noi dung mail nhe
@@ -74,7 +74,7 @@ router.get('/sendmailtogiangvien',function (req,res) {
     });
 })
 //Gui mail đén tất cả các sinh viên có trạng thái được đăng kí
-router.get('/sendmailtosinhvienduocdangki',function (req,res) {
+router.get('/sendmailtosinhvienduocdangki',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     models.SinhVien.getSinhVienDuocDangKiKhoaLuan(function (sv) {
         if(sv){
             var listEmail = "";
@@ -114,14 +114,37 @@ router.get('/sendmailtosinhvienduocdangki',function (req,res) {
 
 })
 //test mo cong dang ki khoa luan
-router.get('/testopenport',utility.checkOpenPortDK,function (req,res) {
+router.get('/testopenport',utility.reqIsAuthen,utility.reqIsKhoa,utility.checkOpenPortDK,function (req,res) {
     res.json({
         trangthai : openPortDK.moDangKi
     })
 })
+//Mo hoac dong cong dang ki
+router.post('/openport',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+    if(req.body.permission){
+        if(req.body.permission == 'open'){
+            openPortDK.moDangKi = true;
+            console.log(openPortDK.moDangKi)
+            res.json({
+                msg: 'đã mở cổng đăng kí'
+            })
+        }else {
+            openPortDK.moDangKi = false;
+            console.log(openPortDK.moDangKi)
+            res.json({
+                msg: 'đã đóng cổng đăng kí'
+            })
+        }
+    }else {
+        openPortDK.moDangKi = false;
+        res.json({
+            msg: 'Có lỗi xảy ra'
+        })
+    }
 
+})
 //ghi file tra ve admin
-router.get('/getXLSX',function (req,res) {
+router.get('/getXLSX',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var data = [{
         ten : "tuan",
         lop : "K95clc"
@@ -131,6 +154,24 @@ router.get('/getXLSX',function (req,res) {
     }]
     res.xls('data.xlsx',data)
 })
+
+/**
+ * Kiếm tra đóng cổng rồi chót đề tài
+ * xóa tất cả các đề tài chưa được chấp nhận
+ *
+ */
+router.get('/chotdetaiduocnhapnhan',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+    models.DeTai.deleteDeTaiByKoDuocChapNhan(function () {
+        res.json({
+            msg : "Chốt đề tài thành công"
+        })
+    },function () {
+        res.json({
+            msg : "Chốt đề tài thất bại"
+        })
+    })
+})
+//update sinh vien duoc dang ki
 router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     if(req.body.id){
         var id = req.body.id
@@ -157,7 +198,7 @@ router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function
 })
 
 //trang Khoa => DonVi( co thong tin don vi va cac giao vien cua don vi do)
-router.get('/donvi/:idDonVi',function (req,res) {
+router.get('/donvi/:idDonVi',   function (req,res) {
     var idDonVi = req.params.idDonVi;
     console.log(idDonVi);
     models.DonVi.getDonViAndGiangVienByIdDonVi(idDonVi,models,function (data) {
@@ -169,7 +210,7 @@ router.get('/donvi/:idDonVi',function (req,res) {
 
 //create 1 giang vien ~ ho tro nhap tay
 //users/khoa/insertonegv
-router.post('/insertonegv', function (req,res) {
+router.post('/insertonegv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     if(req.body){
         var data = req.body;
         var gv = {
@@ -201,30 +242,6 @@ router.post('/insertonegv', function (req,res) {
             msg: "Thêm giảng viên bị lỗi!"
         })
     }
-})
-//Mo hoac dong cong dang ki
-router.post('/openport',function (req,res) {
-    if(req.body.permission){
-        if(req.body.permission == 'open'){
-            openPortDK.moDangKi = true;
-            console.log(openPortDK.moDangKi)
-            res.json({
-                msg: 'đã mở cổng đăng kí'
-            })
-        }else {
-            openPortDK.moDangKi = false;
-            console.log(openPortDK.moDangKi)
-            res.json({
-                msg: 'đã đóng cổng đăng kí'
-            })
-        }
-    }else {
-        openPortDK.moDangKi = false;
-        res.json({
-            msg: 'Có lỗi xảy ra'
-        })
-    }
-
 })
 
 /*
@@ -274,6 +291,9 @@ router.post('/updatesinhvien',utility.reqIsAuthen,
         })
     }
 )
+
+
+
 
 function updateSinhVienDuocDangki(data,req,res,next) {
     var svs = new Array();
@@ -474,4 +494,9 @@ function validateSV(data) {
     )
 }
 
+
+var module4 = require('./suadoidetai');
+var module5 = require('./dangkibaove');
+router.use('/',module4)
+router.use('/',module5)
 module.exports = router;
