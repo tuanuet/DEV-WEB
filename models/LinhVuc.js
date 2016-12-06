@@ -14,45 +14,48 @@ module.exports = function (sequelize, DataTypes) {
           type : DataTypes.STRING(45),
           allowNull : false
         },
-        idTrai : {
-          type:DataTypes.INTEGER,
-          allowNull : false
-        },
-        idPhai : {
-          type: DataTypes.INTEGER,
-          allowNull : false
-        }
+        idParent : DataTypes.INTEGER
     }, {
         timestamps: false,
         classMethods: {
             associate: function (models) {
                 this.hasMany(models.LinhVucLienQuan);
             },
-            themLinhVuc : function(nameLV, idParent, success, failure) {
-              this.findOne({
-                where : {id : idParent}
-              }).then(function(data) {
-                if (data != null) {
-                  this.create({
-                    tenLinhVuc : nameLV,
-                    idTrai : data.idTrai,
-                    idPhai : data.idPhai + 1
-                  }).then(function(data) {
-                    this.update({
-                        idTrai : idTrai + 2,
-                        idPhai : idPhai + 2
-                      }, {
-                        where : idTrai >= data.idPhai - 1
-                      })
-                  }).then(success).catch(failure)
-                } else {
-                   this.create({
-                     tenLinhVuc : nameLV,
-                     idTrai : 0,
-                     idPhai : 1
-                   })
-                }
-              }).catch(failure)
+            findLinhVuc : function (tenLv) {
+                find
+            },
+            themLinhVuc : function (tenLv, idParent, callback, failure) {
+                this.findAll({
+                    where : { tenLinhVuc  : tenLv}
+                }).then(function (data) {
+                    console.log(data);
+                    if(!data || data.length == 0) {
+                        this.create({
+                            tenLinhVuc: tenLv,
+                            idParent: idParent
+                        }).then(callback).catch(failure)
+                    } else {
+                        failure;
+                    }
+                })
+            },
+            showAllLinhVuc :function (callback) {
+                this.findAll({}).then(callback)
+            },
+            findAllChild : function (idParent, callback) {
+                this.findAll({
+                    where : {idParent : idParent}
+                }).then(callback)
+            },
+            getParentBig : function (callback) {
+                this.min('idParent').then(callback)
+            },
+            showFullTree :function () {
+                this.getParentBig(function (data) {
+                    for(var i = 0; i < data.length; i++) {
+
+                    }
+                });
             }
         }
     });

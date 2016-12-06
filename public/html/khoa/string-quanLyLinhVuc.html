@@ -1,0 +1,96 @@
+<!-- Bắt đầu đoạn hiển thị sau khi kick chi tiết-->
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs font-green-sharp"></i>
+            <span class="caption-subject font-green-sharp bold uppercase">Nhập lĩnh vực</span>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="javascript:;" id="form_sample_3" class="form-horizontal">
+            <div class="form-body">
+                <div class="alert alert-danger display-hide" >
+                    <button class="close" data-close="alert"></button>
+                    <p id="failureMessage"></p>
+                </div>
+                <div class="alert alert-success display-hide" >
+                    <button class="close" data-close="alert"></button>
+                    <p id="successMessage"></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">
+                        Nhập tên lĩnh vực :<span class="required"> * </span>
+                    </label>
+                    <div class="col-md-4">
+                        <div class="input-icon right">
+                            <i class="fa"></i>
+                            <input type="text" class="form-control" name="name" placeholder="Trí tuệ nhân tạo" id="nameLV"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">
+                        Chọn lĩnh vực :<span class="required"> * </span>
+                    </label>
+                    <div class="col-md-4">
+                        <select class="form-control select2me" name="options2" id="idParentLV">
+                            <option value="">Chọn...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="button" class="btn green" onclick="submitNow(this)">Submit</button>
+                            <button type="button" class="btn default">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- END FORM-->
+    </div>
+</div>
+<script>
+    jQuery(document).ready(function() {
+        FormValidation.init();
+        $.ajax({
+            url: '/users/khoa/getAllLV',
+            type: 'POST',
+            data : JSON.stringify({toan : 2}),
+            success : function (jsondata) {
+               for(var i = 0; i < jsondata.length; i++) {
+                   var node = document.createElement("option");
+                   var textnode = document.createTextNode(jsondata[i].tenLinhVuc);
+                   node.appendChild(textnode);
+                   document.getElementById("idParentLV").appendChild(node);
+               }
+            }
+        });
+    });
+    function submitNow() {
+        var data = {
+            nameLV: $('#nameLV').val(),
+            idParent: document.getElementById('idParentLV').selectedIndex
+        };
+        $.ajax({
+            url: '/users/khoa/insertLV',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success : function (jsondata) {
+                if(jsondata.msg == "Thanh cong") {
+                    $("successMessage").html("Them linh vuc thanh cong ");
+                    var node = document.createElement("option");
+                    var textnode = document.createTextNode(jsondata.data);
+                    node.appendChild(textnode);
+                    document.getElementById("idParentLV").appendChild(node);
+                } else {
+                    $("#failureMessage").text("Vui long kiem tra lai thong tin")
+                }
+            }
+        });
+    }
+</script>
+<!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
