@@ -146,5 +146,56 @@ router.get('/mailthongbaochuadangki',function (req,res) {
 
 })
 
+//tim kiem sinh vien khi trong trong trang quan ly
+router.post('/searchsinhvien',function (req,res) {
+    if(req.body&&req.body.id){
+        var idSinhVien = req.body.id;
+        models.DeTai.getDeTaiAndSinhVienAndGiangVienBySinhVienId(idSinhVien,models,function (data) {
+            res.render('admin/quanlydetai-onerow',{data : data.dataValues})
+        },function () {
+            res.json({msg : "Hệ thống có lỗi"})
+        })
+    }else{
+        res.json({msg : "Đường truyền mạng kém! vui lòng kiểm tra lại"})
+    }
+})
+
+/**
+ * chuyển đổi trạng thái nộp quyển,được bảo vệ không,nộp hồ sơ
+ * @param nopQuyen
+ * @param baoVe
+ * @param nopHoSo
+ */
+router.post('/updateDeTai',function (req,res) {
+    if (req.body&&validateUpdateDeTai(req.body)){
+        var data = {
+            duocBaoVeKhong: req.body.duocBaoVeKhong,
+            nopQuyenChua: req.body.nopQuyenChua,
+            nopHoSoChua: req.body.nopHoSoChua
+        }
+        models.DeTai.updateTrangThaiDeTaiBySinhVienId(req.body.id,data,function (affectCount) {
+            if(affectCount==0){
+                res.json({msg: "Không tìm thấy sinh viên"})
+            }else{
+                res.json({msg:"update thành công"})
+            }
+        },function (err) {
+            res.json({msg: "Lỗi phát sinh từ hệ thống"})
+        })
+    }else {
+        res.json({msg : "not invalid"})
+    }
+})
+function validateUpdateDeTai(data) {
+    return (
+        validator.isInt(data.id.toString())
+        &&!validator.isEmpty(data.id.toString())
+        &&!validator.isEmpty(data.duocBaoVeKhong.toString())
+        &&!validator.isEmpty(data.nopQuyenChua.toString())
+        &&!validator.isEmpty(data.nopHoSoChua.toString())
+        &&(data.duocBaoVeKhong==0 ||data.duocBaoVeKhong==1)
+        &&(data.nopQuyenChua==0 ||data.nopQuyenChua==1)
+        &&(data.nopHoSoChua==0 ||data.nopHoSoChua==1))
+}
 
 module.exports = router;

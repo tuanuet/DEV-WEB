@@ -122,6 +122,31 @@ module.exports = function (sequelize, DataTypes) {
             },
             getCountDeTai : function (success,failure) {
                 this.findAndCountAll().then(success).catch(failure)
+            },
+            getDeTaiAndSinhVienAndGiangVienBySinhVienId : function (SinhVienId,models,success,failure) {
+                this.findOne({
+                    where : {SinhVienId : SinhVienId},
+                    include : [
+                        {
+                            model : models.SinhVien,
+                            attributes : ['tenSinhVien','id']
+                        },
+                        {
+                            model : models.GiangVien,
+                            attributes : ['tenGiangVien']
+                        }
+                    ],
+                    attributes: ['tenDeTai','nopQuyenChua','nopHoSoChua','duocBaoVeKhong']
+                }).then(success).catch(failure)
+            },
+            updateTrangThaiDeTaiBySinhVienId :function (SinhVienId,data,success,failure) {
+                this.update({
+                    duocBaoVeKhong: data.duocBaoVeKhong,
+                    nopQuyenChua: data.nopQuyenChua,
+                    nopHoSoChua: data.nopHoSoChua
+                },{
+                    where : {SinhVienId : SinhVienId}
+                }).then(success).catch(failure)
             }
         }
     });

@@ -1,0 +1,26 @@
+<tbody class="newRow">
+<tr>
+    <td><%= data.SinhVien.id%></td>
+    <td><%= data.SinhVien.tenSinhVien%></td>
+    <td><%= data.tenDeTai%></td>
+    <td><%= data.GiangVien.tenGiangVien%></td>
+    <td>
+        <input type="checkbox" class="icheck"<% if(data.duocBaoVeKhong == 1){%> checked<%}%>>
+    </td>
+    <td>
+        <input type="checkbox" class="icheck"<% if(data.nopHoSoChua == 1){%> checked<%}%>>
+    </td>
+    <td>
+        <input type="checkbox" class="icheck"<% if(data.nopQuyenChua == 1){%> checked<%}%>>
+    </td>
+</tr>
+</tbody>
+<script>
+    jQuery(document).ready(function() {
+// initiate layout and plugins
+        Metronic.init(); // init metronic core components
+        Layout.init(); // init current layout
+        Demo.init(); // init demo features
+        FormValidation.init();
+    });
+</script>
