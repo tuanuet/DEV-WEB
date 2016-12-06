@@ -76,8 +76,35 @@ router.get('/mailthongbaodangkibaove',utility.reqIsAuthen,utility.reqIsKhoa,func
 })
 
 router.get('/quanlydetai',function (req,res) {
-    res.render('admin/quanlydetai')
+    var page;
+    if(req.query.page && validator.isInt(req.query.page.toString())) {
+        page = req.query.page;
+    }else{
+        page = 0;
+    }
+    models.DeTai.getCountDeTai(function (result) {
+        var soPage = result.count/10;
+
+        models.DeTai.getDeTaiAndSinhVienAndGiangVien(page,models,function (data) {
+            res.render('admin/quanlydetai',{
+                    title : "Quản lý đề tài",
+                    data : data,
+                    page : page,
+                    pagination: soPage
+                })
+            },function () {
+                res.render('error',{
+                    message : "Lỗi hệ thống"
+                })
+            })
+    },function (err) {
+        res.render('error',{
+            message : "Lỗi hệ thống"
+        })
+    })
+
 })
+
 
 router.get('/mailthongbaochuadangki',function (req,res) {
     var listEmail = new Array()

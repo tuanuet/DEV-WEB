@@ -108,6 +108,20 @@ module.exports = function (sequelize, DataTypes) {
                         model : models.SinhVien
                     }]
                 }).then(success).catch(failure)
+            },
+            getDeTaiAndSinhVienAndGiangVien :function (page,models,success,failure) {
+                this.findAll({
+                    include : [
+                        {model : models.SinhVien},
+                        {model : models.GiangVien}
+                    ],
+                    limit : 10,
+                    offset : page*10,
+                    order : 'SinhVienId ASC'
+                }).then(success).catch(failure)
+            },
+            getCountDeTai : function (success,failure) {
+                this.findAndCountAll().then(success).catch(failure)
             }
         }
     });
