@@ -33,8 +33,11 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
 
 })
 //render trang dang ki cho sinh vien
-router.get('.dangkikhoaluan',function (req,res) {
-
+router.get('/dangkikhoaluan',function (req,res) {
+    res.render('student/thongTinDeTai', {
+        title: "Đăng kí khóa luận",
+        
+    })
 })
 //sinh vien dang ki khoa luan
 router.post('/dangkikhoaluan',function (req,res) {

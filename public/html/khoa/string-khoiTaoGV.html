@@ -23,10 +23,10 @@
                     <div class="portlet-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="/users/khoa/insertbulkgv" method="POST" enctype="multipart/form-data">
+                                <form enctype="multipart/form-data">
                                     <input class="btn green" type="file" name="file" id="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="checkfile(this);">
                                     <br>
-                                    <button class="btn blue" type="submit">Tải lên</button>
+                                    <button class="btn blue" type="button" id="tailen" onclick="uploadData(this)">Tải lên</button>
                                     <button id="xoa" class="btn red" type="reset">Xóa</button>
                                 </form>
                             </div>
@@ -39,10 +39,10 @@
             
             <div class="tab-pane" id="tab_1_2">
                 <!-- BEGIN FORM-->
-                <form action="javascript:;" id="form_sample_2" class="form-horizontal">
+                <form id="form_sample_2" class="form-horizontal">
                     <div class="form-body">
                         <div class="alert alert-danger display-hide">
-                            <button class="close" data-close="alert"></button>
+                            <button class="close" data-close="alert" id="success"></button>
                             Một vài thông tin chưa đúng.
                             Xin vui lòng nhập lại.
                         </div>
@@ -57,7 +57,7 @@
                             <div class="col-md-4">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input type="text" class="form-control" name="name" placeholder="fit001"/>
+                                    <input type="text" class="form-control" name="name" placeholder="fit001" id="maGV"/>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                         <div class="col-md-4">
                             <div class="input-icon right">
                                 <i class="fa"></i>
-                                <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang"/>
+                                <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang" id="tenGV"/>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                     <div class="col-md-4">
                         <div class="input-icon right">
                             <i class="fa"></i>
-                            <input type="text" class="form-control" name="number" placeholder="1"/>
+                            <input type="text" class="form-control" name="number" placeholder="1" id="donviID"/>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                 <div class="col-md-4">
                     <div class="input-icon right">
                         <i class="fa"></i>
-                        <input type="text" class="form-control" name="email" placeholder="trang@vnu.edu.vn"/>
+                        <input type="text" class="form-control" name="email" placeholder="trang@vnu.edu.vn" id="vnuMail" />
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
         <div class="form-actions">
             <div class="row">
                 <div class="col-md-offset-3 col-md-9">
-                    <button type="submit" class="btn green">Lưu</button>
+                    <button type="button" class="btn green" id="luu" onclick="uploadData(this)">Lưu</button>
                     <button type="button" class="btn default">Hủy</button>
                 </div>
             </div>
@@ -130,5 +130,37 @@
     }
     else return true;
     }
+    </script>
+    <script type="text/javascript">
+        function uploadData(evt) {
+            var id = evt.id;
+            if (id == "tailen") {
+                $.ajax({
+                    url: '/users/khoa/insertbulkgv',
+                    type: 'POST',
+                    contentType: 'multipart/form-data',
+                    data: $('#file').attr('file'),
+                    success : 
+
+
+                    $('#showContentHere').append("<h1>Toan</h1>")
+                });
+            } else {
+                var gv = {
+                        id : $('#maGV').val(),
+                        tenGiangVien : $('#tenGV').val(),
+                        vnuMail : $('#vnuMail').val(),
+                        DonViId : $('#donviID').val()
+                    };
+
+                 $.ajax({
+                    url: '/users/khoa/insertonegv',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(gv),
+                    success : $('#showContentHere').append("<h1>Toan</h1>")
+                });
+            }
+        }
     </script>
     <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->

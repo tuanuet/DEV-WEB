@@ -32,12 +32,8 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
                                     <li>
-                                        <a href="/users/khoa/myprofile">
+                                        <a href="/users/khoa/admin">
                                             <i class="icon-user"></i> My Profile </a>
-                                    </li>
-                                    <li>
-                                        <a href="/khoa">
-                                            <i class="icon-user"></i>Admin</a>
                                     </li>
                                     <li class="divider">
                                     </li>
@@ -185,12 +181,10 @@
                         <a href="/" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Tin tức cập nhật thường xuyên">
                         Tin Tức </a>
                     </li>
-                    <%if (user && (typeuser != 0)||(typeuser == 0 && openportDKKL && user.duocDangKiKhoaLuanKhong == 1)) {%>
                         <li id="dangkikhoaluan">
-                            <a href="/" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Đăng kí khóa luận">
-                                Đăng kí khóa luận </a>
+                            <a href="/users/sinhvien/dangkikhoaluan" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Đăng kí khóa luận">
+                                Đăng kí khóa luận</a>
                         </li>
-                    <%}%>
                 </ul>
             </div>
             <!-- END MEGA MENU -->
