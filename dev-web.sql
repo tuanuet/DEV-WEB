@@ -202,10 +202,9 @@ DROP TABLE IF EXISTS `linhvucs`;
 CREATE TABLE `linhvucs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tenLinhVuc` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `idTrai` int(11) NOT NULL,
-  `idPhai` int(11) NOT NULL,
+  `idParent` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,6 +213,7 @@ CREATE TABLE `linhvucs` (
 
 LOCK TABLES `linhvucs` WRITE;
 /*!40000 ALTER TABLE `linhvucs` DISABLE KEYS */;
+INSERT INTO `linhvucs` VALUES (1,'Software and its engineering',0),(2,'Computer systems organization',0),(3,'Networks',0),(4,'Theory of computation',0),(5,'Information systems',0),(6,'Security and privacy',0),(7,'Software organization and properties',1),(8,'Software notations and tools',1),(9,'Software creation and management',1),(10,'Real-time systems',2),(11,'Embedded and cyber-physical systems',2),(12,'Network architectures',3),(13,'Network protocols',3),(14,'Network properties',3),(15,'Network algorithms',3),(16,'Models of computation',4),(17,'Formal languages and automata theory',4),(18,'Logic',4),(19,'Data management systems',5),(20,'Information storage systems',5),(21,'Information systems applications',5),(22,'Cryptography',6),(23,'Formal methods and theory of security',6),(24,'Security services',6),(25,'Database and storage security',6);
 /*!40000 ALTER TABLE `linhvucs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,4 +317,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-05 12:26:09
+-- Dump completed on 2016-12-07 11:27:00
