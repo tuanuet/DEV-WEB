@@ -11,7 +11,7 @@ router.get('/', utility.reqIsAuthen, utility.reqIsGV,function (req, res) {
 })
 router.get('/myprofile',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     models.GiangVien.getGiangVienAndKhoaAndDonViAndLinhVucLienQuan(req.user.id,models,function (gv) {
-        res.render('public/userprofile',{
+        res.render('giangvien/GVprofile',{
             title : "My Profile",
             data : gv.dataValues
         })
@@ -23,7 +23,7 @@ router.get('/myprofile',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
 //Trang setting
 router.get('/settings',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     models.GiangVien.getGiangVienAndKhoaAndDonViAndLinhVucLienQuan(req.user.id,models,function (gv) {
-        res.render('public/setting-userprofile',{
+        res.render('giangvien/setting-GVprofile',{
             title : "Settings",
             data : gv.dataValues
         })

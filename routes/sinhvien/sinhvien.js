@@ -11,7 +11,7 @@ router.get('/',utility.reqIsAuthen,function (req,res) {
 })
 router.get('/myprofile',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
     models.SinhVien.getSinhVienAndKhoaAndKhoaHocAndNganhHoc(req.user.id,models,function (sv) {
-        res.render('public/userprofile',{
+        res.render('student/SVProfile',{
             title : "My Profile",
             data : sv.dataValues
         })
@@ -22,7 +22,7 @@ router.get('/myprofile',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
 //Trang setting
 router.get('/settings',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
     models.SinhVien.getSinhVienAndKhoaAndKhoaHocAndNganhHoc(req.user.id,models,function (sv) {
-        res.render('public/setting-userprofile',{
+        res.render('student/setting-SVProfile',{
             title : "Settings",
             data : sv.dataValues
         })

@@ -19,17 +19,13 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                this.hasMany(models.LinhVucLienQuan);
+                this.belongsToMany(models.GiangVien,{through: 'LinhVucLienQuans',timestamps: false});
                 this.hasMany(models.LinhVuc,  {foreignKey: 'idParent'});
-            },
-            findLinhVuc : function (tenLv) {
-                find
             },
             themLinhVuc : function (tenLv, idParent, callback, failure) {
                 this.findAll({
                     where : { tenLinhVuc  : tenLv}
                 }).then(function (data) {
-                    console.log(data);
                     if(!data || data.length == 0) {
                         this.create({
                             tenLinhVuc: tenLv,
@@ -49,14 +45,26 @@ module.exports = function (sequelize, DataTypes) {
                 }).then(callback(data))
             },
             getLevel2OfTree : function (callback) {
-                this.min('idParent').then(function (data) {
-                    console.log(data);
-                    LinhVuc.findAll({
-                        where : {idParent : data},
-                        include : [{
-                            model : LinhVuc,
-                        }]
-                    }).then(callback)
+                this.findOne({
+                    where : {idParent : null}
+                }).then(function (parent) {
+                    if(parent) {
+                        LinhVuc.findAll({
+                            where: {idParent: null},
+                            include: [{
+                                model: LinhVuc,
+                            }]
+                        }).then(callback)
+                    } else {
+                        LinhVuc.min('idParent').then(function (data) {
+                            LinhVuc.findAll({
+                                where: {idParent: data},
+                                include: [{
+                                    model: LinhVuc,
+                                }]
+                            }).then(callback)
+                        })
+                    }
                 })
             },
             getChildLevel1OfParent : function (idParent, callback) {

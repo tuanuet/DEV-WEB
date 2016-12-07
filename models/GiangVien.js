@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
                         allowNull: false
                     }
                 });
-                this.hasMany(models.LinhVucLienQuan);
+                this.belongsToMany(models.LinhVuc,{through: 'LinhVucLienQuans',timestamps: false});
                 this.hasMany(models.DeTai);
                 this.hasMany(models.PhanBien)
             },
@@ -76,10 +76,7 @@ module.exports = function (sequelize, DataTypes) {
                             ]
                         },
                         {
-                            model : models.LinhVucLienQuan,
-                            include : [
-                                {model :models.LinhVuc}
-                            ]
+                            model : models.LinhVuc
                         }
                     ]
                 }).then(success).catch(failure)

@@ -72,7 +72,7 @@
     function submitNow() {
         var data = {
             nameLV: $('#nameLV').val(),
-            idParent: document.getElementById('idParentLV').selectedIndex
+            idParent: document.getElementById('idParentLV').selectedIndex == 0 ? null : document.getElementById('idParentLV').selectedIndex
         };
         $.ajax({
             url: '/users/khoa/insertLV',
