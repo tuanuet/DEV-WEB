@@ -69,13 +69,12 @@ module.exports = function (sequelize, DataTypes) {
             getGiangVienAndKhoaAndDonViAndLinhVucLienQuan : function (id,models,success,failure) {
                 this.findOne({
                     where : {id : id},
-                    include : [
-                        {   model : models.DonVi,
-                            include: [
-                                {model : models.Khoa}
-                            ]
-                        },
-                        {
+                    include : [{
+                        model : models.DonVi,
+                        include: [{
+                            model : models.Khoa
+                        }]
+                        }, {
                             model : models.LinhVuc
                         }
                     ]

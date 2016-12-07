@@ -68,8 +68,10 @@
 											<!-- BEGIN LECTURES -->
 											<div class="col-md-4">
 												<div class="meet-our-team <%= khoa.DonVis[i].id %>">
-													<h3><%= khoa.DonVis[i].GiangViens[j].tenGiangVien %></h3>
-													<img src="<%= khoa.DonVis[i].GiangViens[j].avatar %>" class="img-responsive">
+													<a href="/intro/giangvien/<%= khoa.DonVis[i].GiangViens[j].id%>">
+														<h3><%= khoa.DonVis[i].GiangViens[j].tenGiangVien %></h3>
+														<img src="<%= khoa.DonVis[i].GiangViens[j].avatar %>" class="img-responsive">
+													</a>
 												</div>
 											</div>
 											<!-- END LECTURES -->

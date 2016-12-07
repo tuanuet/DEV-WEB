@@ -39,10 +39,13 @@ module.exports = function (sequelize, DataTypes) {
             showAllLinhVuc :function (callback) {
                 this.findAll({}).then(callback)
             },
-            findAllChild : function (idParent, callback) {
-                this.findAll({
-                    where : {idParent : idParent}
-                }).then(callback(data))
+            findGiangVien : function (idLV,models, callback) {
+                this.findOne({
+                    where : {id : idLV},
+                    include : [{
+                        model : models.GiangVien
+                    }]
+                }).then(callback)
             },
             getLevel2OfTree : function (callback) {
                 this.findOne({
@@ -67,13 +70,15 @@ module.exports = function (sequelize, DataTypes) {
                     }
                 })
             },
-            getChildLevel1OfParent : function (idParent, callback) {
+            getChildLevel1OfParent : function (idParent, models, callback,failure) {
                 this.findOne({
                     where : {id : idParent},
                     include : [{
                         model : LinhVuc
+                    },{
+                        model : models.GiangVien
                     }]
-                }).then(callback)
+                }).then(callback).catch(failure)
             }
         }
     });

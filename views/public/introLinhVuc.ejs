@@ -32,7 +32,9 @@
                             <!--  BEGIN TITLE SIDEBAR -->
                             <div class="profile-usertitle">
                                 <div class="profile-usertitle-name">
-                                    <%= linhvucData.tenLinhVuc %>
+                                    <a href="<%= linhvucData.id %>">
+                                        <%= linhvucData.tenLinhVuc %>
+                                    </a>
                                 </div>
                             </div>
                             <!--  BEGIN TITLE SIDEBAR -->
@@ -41,7 +43,8 @@
                                 <ul class="nav">
                                     <% for(var i = 0; i < linhvucData.LinhVucs.length; i++) {%>
                                     <li>
-                                        <a href="# " id="<%= linhvucData.LinhVucs[i].id %>" onclick="displayLectures(this)">
+                                        <a href="#<%= linhvucData.LinhVucs[i].id %>"
+                                           id="<%= linhvucData.LinhVucs[i].id %>" onclick="submitData(this)">
                                             <%= linhvucData.LinhVucs[i].tenLinhVuc %>
                                         </a>
                                     </li>
@@ -61,7 +64,22 @@
                                     <span class="caption-subject bold uppercase">Danh sách giảng viên</span>
                                 </div>
                             </div>
-
+                            <div class="portlet-body">
+                                <div class="row thumbnails" id="body-display-gv">
+                                    <% for(var i = 0; i < linhvucData.GiangViens.length; i++) { %>
+                                    <!-- BEGIN LECTURES -->
+                                    <div class="col-md-4">
+                                        <div class="meet-our-team <%= linhvucData.GiangViens[i].id %>">
+                                            <a href="/intro/giangvien/<%= linhvucData.GiangViens[i].id%>">
+                                                <h3><%= linhvucData.GiangViens[i].tenGiangVien %></h3>
+                                                <img src="<%= linhvucData.GiangViens[i].avatar %>" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- END LECTURES -->
+                                    <% }%>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- END LIST LECTURES -->
@@ -74,7 +92,32 @@
 <!-- BEGIN FOOTER -->
 <% include ../template/footer.ejs %>
 <% include ../template/foot-link.ejs %>
-<script src="/javascipt/handle-display-GiangVien.js" type="text/javascript"></script>
+<script >
+        function submitData(evt) {
+            var id = {
+                id: evt.id
+            }
+            $.ajax({
+                url: '/intro/fetchGV',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(id),
+                success: function (data) {
+                    var temp = "";
+                    console.log(data.GiangViens[0]);
+                    for(var i = 0 ; i < data.GiangViens.length; i++) {
+                        temp += "<div class=\"col-md-4\"><div class=\"meetour-team\"><a href=\"/intro/giangvien/";
+                        temp += data.GiangViens[i].id;
+                        temp += "\"><h3>" + data.GiangViens[i].tenGiangVien;
+                        temp += "</h3><img src=\"";
+                        temp += data.GiangViens[i].avatar == null ? "" : data.GiangViens[i].avatar;
+                        temp += "\" class=\"img-responsive\"></a></div></div>";
+                    }
+                    $('#body-display-gv').html(temp);
+                }
+            })
+        }
+</script>
 <!-- END FOOTER -->
 </body>
 <!-- END BODY-->
