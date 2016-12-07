@@ -68,13 +68,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="portlet light profile-sidebar-portlet">
                             <!-- SIDEBAR USERPIC -->
                             <div class="profile-userpic">
-                                <img src="<%= data.avatar%>" class="img-responsive" alt="">
+                                <img src="<%= datagv.avatar%>" class="img-responsive" alt="">
                             </div>
                             <!-- END SIDEBAR USERPIC -->
                             <!-- SIDEBAR USER TITLE -->
                             <div class="profile-usertitle">
                                 <div class="profile-usertitle-name">
-                                    <%= data.tenGiangVien%>
+                                    <%= datagv.tenGiangVien%>
                                 </div>
                                 <div class="profile-usertitle-job">
                                     Giảng Viên
@@ -130,7 +130,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <form role="form" action="#">
                                                     <div class="form-group">
                                                         <label class="control-label">Họ và tên</label>
-                                                        <input type="text" disabled placeholder="<%= data.tenGiangVien%>" class="form-control"/>
+                                                        <input type="text" disabled placeholder="<%= datagv.tenGiangVien%>" class="form-control"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label">Số điện thoại</label>
@@ -138,48 +138,34 @@ License: You must have a valid license purchased only from themeforest(the above
                                                                class="form-control"/></div>
                                                     <div class="form-group">
                                                         <label class="control-label ">Đơn vị</label>
-                                                        <input type="text" value="<%= data.DonVi.tenDonVi%>"
+                                                        <input type="text" value="<%= datagv.DonVi.tenDonVi%>"
                                                                class="form-control" /></div>
                                                     <div class="form-group">
                                                         <label class="control-label">Khoa</label>
-                                                        <input type="text" placeholder="Khoa" value="<%= data.DonVi.Khoa.tenKhoa%>"
+                                                        <input type="text" placeholder="Khoa" value="<%= datagv.DonVi.Khoa.tenKhoa%>"
                                                                class="form-control" disabled/></div>
                                                     <div class="form-group">
                                                         <label class="control-label">Hướng nghiên cứu</label>
-                                                        <textarea class="form-control"><%= data.chuDeHuongNghienCuu%></textarea>
+                                                        <textarea class="form-control"><%= datagv.chuDeHuongNghienCuu%></textarea>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label">Lĩnh vực liên quan : </label></br>
+                                                    <div class="form-group" id="linhvuclienquan">
+                                                        <label class="control-label">Lĩnh vực liên quan : </br></label>
+                                                        <% for(var i = 0; i < datalv.length; i++) { %>
                                                         <div>
                                                             <label  style="margin-left: 80px">
-                                                                <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck">
-                                                                <a href="#tempxxx" data-toggle="collapse">Checkbox List</a>
+                                                                <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck" id="">
+                                                                <a href="#linhvuc-<%= datalv[i].id%>" data-toggle="collapse"><%= datalv[i].tenLinhVuc%></a>
                                                             </label>
-                                                            <div class="icheck-list collapse" style="margin-left: 200px" id="tempxxx">
-                                                                <label>
-                                                                    <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck"> Checkbox 1 </label>
-                                                                <label>
-                                                                    <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck"> Checkbox 1 </label>
-                                                                <label>
-                                                                    <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck"> Checkbox 1 </label>
+                                                            <div class="icheck-list collapse" style="margin-left: 200px" id="linhvuc-<%= datalv[i].id%>">
+                                                                <%for(var j = 0; j < datalv[i].LinhVucs.length; j++ ) {%>
+                                                                <label class="togetherParent-<%= datalv[i].id%>">
+                                                                    <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck">
+                                                                    <%= datalv[i].LinhVucs[j].tenLinhVuc%>
+                                                                </label>
+                                                                <%}%>
                                                             </div>
                                                         </div>
-                                                        <div>
-                                                            <label  style="margin-left: 80px">
-                                                                <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck">
-                                                                <a href="#tempxxxx" data-toggle="collapse">Checkbox List</a>
-                                                            </label>
-                                                            <div class="icheck-list collapse" style="margin-left: 200px" id="tempxxxx">
-                                                                <label>
-                                                                    <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck"> Checkbox 1 </label>
-                                                                <label>
-                                                                    <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck"> Checkbox 1 </label>
-                                                                <label>
-                                                                    <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck"> Checkbox 1 </label>
-                                                            </div>
-                                                        </div>
-
-
+                                                        <% }%>
                                                     </div>
                                                     <div class="margiv-top-10">
                                                         <a href="javascript:;" class="btn green"> Lưu </a>
@@ -285,6 +271,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="/assets/admin/layout3/scripts/demo.js" type="text/javascript"></script>
 <script src="/assets/admin/pages/scripts/profile.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/icheck/icheck.min.js" type="text/javascript"></script>
+<script src="/javascipt/lecture/setting-profile.js" type="text/javascript"></script>
 
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>

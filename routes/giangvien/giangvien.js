@@ -20,14 +20,17 @@ router.get('/myprofile',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
         res.json(err)
     })
 })
+
 //Trang setting
 router.get('/settings',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     models.GiangVien.getGiangVienAndKhoaAndDonViAndLinhVucLienQuan(req.user.id,models,function (gv) {
-        res.render('giangvien/setting-GVprofile',{
-            title : "Settings",
-            data : gv.dataValues
+        models.LinhVuc.getLevel2OfTree(function(lv) {
+            res.render('giangvien/setting-GVprofile',{
+                title : "Settings",
+                datagv : gv.dataValues,
+                datalv : lv
+            })
         })
-
     },function (err) {
         res.json(err)
     })

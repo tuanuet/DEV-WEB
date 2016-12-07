@@ -97,4 +97,11 @@ app.use("/intro", showall);
 app.use('/users',user)
 
 
+app.use(function (req, res, next) {
+    if(res.status(404 || 500))
+        res.render('error', {
+            title: "Trang yêu cầu không tìm thấy"
+        });
+});
+
 module.exports = app;

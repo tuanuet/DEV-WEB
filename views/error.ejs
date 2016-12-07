@@ -1,2 +1,39 @@
-<!-- Hiển thị lỗi -->
-<h1><%= message %></h1>
+<!-- Trang mẫu.mọi trang ở public đề có như vậy -->
+<!DOCTYPE html>
+<html lang="en">
+<!-- BEGIN HEAD-->
+<% include template/head-link.ejs %>
+<!-- END HEAD-->
+<!--BEGIN BODY -->
+<body class="page-header-menu-fixed">
+<!-- BEGIN NAV -->
+<% include template/nav.ejs %>
+<!-- END NAV -->
+<!-- BEGIN PAGE CONTAINER -->
+<div class="page-container">
+    <div class="page-head container">
+        <div class="page-title">
+            <h1>
+                <%= title%>
+            </h1>
+        </div>
+    </div>
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="text-align: center">
+                    <img src="image/error.png" style="display: block;margin: auto;padding-bottom: 10px"></img>
+                        <a href="/">Quay về trang chủ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTAINER -->
+<!-- BEGIN FOOTER -->
+<% include template/footer.ejs %>
+<% include template/foot-link.ejs %>
+<!-- END FOOTER -->
+</body>
+<!-- END BODY-->
+</html>

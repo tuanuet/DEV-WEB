@@ -56,6 +56,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <% include ../template/nav.ejs%>
 <!-- END HEADER -->
 <!-- BEGIN PAGE CONTAINER -->
+<!--DANH CHO SINHVIEN-->
 <!--DANH CHO GIANGVIEN-->
 <div class="page-container">
     <!-- BEGIN PAGE CONTENT -->
@@ -158,13 +159,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     </th>
                                                 </tr>
                                                 </thead>
-
-
+                                                <%for(var i=0; i< data.LinhVucs.length; i++){%>
                                                 <tr>
-                                                    <td><%= data.LinhVuc%></td>
+                                                    <td><%= i+1%> -      <%= data.LinhVucs[i].tenLinhVuc%></td>
                                                 </tr>
-
-
+                                                <% }%>
                                             </table>
                                         </div>
                                     </div>
