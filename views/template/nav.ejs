@@ -121,7 +121,7 @@
                                 <ul class="dropdown-menu">
                                     <% for(var i = 0;i<nav.length;i++){%>
                                     <li class=" ">
-                                        <a href="/introKhoa/<%= nav[i].id %>">
+                                        <a href="/intro/khoa/<%= nav[i].id %>">
                                             <i class="icon-home"></i><%= nav[i].tenKhoa%> </a>
                                     </li>
                                     <%}%>
@@ -134,15 +134,15 @@
                             Lĩnh Vực <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu pull-left">
-                            <% for(var i = 0;i<nav.length;i++){%>
+                            <% for(var i = 0;i<linhvuc.length;i++){%>
                             <li class=" dropdown-submenu">
-                                <a href="#">
-                                    <i class="icon-briefcase"></i><%= nav[i].tenKhoa%></a>
+                                <a href="/intro/linhvuc/<%= linhvuc[i].id%>">
+                                    <i class="icon-briefcase"></i><%= linhvuc[i].tenLinhVuc%></a>
                                 <ul class="dropdown-menu">
-                                    <%for(var j =0;j<nav[i].DonVis.length;j++){%>
+                                    <%for(var j =0;j<linhvuc[i].LinhVucs.length;j++){%>
                                     <li class=" ">
-                                        <a href="#">
-                                            <%= nav[i].DonVis[j].tenDonVi%> </a>
+                                        <a href="/intro/linhvuc/<%= linhvuc[i].id%>">
+                                            <%= linhvuc[i].LinhVucs[j].tenLinhVuc%> </a>
                                     </li>
                                     <%}%>
                                 </ul>

@@ -10,7 +10,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var index = require('./routes/index');
-var showallKhoa = require('./routes/public/showallKhoa');
+var showall = require('./routes/public/showall');
 var user = require('./routes/users');
 var models = require('./models')
 var openportDKKL = require('./config/config_Khoa_moDangKi.json')
@@ -68,6 +68,13 @@ app.use(flash());
 app.use(function (req,res,next) {
     utility.getDataForNav(next)
 })
+
+//Lay data LV
+app.use(function (data, req, res, next) {
+    res.locals.nav = data;
+    utility.getDataLVForNav(next)
+})
+
 /*
  * Global Vars
  * khai bao mot so bien cuc bo
@@ -79,14 +86,14 @@ app.use(function (data, req, res, next) {
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
   res.locals.typeuser = utility.userIsWho(req);
-  res.locals.nav = data;
+  res.locals.linhvuc = data;
   res.locals.openportDKKL = openportDKKL.moDangKi;
   next();
 });
 
 
 app.use('/', index);
-app.use("/introKhoa", showallKhoa);
+app.use("/intro", showall);
 app.use('/users',user)
 
 

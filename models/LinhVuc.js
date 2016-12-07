@@ -20,6 +20,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 this.hasMany(models.LinhVucLienQuan);
+                this.hasMany(models.LinhVuc,  {foreignKey: 'idParent'});
             },
             findLinhVuc : function (tenLv) {
                 find
@@ -45,17 +46,26 @@ module.exports = function (sequelize, DataTypes) {
             findAllChild : function (idParent, callback) {
                 this.findAll({
                     where : {idParent : idParent}
+                }).then(callback(data))
+            },
+            getLevel2OfTree : function (callback) {
+                this.min('idParent').then(function (data) {
+                    console.log(data);
+                    LinhVuc.findAll({
+                        where : {idParent : data},
+                        include : [{
+                            model : LinhVuc,
+                        }]
+                    }).then(callback)
+                })
+            },
+            getChildLevel1OfParent : function (idParent, callback) {
+                this.findOne({
+                    where : {id : idParent},
+                    include : [{
+                        model : LinhVuc
+                    }]
                 }).then(callback)
-            },
-            getParentBig : function (callback) {
-                this.min('idParent').then(callback)
-            },
-            showFullTree :function () {
-                this.getParentBig(function (data) {
-                    for(var i = 0; i < data.length; i++) {
-
-                    }
-                });
             }
         }
     });

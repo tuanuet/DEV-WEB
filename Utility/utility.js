@@ -102,6 +102,13 @@ module.exports.userIsWho = function (req) {
     }
 }
 
+module.exports.getDataLVForNav = function (next) {
+    models.LinhVuc.getLevel2OfTree(function (data) {
+        return next(data);
+    })
+}
+
+
 module.exports.getDataForNav = function (next) {
     models.Khoa.getAllKhoaAndDonVi(models,function (data) {
         return next(data);
