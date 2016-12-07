@@ -151,7 +151,12 @@ router.post('/searchsinhvien',function (req,res) {
     if(req.body&&req.body.id){
         var idSinhVien = req.body.id;
         models.DeTai.getDeTaiAndSinhVienAndGiangVienBySinhVienId(idSinhVien,models,function (data) {
-            res.render('admin/quanlydetai-onerow',{data : data.dataValues})
+            if(data){
+                res.render('admin/quanlydetai-onerow',{data : data.dataValues})
+            }else{
+                res.json({msg : "Không tìm thấy sinh viên"})
+            }
+
         },function () {
             res.json({msg : "Hệ thống có lỗi"})
         })
@@ -166,7 +171,7 @@ router.post('/searchsinhvien',function (req,res) {
  * @param baoVe
  * @param nopHoSo
  */
-router.post('/updateDeTai',function (req,res) {
+router.post('/updatedetai',function (req,res) {
     if (req.body&&validateUpdateDeTai(req.body)){
         var data = {
             duocBaoVeKhong: req.body.duocBaoVeKhong,
