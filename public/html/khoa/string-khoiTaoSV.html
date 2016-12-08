@@ -60,10 +60,10 @@
                             </div>
                         </div>
                     </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Họ tên <span class="required">
-                            * </span>
-                        </label>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Họ tên <span class="required">
+                        * </span>
+                    </label>
                     <div class="col-md-4">
                         <div class="input-icon right">
                             <i class="fa"></i>
@@ -71,10 +71,10 @@
                         </div>
                     </div>
                 </div>
-                        <div class="form-group">
-                        <label class="control-label col-md-3">Khóa học <span class="required">
-                        * </span>
-                    </label>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Khóa học <span class="required">
+                    * </span>
+                </label>
                 <div class="col-md-4">
                     <div class="input-icon right">
                         <i class="fa"></i>
@@ -82,18 +82,18 @@
                     </div>
                 </div>
             </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Ngành học <span class="required">
-                            * </span>
-                        </label>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <input type="text" class="form-control" name="name" placeholder="CNTT"/>
-                            </div>
-                        </div>
-                    </div>
-                        <div class="form-group">
+            <div class="form-group">
+                <label class="control-label col-md-3">Ngành học <span class="required">
+                * </span>
+            </label>
+            <div class="col-md-4">
+                <div class="input-icon right">
+                    <i class="fa"></i>
+                    <input type="text" class="form-control" name="name" placeholder="CNTT"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-md-3">Vnu mail <span class="required">
             * </span>
         </label>
@@ -104,23 +104,22 @@
             </div>
         </div>
     </div>
-                    </div>
-                    <div class="form-actions">
-                        <div class="row">
-                            <div class="col-md-offset-3 col-md-9">
-                                <button type="submit" class="btn green">Lưu</button>
-                                <button type="button" class="btn default">Hủy</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            <!-- END FORM-->
-            </div> <!-- End tab 2 -->
-        </div> <!-- End tab-content -->
-    </div> <!--End portlet-body -->
+</div>
+<div class="form-actions">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-9">
+            <button type="submit" class="btn green">Lưu</button>
+            <button type="button" class="btn default">Hủy</button>
+        </div>
+    </div>
+</div>
+</form>
+<!-- END FORM-->
+</div> <!-- End tab 2 -->
+</div> <!-- End tab-content -->
+</div> <!--End portlet-body -->
 </div> <!-- End portlet light -->
-
- <script>
+<script>
 jQuery(document).ready(function() {
 // initiate layout and plugins
 Metronic.init(); // init metronic core components
@@ -129,18 +128,57 @@ Demo.init(); // init demo features
 FormValidation.init();
 });
 </script>
-
 <script type="text/javascript" language="javascript">
-    function checkfile(sender) {
-        var validExts = new Array(".xlsx", ".xls");
-    var fileExt = sender.value;
-    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-    if (validExts.indexOf(fileExt) < 0) {
-    alert( " Vui lòng chọn file Excel");
-    document.getElementById("xoa").click();
-    return false;
-    }
-    else return true;
-    }
-    </script>
+function checkfile(sender) {
+var validExts = new Array(".xlsx", ".xls");
+var fileExt = sender.value;
+fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+if (validExts.indexOf(fileExt) < 0) {
+alert( " Vui lòng chọn file Excel");
+document.getElementById("xoa").click();
+return false;
+}
+else return true;
+}
+</script>
+<!-- Ajax -->
+<script type="text/javascript">
+function uploadData(evt) {
+var id = evt.id;
+if (id == "tailen") {
+var formData = new FormData();
+formData.append('file', $('#file')[0].files[0]);
+$.ajax({
+url : '/users/khoa/insertbulkgv',
+type : 'POST',
+data : formData,
+processData: false,  // tell jQuery not to process the data
+contentType: false,  // tell jQuery not to set contentType
+success : function(data) {
+console.log(data);
+alert(data);
+$('#showContentHere').append("<h1>Trang</h1>");
+}
+});
+} else {
+var gv = {
+id : $('#maGV').val(),
+tenGiangVien : $('#tenGV').val(),
+vnuMail : $('#vnuMail').val(),
+DonViId : $('#donviID').val()
+};
+$.ajax({
+url: '/users/khoa/insertonegv',
+type: 'POST',
+contentType: 'application/json',
+data: JSON.stringify(gv),
+success : function(data) {
+console.log(data);
+alert(data);
+$('#showContentHere').append("<h1>Trang kute</h1>");
+}
+});
+}
+}
+</script>
 <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->

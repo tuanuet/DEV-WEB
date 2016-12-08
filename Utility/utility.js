@@ -56,6 +56,8 @@ module.exports.userIsKhoa = function (user) {
     }
 }
 module.exports.reqIsAuthen = function (req, res, next) {
+
+    
     if (req.isAuthenticated()) {
         return next();
     }

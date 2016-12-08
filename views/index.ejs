@@ -13,27 +13,40 @@
     <% include template/nav.ejs %>
     <!-- BEGIN PAGE CONTAINER -->
     <div class="page-container">
-      <!-- BEGIN PAGE HEAD -->
-      <div class="page-head container">
-        <div class="page-title">
-          <h1>
-          <%= title%>
-          </h1>
-        </div>
-      </div>
-      <!-- END PAGE HEAD -->
       <!-- BEGIN PAGE CONTENT INNER -->
       <div class="page-content">
         <div class="container">
           <!-- BEGIN CONTENT NEWS -->
-          <div class="portlet light">
-            <div class="portlet-body">
+          <div class="portlet light" style="padding-top: 0px;">
+            <div class="portlet-body" style="padding-top: 0px;">
               <div class="row">
                 <div class="col-md-12">
                   <div class="col-md-8">
                     <h3 class="caption-subject font-blue-madison bold uppercase">Nổi Bật</h3>
                     <hr>
-                    <img src="/assets/admin/pages/media/gallery/item_img1.jpg" class="img-responsive" alt="">
+                    
+                      <div id="carousel-id" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                      <li data-target="#carousel-id" data-slide-to="0" class="active"></li>
+                      <li data-target="#carousel-id" data-slide-to="1" class=""></li>
+                      <li data-target="#carousel-id" data-slide-to="2" class=""></li>
+                  </ol>
+                  <div class="carousel-inner">
+                      <div class="item active">
+                          <img alt="First slide" class="img-responsive" style="height: 450px; width: 702px;" src="/assets/admin/pages/media/gallery/item_img5.jpg">
+                      </div>
+                      <div class="item">
+                          <img alt="Second slide" class="img-responsive" style="height: 450px; width: 702px;" src="/assets/admin/pages/media/gallery/item_img4.jpg">
+                      </div>
+                      <div class="item">
+                          <img alt="Third slide" class="img-responsive" style="height: 450px; width: 702px;" src="/assets/admin/pages/media/gallery/item_img3.jpg">
+                      </div>
+                  </div>
+                  <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                  <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+              </div>
+
+
                     <h3 style="margin-bottom: -20px">Chào mừng đến với Trường Đại học Công Nghệ</h3>
                     <hr style="width: 50%;">
                     <p style="text-indent: 30px;">

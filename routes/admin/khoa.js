@@ -337,6 +337,7 @@ function validateUpdateSinhVien(data) {
 }
 function insertDataToGiangVien(data,req,res,next) {
     var gvs = new Array();
+    alert(1);
     // validate data
     //chua validate dau, vẫn phải code
     //start

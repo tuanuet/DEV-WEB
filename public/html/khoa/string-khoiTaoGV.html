@@ -118,6 +118,8 @@
     FormValidation.init();
     });
     </script>
+
+    <!-- Script check file -->     
     <script type="text/javascript" language="javascript">
     function checkfile(sender) {
     var validExts = new Array(".xlsx", ".xls");
@@ -131,20 +133,29 @@
     else return true;
     }
     </script>
+    <!-- Script check file --> 
+
+    <!-- Ajax -->
     <script type="text/javascript">
         function uploadData(evt) {
             var id = evt.id;
             if (id == "tailen") {
+                var formData = new FormData();
+                formData.append('file', $('#file')[0].files[0]);
+
                 $.ajax({
-                    url: '/users/khoa/insertbulkgv',
-                    type: 'POST',
-                    contentType: 'multipart/form-data',
-                    data: $('#file').attr('file'),
-                    success : 
-
-
-                    $('#showContentHere').append("<h1>Toan</h1>")
+                       url : '/users/khoa/insertbulkgv',
+                       type : 'POST',
+                       data : formData,
+                       processData: false,  // tell jQuery not to process the data
+                       contentType: false,  // tell jQuery not to set contentType
+                       success : function(data) {
+                           console.log(data);
+                           alert(data);
+                            $('#showContentHere').append("<h1>Trang</h1>");
+                       }
                 });
+
             } else {
                 var gv = {
                         id : $('#maGV').val(),
@@ -158,9 +169,13 @@
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(gv),
-                    success : $('#showContentHere').append("<h1>Toan</h1>")
+                    success : function(data) {
+                           console.log(data);
+                           alert(data);
+                            $('#showContentHere').append("<h1>Trang kute</h1>");
+                        }
                 });
             }
         }
-    </script>
+        </script>
     <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
