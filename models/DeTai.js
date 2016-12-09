@@ -139,11 +139,23 @@ module.exports = function (sequelize, DataTypes) {
                     attributes: ['tenDeTai','nopQuyenChua','nopHoSoChua','duocBaoVeKhong']
                 }).then(success).catch(failure)
             },
-            updateTrangThaiDeTaiBySinhVienId :function (SinhVienId,data,success,failure) {
+            updateNopHoSoBySinhVienId :function (SinhVienId,data,success,failure) {
                 this.update({
-                    duocBaoVeKhong: data.duocBaoVeKhong,
-                    nopQuyenChua: data.nopQuyenChua,
                     nopHoSoChua: data.nopHoSoChua
+                },{
+                    where : {SinhVienId : SinhVienId}
+                }).then(success).catch(failure)
+            },
+            updateNopQuyenBySinhVienId :function (SinhVienId,data,success,failure) {
+                this.update({
+                    nopQuyenChua: data.nopQuyenChua
+                },{
+                    where : {SinhVienId : SinhVienId}
+                }).then(success).catch(failure)
+            },
+            updateDuocBaoVeBySinhVienId :function (SinhVienId,data,success,failure) {
+                this.update({
+                    duocBaoVeKhong: data.duocBaoVeKhong
                 },{
                     where : {SinhVienId : SinhVienId}
                 }).then(success).catch(failure)

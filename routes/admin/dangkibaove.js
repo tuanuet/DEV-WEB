@@ -172,25 +172,56 @@ router.post('/searchsinhvien',function (req,res) {
  * @param nopHoSo
  */
 router.post('/updatedetai',function (req,res) {
-    if (req.body&&validateUpdateDeTai(req.body)){
-        var data = {
-            duocBaoVeKhong: req.body.duocBaoVeKhong,
-            nopQuyenChua: req.body.nopQuyenChua,
-            nopHoSoChua: req.body.nopHoSoChua
-        }
-        models.DeTai.updateTrangThaiDeTaiBySinhVienId(req.body.id,data,function (affectCount) {
-            if(affectCount==0){
-                res.json({msg: "Không tìm thấy sinh viên"})
-            }else{
-                res.json({msg:"update thành công"})
+    if(req.body) {
+        if(req.body.duocBaoVeKhong==0|| req.body.duocBaoVeKhong==1){
+            var data = {
+                duocBaoVeKhong: req.body.duocBaoVeKhong
             }
-        },function (err) {
-            res.json({msg: "Lỗi phát sinh từ hệ thống"})
+            models.DeTai.updateDuocBaoVeBySinhVienId(req.body.id, data, function (affectCount) {
+                if (affectCount == 0) {
+                    res.json({msg: "Không tìm thấy sinh viên"})
+                } else {
+                    res.json({msg: "update thành công"})
+                }
+            }, function (err) {
+                res.json({msg: "Lỗi phát sinh từ hệ thống"})
+            })
+        }else if(req.body.nopHoSoChua == 0 ||req.body.nopHoSoChua ==1){
+            var data = {
+                nopHoSoChua: req.body.nopHoSoChua
+            }
+            models.DeTai.updateNopHoSoBySinhVienId(req.body.id, data, function (affectCount) {
+                if (affectCount == 0) {
+                    res.json({msg: "Không tìm thấy sinh viên"})
+                } else {
+                    res.json({msg: "update thành công"})
+                }
+            }, function (err) {
+                res.json({msg: "Lỗi phát sinh từ hệ thống"})
+            })
+        }else if(req.body.nopQuyenChua == 0||req.body.nopQuyenChua == 1){
+            var data = {
+                nopQuyenChua: req.body.nopQuyenChua
+            }
+            models.DeTai.updateNopQuyenBySinhVienId(req.body.id, data, function (affectCount) {
+                if (affectCount == 0) {
+                    res.json({msg: "Không tìm thấy sinh viên"})
+                } else {
+                    res.json({msg: "update thành công"})
+                }
+            }, function (err) {
+                res.json({msg: "Lỗi phát sinh từ hệ thống"})
+            })
+        }
+    }
+    else {
+        res.json({
+            msg : "not invalid",
+            data: req.body
         })
-    }else {
-        res.json({msg : "not invalid"})
     }
 })
+
 function validateUpdateDeTai(data) {
     return (
         validator.isInt(data.id.toString())

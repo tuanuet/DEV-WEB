@@ -37,7 +37,6 @@ jQuery(document).ready(function() {
         }
     })
     //send trang thai nguoi dung
-
     var input = document.getElementsByClassName('input');
     for(var i=0;i<input.length;i++){
         input[i].onchange = function (event) {
@@ -80,6 +79,18 @@ jQuery(document).ready(function() {
                 }
             }
             console.log(data)
+            $.ajax({
+                url: '/users/khoa/updatedetai',
+                type: 'post',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function(data) {
+                    if(data.msg){
+                        alert(data.msg)
+                    }else {
+                    }
+                }
+            });
         }
     }
 });
