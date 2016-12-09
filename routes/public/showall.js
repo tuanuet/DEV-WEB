@@ -18,8 +18,7 @@ router.get("/khoa/:khoa" , function(req, res) {
 
 router.get("/linhvuc/:idLV", function (req, res) {
     var idLV = req.params.idLV;
-    models.LinhVuc.getChildLevel1OfParent(idLV, models, function (data) {
-        console.log("Noi gi di : " + data);
+    models.LinhVuc.getChildLevel1OfParentandGV(idLV, models, function (data) {
         res.render("public/introLinhVuc", {
             title : "Intro Linh vuc",
             linhvucData : data

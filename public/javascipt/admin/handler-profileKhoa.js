@@ -18,9 +18,13 @@ function submitButtonHandler(evt) {
             break;
         case "hoidong" :
            $('#showContentHere').load("../../html/khoa/string-hoiDongBaoVe.html");
-        break;
+            break;
         case "QLLV" :
             $('#showContentHere').load("../../html/khoa/string-quanLyLinhVuc.html");
+            break;
+        case "KHCTDT" :
+            $('#showContentHere').load("../../html/khoa/string-themKhoaHoc-CTDT.html");
+            break;
         default:
     }
 }

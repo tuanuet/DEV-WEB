@@ -28,7 +28,8 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
             res.render('giangvien/setting-GVprofile',{
                 title : "Settings",
                 datagv : gv.dataValues,
-                datalv : lv
+                datalv : lv,
+                sign : findLVLQ(gv.dataValues, lv)
             })
         })
     },function (err) {
@@ -36,6 +37,30 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     })
 
 })
+/**
+ * Đánh dấu những lĩnh mục liên quan của giảng viêns
+ */
+function findLVLQ(gv, lv) {
+    var array = [];
+    for(var i = 0; i < lv.length; i++) {
+        array.push(checkContain(lv[i].dataValues.id, gv.LinhVucs))
+        for(var j = 0; j < lv[i].LinhVucs.length; j++) {
+            array.push(checkContain(lv[i].LinhVucs[j].id, gv.LinhVucs));
+        }
+    }
+
+    return array;
+}
+
+function checkContain(idLv, array) {
+    for(var i = 0; i < array.length; i++) {
+        if(array[i].dataValues.id == idLv) {
+            return "checked";
+        }
+    }
+    return "";
+}
+
 //tra lai trang dangkikhoaluan
 router.get('/dangkikhoaluan',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     models.DeTai.getDeTaiAndSinhVienByGiangVienId(req.user.id,models,function (data) {
@@ -84,4 +109,93 @@ router.post('/controldetai',utility.reqIsAuthen,utility.reqIsGV,function (req,re
         })
     }
 })
+
+/**
+ * Xu ly khi go mat khau cu
+ */
+router.post("/comparepass", function (req, res) {
+    models.GiangVien.getPassword(req.body.id, function (data) {
+        if(data.matKhau == req.body.password) {
+            res.json({
+                msg : "Mật khẩu đúng",
+                result : true
+            })
+        } else {
+            res.json({
+                msg : "Mật khẩu vừa nhập sai",
+                result : false
+            })
+        }
+    })
+})
+
+/**
+ * Lưu mật khẩu
+ */
+
+router.post("/savepass", function(req, res) {
+    models.GiangVien.updatePassword(req.body.id, req.body.password, function () {
+        res.json({
+            msg : "Mật khẩu thay đổi thành công"
+        })
+    }, function () {
+        res.json({
+            msg : "Mật khẩu thay đổi đã xảy ra lỗi"
+        })
+    })
+})
+
+/**
+ * Xử lý khi gửi form cập nhật thông tin
+ */
+router.post("/updateinfor", function (req, res) {
+    models.GiangVien.updateChudeNghienCuu(req.body.id, req.body.chude, function () {
+        res.json({
+            status : 200,
+            msg : "thanh cong",
+        })
+    });
+
+})
+
+
+
+function updateChuDeMoi(req, res, next) {
+    models.GiangVien.updateChudeNghienCuu(req.body.id, req.body.chude, function () {
+        return next;
+    });
+}
+
+function updateLinhVucNhoForGV(req, res, next) {
+    for(var i = 0; i < req.body.linhvuc2.length; i++) {
+        models.LinhVucLienQuan.addNew(parseInt(req.body.linhvuc2[i]), req.body.id, function () {
+            if(i == req.body.linhvuc2.length - 1) {
+                next;
+            }
+        })
+    }
+}
+
+function updateLinhVucLonForGV(req, res, next) {
+    for(var i = 0; i < req.body.linhvuc.length; i++) {
+        models.LinhVucLienQuan.addNew(parseInt(req.body.linhvuc[i]), req.body.id, function () {
+            if(i = req.body.linhvuc.lenghth-1) {
+                next;
+            }
+        })
+    }
+}
+
+function updateLinhVucNhoCuaLonForGV(req, res, next) {
+    models.LinhVuc.getChildLevel1OfParen(parseInt(req.body.linhvuc[i]), function (data) {
+        for(var j = 0; j < data.length; j++) {
+            models.LinhVucLienQuan.addNew(data[j].id, req.body.id, function () {
+                if(i == req.body.linhvuc2.length) {
+                    next;
+                }
+            })
+        }
+    })
+}
+
 module.exports = router;

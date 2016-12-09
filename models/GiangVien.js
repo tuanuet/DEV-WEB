@@ -56,6 +56,18 @@ module.exports = function (sequelize, DataTypes) {
                 //     callback(null, isMatch);
                 // });
             },
+            getPassword : function (id, callback) {
+                this.findOne({
+                    where : {id : id}
+                }).then(callback)
+            },
+            updatePassword : function (id, newpass, callback, failure) {
+                this.update({
+                    matKhau : newpass
+                }, {
+                    where : {id : id}
+                }).then(callback).catch(failure)
+            },
             getGVByID: function (idKhoa, callback) {
                 this.findOne({
                     where: {
@@ -120,6 +132,13 @@ module.exports = function (sequelize, DataTypes) {
                         model : models.DonVi
                     }
                 }).then(success).catch(failure)
+            },
+            updateChudeNghienCuu : function (idGV,chudeMoi, callback) {
+                this.update({
+                    chuDeHuongNghienCuu : chudeMoi
+                }, {
+                    where : {id : idGV}
+                }).then(callback)
             }
         }
     });

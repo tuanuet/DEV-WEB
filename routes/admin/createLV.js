@@ -23,4 +23,43 @@ router.post("/insertLV", function(req, res) {
   }
 })
 
+router.post("/insertKH", function (req, res) {
+    models.KhoaHoc.createKH(req.body, function () {
+        res.json({msg:"Thêm khóa học thành công"})
+    })
+}, function (err) {
+    res.json({msg : "Them that bai"})
+})
+
+router.post("/checkKH", function (req, res) {
+    models.KhoaHoc.getAllKH(req.body.kh, function (data) {
+        if(data) {
+            res.json({
+                msg : "Ki hieu bi trung"
+            })
+        } else {
+            res.json({
+                msg : "Ki hieu phu hop"
+            })
+        }
+    })
+})
+
+router.post("/getKhoaID", function (req, res) {
+    models.Khoa.gettAllKhoa(function (data) {
+        res.json({
+            dataKhoa : data
+        })
+    })
+})
+
+router.post("/insertNH", function (req, res) {
+    console.log(req.body)
+    models.NganhHoc.createNH(req.body, function () {
+        res.json({msg:"Thêm nghành học thành công"})
+    })
+}, function (err) {
+    res.json({msg : "Them that bai"})
+})
+
 module.exports = router;

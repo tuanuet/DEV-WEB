@@ -1,37 +1,30 @@
 <!DOCTYPE html>
-<!--
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.2
-Version: 3.2.0
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
 <html lang="en">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8"/>
-    <title><%= title%></title>
+    <title><%= title %></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta content="" name="description"/>
     <meta content="" name="author"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css">
     <link href="/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="/assets/global/plugins/bootstrap-toastr/toastr.min.css">
     <link href="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/admin/pages/css/profile.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css"/>
@@ -48,11 +41,9 @@ License: You must have a valid license purchased only from themeforest(the above
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<!-- DOC: Apply "page-header-menu-fixed" class to set the mega menu fixed  -->
-<!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
-<body>
+<body class="page-header-menu-fixed">
 <!-- BEGIN HEADER -->
-<% include ../template/nav.ejs%>
+<% include ../template/nav.ejs %>
 <!-- END HEADER -->
 <!-- BEGIN PAGE CONTAINER -->
 <div class="page-container">
@@ -68,13 +59,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         <div class="portlet light profile-sidebar-portlet">
                             <!-- SIDEBAR USERPIC -->
                             <div class="profile-userpic">
-                                <img src="<%= datagv.avatar%>" class="img-responsive" alt="">
+                                <img src="<%= datagv.avatar %>" class="img-responsive" alt="">
                             </div>
                             <!-- END SIDEBAR USERPIC -->
                             <!-- SIDEBAR USER TITLE -->
                             <div class="profile-usertitle">
                                 <div class="profile-usertitle-name">
-                                    <%= datagv.tenGiangVien%>
+                                    <%= datagv.tenGiangVien %>
                                 </div>
                                 <div class="profile-usertitle-job">
                                     Giảng Viên
@@ -127,48 +118,64 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <div class="tab-content">
                                             <!-- PERSONAL INFO TAB -->
                                             <div class="tab-pane active" id="tab_1_1">
-                                                <form role="form" action="#">
+                                                <form action="/users/giangvien/updateinfor" method="post">
                                                     <div class="form-group">
-                                                        <label class="control-label">Họ và tên</label>
-                                                        <input type="text" disabled placeholder="<%= datagv.tenGiangVien%>" class="form-control"/>
+                                                        <label class="control-label ">Tên giảng viên</label>
+                                                        <input type="text" disabled value="<%= datagv.tenGiangVien %>"
+                                                               class="form-control"/></div>
+                                                    <div class="form-group" style="display: none">
+                                                        <input type="text"  value="<%= datagv.id %>"
+                                                               name="id" id="idGV"/>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="control-label">Số điện thoại</label>
-                                                        <input type="text" value="0976200663" placeholder="Số điện thoại"
+                                                        <label class="control-label ">Mã giảng viên</label>
+                                                        <input type="text" disabled value="<%= datagv.id %>"
                                                                class="form-control"/></div>
                                                     <div class="form-group">
+                                                    </div>
+                                                    <div>
                                                         <label class="control-label ">Đơn vị</label>
-                                                        <input type="text" value="<%= datagv.DonVi.tenDonVi%>"
-                                                               class="form-control" /></div>
-                                                    <div class="form-group">
+                                                        <input type="text" disabled value="<%= datagv.DonVi.tenDonVi %>"
+                                                               class="form-control"/>
                                                         <label class="control-label">Khoa</label>
-                                                        <input type="text" placeholder="Khoa" value="<%= datagv.DonVi.Khoa.tenKhoa%>"
+                                                        <input type="text" placeholder="Khoa"
+                                                               value="<%= datagv.DonVi.Khoa.tenKhoa %>"
+                                                               class="form-control" disabled/></div>
+                                                    <div class="form-group">
+                                                        <label class="control-label">VNU mail</label>
+                                                        <input type="text" placeholder="Khoa" name="vnumail"
+                                                               value="<%= datagv.vnuMail %>"
                                                                class="form-control" disabled/></div>
                                                     <div class="form-group">
                                                         <label class="control-label">Hướng nghiên cứu</label>
-                                                        <textarea class="form-control"><%= datagv.chuDeHuongNghienCuu%></textarea>
+                                                        <textarea
+                                                                class="form-control" name="chude" id="huongnghiencuu"><%= datagv.chuDeHuongNghienCuu %></textarea>
                                                     </div>
                                                     <div class="form-group" id="linhvuclienquan">
-                                                        <label class="control-label">Lĩnh vực liên quan : </br></label>
-                                                        <% for(var i = 0; i < datalv.length; i++) { %>
+                                                        <label class="control-label">Lĩnh vực liên quan :</label>
+                                                        </br>
+                                                        <% for(var i = 0, k = 0; i < datalv.length; i++) { %>
                                                         <div>
-                                                            <label  style="margin-left: 80px">
-                                                                <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck" id="">
-                                                                <a href="#linhvuc-<%= datalv[i].id%>" data-toggle="collapse"><%= datalv[i].tenLinhVuc%></a>
+                                                            <label style="margin-left: 80px">
+                                                                <input data-checkbox="icheckbox_minimal-green"
+                                                                       type="checkbox" class="icheck <%= sign[k++]%>" name="linhvuc" value="<%= datalv[i].id %>">
+                                                                <a href="#linhvuc-<%= datalv[i].id %>"
+                                                                   data-toggle="collapse"><%= datalv[i].tenLinhVuc %></a>
                                                             </label>
-                                                            <div class="icheck-list collapse" style="margin-left: 200px" id="linhvuc-<%= datalv[i].id%>">
-                                                                <%for(var j = 0; j < datalv[i].LinhVucs.length; j++ ) {%>
-                                                                <label class="togetherParent-<%= datalv[i].id%>">
-                                                                    <input data-checkbox="icheckbox_minimal-green" type="checkbox" class="icheck">
-                                                                    <%= datalv[i].LinhVucs[j].tenLinhVuc%>
+                                                            <div class="icheck-list collapse" style="margin-left: 200px" id="linhvuc-<%= datalv[i].id %>">
+                                                                <% for(var j = 0; j < datalv[i].LinhVucs.length; j++ ) { %>
+                                                                <label>
+                                                                    <input data-checkbox="icheckbox_minimal-green"
+                                                                           type="checkbox" class="icheck <%= sign[k++]%>" name="linhvuc2" value="<%= datalv[i].LinhVucs[j].id %>">
+                                                                    <%= datalv[i].LinhVucs[j].tenLinhVuc %>
                                                                 </label>
-                                                                <%}%>
+                                                                <% } %>
                                                             </div>
                                                         </div>
-                                                        <% }%>
+                                                        <% } %>
                                                     </div>
                                                     <div class="margiv-top-10">
-                                                        <a href="javascript:;" class="btn green"> Lưu </a>
+                                                        <button class="btn green" type="submit"> Lưu </button>
                                                         <a href="javascript:;" class="btn default"> Hủy </a>
                                                     </div>
                                                 </form>
@@ -208,18 +215,20 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <!-- END CHANGE AVATAR TAB -->
                                             <!-- CHANGE PASSWORD TAB -->
                                             <div class="tab-pane" id="tab_1_3">
-                                                <form action="#">
-                                                    <div class="form-group">
+                                                <form>
+                                                    <div class="form-group" >
                                                         <label class="control-label">Mật khẩu hiện tại</label>
-                                                        <input type="password" class="form-control"/></div>
+                                                        <input type="password" class="form-control" id="passOld" onkeyup="changeType()"/></div>
+                                                        <p id="addNoti"></p>
                                                     <div class="form-group">
                                                         <label class="control-label">Mật khẩu mới</label>
-                                                        <input type="password" class="form-control"/></div>
+                                                        <input type="password" class="form-control" id="passNew"/></div>
                                                     <div class="form-group">
                                                         <label class="control-label">Nhập lại mật khẩu mới</label>
-                                                        <input type="password" class="form-control"/></div>
+                                                        <input type="password" class="form-control" id="passNewAgain" onkeyup="changePass()"/></div>
+                                                        <p id="addNotiMatch"></p>
                                                     <div class="margin-top-10">
-                                                        <a href="javascript:;" class="btn green"> Lưu </a>
+                                                        <button onclick="saveResult()" class="btn green" type="button" id="savepass"> Lưu </button>
                                                         <a href="javascript:;" class="btn default"> Hủy </a>
                                                     </div>
                                                 </form>
@@ -242,7 +251,7 @@ License: You must have a valid license purchased only from themeforest(the above
 </div>
 <!-- END PAGE CONTAINER -->
 <!-- BEGIN FOOTER -->
-<% include ../template/footer.ejs%>
+<% include ../template/footer.ejs %>
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
@@ -255,7 +264,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 <script src="/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
 <script src="/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
@@ -272,16 +282,24 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="/assets/admin/pages/scripts/profile.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/icheck/icheck.min.js" type="text/javascript"></script>
 <script src="/javascipt/lecture/setting-profile.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
 
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
+        var array = [], i = 0;
+        <% for(var k = 0; k < datalv.length; k++) { %>
+            var temp = <%= datalv[k].LinhVucs.length %>;
+            array.push([i, temp]);
+            i = i + temp  + 1;
+        <% } %>
         // initiate layout and plugins
         Metronic.init(); // init metronic core components
         Layout.init(); // init current layout
         Demo.init(); // init demo features\
         Profile.init(); // init page demo
-    });
+        ClickHandler.init(array);
+    })
 </script>
 <!-- END JAVASCRIPTS -->
 </body>

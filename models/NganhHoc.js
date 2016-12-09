@@ -23,6 +23,14 @@ module.exports = function (sequelize, DataTypes) {
                     }
                 });
                 this.hasMany(models.SinhVien)
+            },
+            createNH : function (data, callback, failure) {
+                this.create({
+                    kh: data.kh,
+                    tenNganhHoc: data.tenNganhHoc,
+                    moTa: data.moTa,
+                    KhoaId : data.KhoaId
+                }).then(callback).catch(failure)
             }
         }
     });

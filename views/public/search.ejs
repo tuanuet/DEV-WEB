@@ -86,11 +86,13 @@ License: You must have a valid license purchased only from themeforest(the above
 											<% for (var fir = 0 ; fir <data.GiangVien.length; fir++){%>
 												<div class="col-md-3">
 													<div class="meet-our-team">
-														<a href="#"><img src="/assets/admin/pages/media/pages/3.jpg" alt="" class="img-responsive"></a>
-														<h3><%= data.GiangVien[fir].tenGiangVien%></h3>
-														<div class="team-info">
-															<p><%= data.GiangVien[fir].vnuMail%></p>
-														</div>
+														<a href="/intro/giangvien/<%=data.GiangVien[fir].id%>">
+															<img src="/assets/admin/pages/media/pages/3.jpg" alt="" class="img-responsive">
+															<h3><%= data.GiangVien[fir].tenGiangVien%></h3>
+															<div class="team-info">
+																<p><%= data.GiangVien[fir].vnuMail%></p>
+															</div>
+														</a>
 													</div>
 												</div>
 											<%}%>
@@ -124,7 +126,10 @@ License: You must have a valid license purchased only from themeforest(the above
 												<tbody>
 												<tr>
 													<% for(var temp =0 ;temp<data.HuongNghienCuu.length;temp++){%>
-														<td><%= data.HuongNghienCuu[temp].tenGiangVien%></td>
+														<td>
+															<a href="/intro/giangvien/<%=data.HuongNghienCuu[temp].id%>">
+																<%= data.HuongNghienCuu[temp].tenGiangVien%></td>
+															</a>
 														<td><%= data.HuongNghienCuu[temp].chuDeHuongNghienCuu%></td>
 														<td><%= data.HuongNghienCuu[temp].vnuMail%></td>
 														<td><%= data.HuongNghienCuu[temp].DonVi.tenDonVi%></td>

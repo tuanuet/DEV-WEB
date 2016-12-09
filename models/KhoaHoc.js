@@ -17,6 +17,19 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 this.hasMany(models.SinhVien)
+            },
+            getAllKH : function (kh, callback) {
+                this.findOne({
+                    where : {kh : kh}
+                }).then(callback)
+            },
+            createKH : function (khoahoc, callback,failure) {
+                this.create({
+                    kh: khoahoc.kh,
+                    // thoiGianBatDau : khoahoc.thoiGianBatDau,
+                    // thoiGianKetThuc : khoahoc.thoiGianKetThuc,
+                    moTa : khoahoc.moTa
+                }).then(callback).catch(failure)
             }
         }
     });

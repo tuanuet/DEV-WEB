@@ -61,6 +61,10 @@ module.exports = function (sequelize, DataTypes) {
                     }]
                 }).then(callback)
             },
+            gettAllKhoa : function(callback) {
+                this.findAll({
+                }).then(callback)
+            },
 
             // Tìm tất cả giảng viên thuộc các đơn vị của một khoa có id là IdKhoa
             getGiangVienOfDonViOfKhoa : function (idKhoa,models,callback) {

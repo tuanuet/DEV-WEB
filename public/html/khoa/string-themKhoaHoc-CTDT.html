@@ -1,0 +1,240 @@
+<!-- Bắt đầu đoạn hiển thị sau khi kick chi tiết-->
+<div class="portlet light" >
+    <div class="portlet-title tabbable-line">
+        <div class="caption caption-md">
+            <i class="icon-globe theme-font hide"></i>
+            <span class="caption-subject font-blue-madison bold uppercase">Khóa học, chương trình đào tạo</span>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#tab_1_1" data-toggle="tab">Thêm khóa học</a>
+            </li>
+            <li>
+                <a href="#tab_1_2" data-toggle="tab">Thêm chương trình đào tạo</a>
+            </li>
+        </ul>
+    </div>
+    <div class="portlet-body">
+        <div class="tab-content">
+            <!-- PERSONAL INFO TAB -->
+            <div class="tab-pane active" id="tab_1_1">
+                <form id="form_sample_1" class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Kí hiệu khóa học <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" name="name" placeholder="QHI-2014" id="khKhoaHoc" onkeyup="checkMatch()"/>
+                                </div>
+                                <p id="checkKH"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Thời gian bắt đầu </label>
+                            <div class="col-md-4">
+                                <div class="input-group input-medium date date-picker" data-date-format="mm/yyyy" data-date-viewmode="years" data-date-minviewmode="months">
+                                    <input type="text" class="form-control" id="timeStart">
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Thời gian kết thúc</label>
+                            <div class="col-md-4">
+                                <div class="input-group input-medium date date-picker" data-date-format="mm/yyyy" data-date-viewmode="years" data-date-minviewmode="months">
+                                    <input type="text" class="form-control" id="timeEnd">
+                                    <span class="input-group-btn">
+                                        <button class="btn default" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Mô tả
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <textarea class="form-control" rows="5" id="mota"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn green" onclick="uploadData(this)">Lưu</button>
+                                <button type="button" class="btn default">Hủy</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- END PERSONAL INFO TAB -->
+
+            <div class="tab-pane" id="tab_1_2">
+                <!-- BEGIN FORM-->
+                <form id="form_sample_2" class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Kí hiệu ngành học <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" name="name" placeholder="CNTT" id="khNganhHoc"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Tên nghành học <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" name="name" placeholder="Công nghệ thông tin" id="tenNganh"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Mô tả ngành học
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <textarea class="form-control" rows="5" id="motaNH"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                Thuộc khoa <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <select class="form-control select2me" name="options2" id="idKhoa">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn green" onclick="uploadDataNganhHoc()">Lưu</button>
+                                <button type="button" class="btn default">Hủy</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div> <!-- End tab 2 -->
+        </div> <!-- End tab-content -->
+    </div> <!--End portlet-body -->
+</div> <!-- End portlet light -->
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $.ajax({
+            url: '/users/khoa/getKhoaID',
+            type: 'POST',
+            success: function (data) {
+                var datajson = data.dataKhoa;
+                console.log(datajson)
+                for(var i = 0; i < datajson.length; i++) {
+                    $('#idKhoa').append($('<option>', {
+                        value: datajson[i].id,
+                        text: datajson[i].tenKhoa
+                    }));
+                }
+            }
+        });
+    })
+
+    function uploadDataNganhHoc() {
+        var object = {
+            kh: $("#khNganhHoc").val(),
+            tenNganhHoc: $("#tenNganh").val(),
+            moTa: $("#motaNH").val(),
+            KhoaId : $("#idKhoa").val()
+        };
+
+        $.ajax({
+            url: '/users/khoa/insertNH',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(object),
+            success : function (datajson) {
+                showtoastr(datajson.msg);
+            }
+        });
+    }
+
+    function uploadData() {
+            var object = {
+                kh: $("#khKhoaHoc").val(),
+                thoiGianBatDau : $("#timeStart").val(),
+                thoiGianKetThuc : $("#timeEnd").val(),
+                moTa : $("#mota").val()
+            };
+
+            $.ajax({
+                url: '/users/khoa/insertKH',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(object),
+                success : function (datajson) {
+                    showtoastr(datajson.msg);
+                }
+            });
+    }
+
+    function checkMatch() {
+        if($("#khKhoaHoc").val() != "") {
+            var object = {
+                kh: $("#khKhoaHoc").val(),
+            };
+
+            $.ajax({
+                url: '/users/khoa/checkKH',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(object),
+                success: function (datajson) {
+                    $('#checkKH').text(datajson.msg)
+                }
+            });
+        } else {
+            $('#checkKH').text("")
+        }
+    }
+
+    function showtoastr(msg) {
+        toastr["success"](msg);
+
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    }
+</script>
+<!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
