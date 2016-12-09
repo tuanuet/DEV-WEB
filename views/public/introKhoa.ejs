@@ -69,8 +69,8 @@
 											<div class="col-md-4">
 												<div class="meet-our-team <%= khoa.DonVis[i].id %>">
 													<a href="/intro/giangvien/<%= khoa.DonVis[i].GiangViens[j].id%>">
-														<h3><%= khoa.DonVis[i].GiangViens[j].tenGiangVien %></h3>
-														<img src="<%= khoa.DonVis[i].GiangViens[j].avatar %>" class="img-responsive">
+														<img src=<%= khoa.DonVis[i].GiangViens[j].avatar == null ? "/assets/admin/pages/media/pages/3.jpg" : khoa.DonVis[i].GiangViens[j].avatar %> class="img-responsive">
+														<h3 style="text-align: center"><%= khoa.DonVis[i].GiangViens[j].tenGiangVien %></h3>
 													</a>
 												</div>
 											</div>

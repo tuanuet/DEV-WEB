@@ -71,8 +71,8 @@
                                     <div class="col-md-4">
                                         <div class="meet-our-team <%= linhvucData.GiangViens[i].id %>">
                                             <a href="/intro/giangvien/<%= linhvucData.GiangViens[i].id%>">
-                                                <h3><%= linhvucData.GiangViens[i].tenGiangVien %></h3>
-                                                <img src="<%= linhvucData.GiangViens[i].avatar %>" class="img-responsive">
+                                                <img src="<%= linhvucData.GiangViens[i].avatar == null ? "/assets/admin/pages/media/pages/3.jpg" : linhvucData.GiangViens[i].avatar %>" class="img-responsive">
+                                                <h3 style="text-align: center"><%= linhvucData.GiangViens[i].tenGiangVien %></h3>
                                             </a>
                                         </div>
                                     </div>
