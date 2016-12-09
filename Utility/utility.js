@@ -11,7 +11,9 @@ module.exports.reqIsSV = function (req, res, next) {
         //tra lai 1 trang voi noi dung
         // ban ko co quyen han trong trang nau
         // res.redirect('/users/login');
-        res.send("Ban ko phai sinh vien")
+        res.render('error',{
+            title : "This is private page"
+        })
     }
 }
 module.exports.reqIsKhoa = function (req, res, next) {
@@ -21,7 +23,9 @@ module.exports.reqIsKhoa = function (req, res, next) {
         //tra lai 1 trang voi noi dung
         // ban ko co quyen han trong trang nau
         // res.redirect('/users/login');
-        res.send("Ban ko phai khoa")
+        res.render('error',{
+            title : "This is private page"
+        })
     }
 }
 module.exports.reqIsGV = function (req, res, next) {
@@ -31,7 +35,9 @@ module.exports.reqIsGV = function (req, res, next) {
         //tra lai 1 trang voi noi dung
         // ban ko co quyen han trong trang nau
         // res.redirect('/users/login');
-        res.send("Ban ko phai giang vien")
+        res.render('error',{
+            title : "This is private page"
+        })
     }
 }
 module.exports.userIsGV = function (user) {
@@ -125,7 +131,9 @@ module.exports.checkOpenPortDK = function (req,res,next) {
     if (openPortDK.moDangKi){
         return next();
     }else{
-        res.send("Chua mo cong dang ki khoa luan")
+        res.render('error',{
+            title : "Khoa chưa mở đăng kí"
+        })
     }
 }
 //Xu ly ten giang vien

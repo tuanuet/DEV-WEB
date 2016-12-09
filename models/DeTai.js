@@ -109,11 +109,24 @@ module.exports = function (sequelize, DataTypes) {
                     }]
                 }).then(success).catch(failure)
             },
-            getDeTaiAndSinhVienAndGiangVien :function (page,models,success,failure) {
+            getDeTaiAndSinhVienAndGiangVien :function (khoaId,page,models,success,failure) {
                 this.findAll({
                     include : [
                         {model : models.SinhVien},
-                        {model : models.GiangVien}
+                        {
+                            model : models.GiangVien,
+                            include : [
+                                {
+                                    model : models.DonVi,
+                                    include : {
+                                        model : models.Khoa,
+                                        where : {
+                                            id : khoaId
+                                        }
+                                    }
+                                }
+                            ]
+                        }
                     ],
                     limit : 10,
                     offset : page*10,
@@ -153,11 +166,23 @@ module.exports = function (sequelize, DataTypes) {
                     where : {SinhVienId : SinhVienId}
                 }).then(success).catch(failure)
             },
-            updateDuocBaoVeBySinhVienId :function (SinhVienId,data,success,failure) {
-                this.update({
-                    duocBaoVeKhong: data.duocBaoVeKhong
-                },{
-                    where : {SinhVienId : SinhVienId}
+            /**
+             * tim kiem de tai chư nộp hồ sơ
+             * xoa tất cả đề tài ko nộp hồ sơ
+             * @param models
+             * @param success
+             * @param failure
+             */
+            validateHoSo : function (models,success,failure) {
+                this.findAll({
+                    where : {
+                        nopHoSoChua : 1,
+                        duocBaoVeKhong : 1
+                    },
+                    include: [
+                        {model : models.SinhVien},
+                        {model : models.GiangVien}
+                    ]
                 }).then(success).catch(failure)
             }
         }

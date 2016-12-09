@@ -25,7 +25,7 @@ var transporter = nodemailer.createTransport(smtpTransport);
 
 //MODULE 5 DANG KI BAO VE
 /**
- * Gửi mail cho tat ca
+ * Gửi mail cho tat ca thông báo đăng kí bảo vệ
  */
 router.get('/mailthongbaodangkibaove',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var listEmail = new Array()
@@ -67,15 +67,20 @@ router.get('/mailthongbaodangkibaove',utility.reqIsAuthen,utility.reqIsKhoa,func
             //         })
             // });
         },function (err) {
-
+            res.render('error',{
+                title : "Lỗi hệ thống"
+            })
         })
     },function (err) {
-
+        res.render('error',{
+            title : "Lỗi hệ thống"
+        })
     })
 
 })
 
-router.get('/quanlydetai',function (req,res) {
+//trang admin quan lý để tài
+router.get('/quanlydetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var page;
     if(req.query.page && validator.isInt(req.query.page.toString())) {
         page = req.query.page;
@@ -85,7 +90,7 @@ router.get('/quanlydetai',function (req,res) {
     models.DeTai.getCountDeTai(function (result) {
         var soPage = result.count/10;
 
-        models.DeTai.getDeTaiAndSinhVienAndGiangVien(page,models,function (data) {
+        models.DeTai.getDeTaiAndSinhVienAndGiangVien(req.user.id,page,models,function (data) {
             res.render('admin/quanlydetai',{
                     title : "Quản lý đề tài",
                     data : data,
@@ -94,19 +99,21 @@ router.get('/quanlydetai',function (req,res) {
                 })
             },function () {
                 res.render('error',{
-                    message : "Lỗi hệ thống"
+                    title : "Lỗi hệ thống"
                 })
             })
     },function (err) {
         res.render('error',{
-            message : "Lỗi hệ thống"
+            title : "Lỗi hệ thống"
         })
     })
 
 })
 
-
-router.get('/mailthongbaochuadangki',function (req,res) {
+/**
+ * gửi mail to sinh vien chưa nộp hô sơ khóa luân
+ */
+router.get('/sendmailthongbaodangki',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var listEmail = new Array()
     models.DeTai.getDeTaiAndSinhVienChuaNop(models,function (data) {
         for(var i=0;i<data.length;i++){
@@ -147,7 +154,7 @@ router.get('/mailthongbaochuadangki',function (req,res) {
 })
 
 //tim kiem sinh vien khi trong trong trang quan ly
-router.post('/searchsinhvien',function (req,res) {
+router.post('/searchsinhvien',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     if(req.body&&req.body.id){
         var idSinhVien = req.body.id;
         models.DeTai.getDeTaiAndSinhVienAndGiangVienBySinhVienId(idSinhVien,models,function (data) {
@@ -168,25 +175,11 @@ router.post('/searchsinhvien',function (req,res) {
 /**
  * chuyển đổi trạng thái nộp quyển,được bảo vệ không,nộp hồ sơ
  * @param nopQuyen
- * @param baoVe
  * @param nopHoSo
  */
-router.post('/updatedetai',function (req,res) {
+router.post('/updatedetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     if(req.body) {
-        if(req.body.duocBaoVeKhong==0|| req.body.duocBaoVeKhong==1){
-            var data = {
-                duocBaoVeKhong: req.body.duocBaoVeKhong
-            }
-            models.DeTai.updateDuocBaoVeBySinhVienId(req.body.id, data, function (affectCount) {
-                if (affectCount == 0) {
-                    res.json({msg: "Không tìm thấy sinh viên"})
-                } else {
-                    res.json({msg: "update thành công"})
-                }
-            }, function (err) {
-                res.json({msg: "Lỗi phát sinh từ hệ thống"})
-            })
-        }else if(req.body.nopHoSoChua == 0 ||req.body.nopHoSoChua ==1){
+        if(req.body.nopHoSoChua == 0 ||req.body.nopHoSoChua ==1){
             var data = {
                 nopHoSoChua: req.body.nopHoSoChua
             }
@@ -221,7 +214,24 @@ router.post('/updatedetai',function (req,res) {
         })
     }
 })
-
+/**
+ * kiểm tra hợ thức hồ sơ và chốt danh sách
+ * kiểm tra xem detai nop ho so chua
+ * + chua nop ho so xoa luon de tai
+ * trả về 1 bẳng gồm sinh viên, giảng viên , đề tài
+ */
+router.get('/validatehoso',function (req,res) {
+    models.DeTai.validateHoSo(models,function (data) {
+        res.render('admin/quanlydetai-validate',{
+            title : "Kiểm tra hợp thức hồ sơ",
+            data : data
+        })
+    },function (err) {
+        res.json({
+            title  : 'system has fail'
+        })
+    })
+})
 function validateUpdateDeTai(data) {
     return (
         validator.isInt(data.id.toString())
