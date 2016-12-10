@@ -1,0 +1,179 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+
+<head>
+<meta charset="utf-8">
+    <title>Microsoft Office HTML Example</title>
+    <style type="text/css">
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>Title level 1</h1>
+    <h2>Title level 2</h2>
+    <h3>Title level 3</h3>
+    <p>Text in level 3</p>
+    <h2>2nd title level 2</h2>
+    <h3>Another level 3 title</h3> List:
+    <ul>
+        <li>element 1</li>
+        <li>element 2</li>
+        <li>element 3</li>
+        <ul>
+            <li>element 4</li>
+            <li>element 5</li>
+            <li>element 6</li>
+            <ul>
+                <li>element 7</li>
+                <li>element 8</li>
+            </ul>
+        </ul>
+        <li>element 9</li>
+        <li>element 10</li>
+    </ul>
+    <table width="80%">
+                    <tr>
+                        <th>TT</th>
+                        <th>Mã số</th>
+                        <th style="width: 120px;">Họ và tên</th>
+                        <th>Phòng thi</th>
+                        <th>(W)</th>
+                        <th>(C)</th>
+                        <th>(D)</th>
+                        <th>(X)</th>
+                        <th>(S)</th>
+                        <th>Đăng nhập lại (Lần)</th>
+                        <th>Bắt đầu làm bài</th>
+                        <th>Lưu bài lần cuối</th>
+                        <th>IP</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>12020019</td>
+                        <td>Vũ Đức Bình</td>
+                        <td>1</td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>0</td>
+                        <td>6/10/2015 6:31:22PM</td>
+                        <td>6/10/2015 6:31:24PM</td>
+                        <td>127.0.0.1</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>12020019</td>
+                        <td>Vũ Đức Bình</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>10</td>
+                        <td>6/10/2015 6:31:22PM</td>
+                        <td>6/10/2015 6:31:24PM</td>
+                        <td>127.0.0.1</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>12020019</td>
+                        <td>Vũ Đức Bình</td>
+                        <td>1</td>
+                        <td>x</td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>10</td>
+                        <td>6/10/2015 6:31:22PM</td>
+                        <td>6/10/2015 6:31:24PM</td>
+                        <td>127.0.0.1</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>12020019</td>
+                        <td>Vũ Đức Bình</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>10</td>
+                        <td>6/10/2015 6:31:22PM</td>
+                        <td>6/10/2015 6:31:24PM</td>
+                        <td>127.0.0.1</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>12020019</td>
+                        <td>Vũ Đức Bình</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>10</td>
+                        <td>6/10/2015 6:31:22PM</td>
+                        <td>6/10/2015 6:31:24PM</td>
+                        <td>127.0.0.1</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>12020019</td>
+                        <td>Vũ Đức Bình</td>
+                        <td>1</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>10</td>
+                        <td>6/10/2015 6:31:22PM</td>
+                        <td>6/10/2015 6:31:24PM</td>
+                        <td>127.0.0.1</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>12020019</td>
+                        <td>Vũ Đức Bình</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td></td>
+                        <td>10</td>
+                        <td>6/10/2015 6:31:22PM</td>
+                        <td>6/10/2015 6:31:24PM</td>
+                        <td>127.0.0.1</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>12020019</td>
+                        <td>Vũ Đức Bình</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>x</td>
+                        <td></td>
+                        <td>10</td>
+                        <td>6/10/2015 6:31:22PM</td>
+                        <td>6/10/2015 6:31:24PM</td>
+                        <td>127.0.0.1</td>
+                    </tr>
+                </table>
+
+</body>
+
+</html>
