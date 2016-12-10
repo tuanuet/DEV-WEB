@@ -5,7 +5,12 @@ var express = require('express');
 var router = express.Router();
 var utility = require('../../Utility/utility')
 var models = require('../../models');
-var validator = require('validator')
+var validator = require('validator');
+var multipart  = require('connect-multiparty');
+var multipartMiddleware = multipart();
+var path = require('path');
+var fs = require('fs')
+
 router.get('/',utility.reqIsAuthen,function (req,res) {
     res.send('day la trang sinh vien')
 })
@@ -18,6 +23,41 @@ router.get('/myprofile',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
     },function (err) {
         res.json(err)
     })
+})
+
+//upload hinh anh
+router.post('/updateavatar',multipartMiddleware,function (req,res) {
+    var file = req.files.file;
+
+    // Tên file
+    var originalFilename = file.name;
+    console.log("Ten file vua up: "+ originalFilename)
+    // File type
+    var fileType         = file.type.split('/')[1];
+
+    // File size
+    var fileSize         = file.size;
+    // Đường dẫn lưu ảnh
+    var pathUpload       =  utility.getMainHost(__dirname)  + '/public/image/' + originalFilename;
+    var srcAvatar = '/image/' + originalFilename
+
+    console.log(pathUpload)
+    fs.readFile(file.path, function(err, data) {
+        if(!err) {
+            fs.writeFile(pathUpload, data, function(err) {
+                if(!err){
+                    models.SinhVien.updateAvatar(req.user.id,srcAvatar,function (sv) {
+                        res.json({msg : "Update thành công"});
+                    },function () {
+                        res.json({msg : "Update lỗi"});
+                    })
+                }else {
+                    res.json({msg : "Update lỗi"});
+                }
+            });
+
+        }
+    });
 })
 //Trang setting
 router.get('/settings',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {

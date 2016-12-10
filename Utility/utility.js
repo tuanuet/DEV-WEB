@@ -149,3 +149,18 @@ module.exports.chuyendoichuhoa =function(str)
     }
     return strchuyendoi;
 }
+//lấy hostname
+module.exports.getMainHost =function(str)
+{
+    var _dir = "";
+    var host = str.split("\\");
+    for(var i=0;i<host.length-2;i++){
+        if(i==host.length-2){
+            _dir +=host[i]
+        }else {
+            _dir += host[i]+'\\'
+        }
+
+    }
+    return _dir;
+}

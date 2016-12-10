@@ -16,6 +16,7 @@ var models = require('./models')
 var openportDKKL = require('./config/config_Khoa_moDangKi.json')
 var utility = require('./Utility/utility')
 var json2xls = require('json2xls');
+var _dirname = require('./config/config.json')
 
 var app = express();
 
@@ -29,7 +30,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(__dirname + '/static'));
+
 app.use(json2xls.middleware)
 
 // Express Session
@@ -81,21 +84,20 @@ app.use(function (data, req, res, next) {
  * cac bien nay dc dung trong view
  */
 app.use(function (data, req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  res.locals.user = req.user || null;
-  res.locals.typeuser = utility.userIsWho(req);
-  res.locals.linhvuc = data;
-  res.locals.openportDKKL = openportDKKL.moDangKi;
-  next();
+      res.locals.success_msg = req.flash('success_msg');
+      res.locals.error_msg = req.flash('error_msg');
+      res.locals.error = req.flash('error');
+      res.locals.user = req.user || null;
+      res.locals.typeuser = utility.userIsWho(req);
+      res.locals.linhvuc = data;
+      res.locals.openportDKKL = openportDKKL.moDangKi;
+      next();
 });
 
 
 app.use('/', index);
 app.use("/intro", showall);
-app.use('/users',user)
-
+app.use('/users',user);
 
 app.use(function (req, res, next) {
     if(res.status(404 || 500))

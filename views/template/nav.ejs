@@ -28,7 +28,7 @@
                         <%} else {%>
                             <% if(typeuser == 2){%>
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
+                                    <img alt="" class="img-circle" src="<%= user.avatar%>">
                                     <span class="username"><%= user.tenKhoa%></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
@@ -45,7 +45,7 @@
                                 </ul>
                             <%} else if(typeuser == 1){%>
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
+                                    <img alt="" class="img-circle" src="<%= user.avatar%>">
                                     <span class="username"><%= user.tenGiangVien%></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
@@ -62,7 +62,7 @@
                                 </ul>
                             <% } else  {%>
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt="" class="img-circle" src="/assets/admin/layout3/img/avatar.png">
+                                    <img alt="" class="img-circle" src="<%= user.avatar%>">
                                     <span class="username username-hide-mobile"><%= user.tenSinhVien%></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
@@ -160,8 +160,8 @@
                         <a href="/error" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Đăng kí khóa luận">
                             Đăng kí khóa luận </a>
                         <%} else if(user && typeuser == 2 ){%>
-                        <a href="/user/khoa/dangkikhoaluan" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Đăng kí khóa luận">
-                            Đăng kí khóa luận </a>
+                        <a href="/users/khoa/quanlydetai" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Đăng kí khóa luận">
+                            Quản lý đề tài </a>
                         <%} else if(user && typeuser == 1 ){%>
                         <a href="/users/giangvien/dangkikhoaluan" class="tooltips" data-container="body" data-placement="bottom" data-html="true" data-original-title="Đăng kí khóa luận">
                             Đăng kí khóa luận </a>

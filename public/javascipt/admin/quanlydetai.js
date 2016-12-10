@@ -36,51 +36,50 @@ jQuery(document).ready(function() {
             $('.newRow').remove();
         }
     })
-    //send trang thai nguoi dung
-    var input = document.getElementsByClassName('input');
-    for(var i=0;i<input.length;i++){
-        input[i].onchange = function (event) {
-            var checkbox = event.target;
-            var data;
-            var idSinhVien = parseInt(event.path[4].childNodes[1].outerText)
-            if (checkbox.checked) {
-                if(event.target.className.indexOf('nopHoSoChua')>=0){
-                    data = {
-                        id:idSinhVien,
-                        nopHoSoChua : 1
-                    }
-                } else if(event.target.className.indexOf('nopQuyenChua')>=0){
-                    data = {
-                        id:idSinhVien,
-                        nopQuyenChua : 1
-                    }
+    $('.input').change(function (even) {
+        var query = $(this).parent().parent().parent().context.className
+        var idSinhVien = parseInt($(this).parent().parent().parent().parent().children()[0].innerText)
+        var data;
+        var checkbox = even.target
+        if (checkbox.checked) {
+            if(query.indexOf('nopHoSoChua')>=0){
+                data = {
+                    id:idSinhVien,
+                    nopHoSoChua : 1
                 }
-            } else {
-                if(event.target.className.indexOf('nopHoSoChua')>=0){
-                    data = {
-                        id:idSinhVien,
-                        nopHoSoChua : 0
-                    }
-                } else if(event.target.className.indexOf('nopQuyenChua')>=0){
-                    data = {
-                        id:idSinhVien,
-                        nopQuyenChua : 0
-                    }
+            } else if(query.indexOf('nopQuyenChua')>=0){
+                data = {
+                    id:idSinhVien,
+                    nopQuyenChua : 1
                 }
             }
-            console.log(data)
-            $.ajax({
-                url: '/users/khoa/updatedetai',
-                type: 'post',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function(data) {
-                    if(data.msg){
-                        alert(data.msg)
-                    }else {
-                    }
+        } else {
+            if(query.indexOf('nopHoSoChua')>=0){
+                data = {
+                    id:idSinhVien,
+                    nopHoSoChua : 0
                 }
-            });
+            } else if(query.indexOf('nopQuyenChua')>=0){
+                data = {
+                    id:idSinhVien,
+                    nopQuyenChua : 0
+                }
+            }
         }
-    }
+        console.log(data)
+        $.ajax({
+            url: '/users/khoa/updatedetai',
+            type: 'post',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function(data) {
+                if(data.msg){
+                    alert(data.msg)
+                }else {
+                }
+            }
+        });
+    })
+
+
 });

@@ -9,6 +9,8 @@ var giangvien = require('../routes/giangvien/giangvien')
 var sinhvien = require('../routes/sinhvien/sinhvien')
 var validator = require('validator')
 
+
+
 // Login
 router.get('/login', utility.reqIsNotAuthen, function (req, res) {
     res.render('login', {
@@ -134,6 +136,8 @@ router.get('/logout', function (req, res) {
 
     res.redirect('/users/login');
 });
+
+
 router.use('/khoa', khoa)
 router.use('/giangvien', giangvien)
 router.use('/sinhvien', sinhvien)

@@ -122,6 +122,12 @@ module.exports = function (sequelize, DataTypes) {
                         duocDangKiKhoaLuanKhong : 1
                     }
                 }).then(success).catch(failure)
+            },
+            updateAvatar : function (id,url,success,failure) {
+                this.update(
+                    {avatar : url},{
+                    where : {id : id}
+                }).then(success).catch(failure)
             }
         }
     });

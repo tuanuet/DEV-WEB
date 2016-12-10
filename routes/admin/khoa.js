@@ -11,6 +11,7 @@ var multipartMiddleware = multipart();
 var validator = require('validator')
 var openPortDK = require('../../config/config_Khoa_moDangKi.json');
 var nodemailer = require('nodemailer');
+
 var smtpTransport = {
     host: "ctmail.vnu.edu.vn", // hostname
     secure: false, // use SSL

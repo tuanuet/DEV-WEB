@@ -139,6 +139,12 @@ module.exports = function (sequelize, DataTypes) {
                 }, {
                     where : {id : idGV}
                 }).then(callback)
+            },
+            updateAvatar : function (id,url,success,failure) {
+                this.update(
+                    {avatar : url},{
+                        where : {id : id}
+                    }).then(success).catch(failure)
             }
         }
     });
