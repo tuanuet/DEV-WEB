@@ -187,54 +187,37 @@ router.post("/savepass", function(req, res) {
 /**
  * Xử lý khi gửi form cập nhật thông tin
  */
-router.post("/updateinfor", function (req, res) {
-    models.GiangVien.updateChudeNghienCuu(req.body.id, req.body.chude, function () {
+router.post("/updateinfor",
+    updateChuDeMoi, deleteLinhVucOfGV, updateLinhVucForGV,
+    function (req, res) {
         res.json({
             status : 200,
             msg : "thanh cong",
         })
-    });
-
-})
+    })
 
 
 
 function updateChuDeMoi(req, res, next) {
     models.GiangVien.updateChudeNghienCuu(req.body.id, req.body.chude, function () {
-        return next;
+        return next();
     });
 }
 
-function updateLinhVucNhoForGV(req, res, next) {
-    for(var i = 0; i < req.body.linhvuc2.length; i++) {
-        models.LinhVucLienQuan.addNew(parseInt(req.body.linhvuc2[i]), req.body.id, function () {
-            if(i == req.body.linhvuc2.length - 1) {
-                next;
-            }
-        })
-    }
-}
-
-function updateLinhVucLonForGV(req, res, next) {
-    for(var i = 0; i < req.body.linhvuc.length; i++) {
-        models.LinhVucLienQuan.addNew(parseInt(req.body.linhvuc[i]), req.body.id, function () {
-            if(i = req.body.linhvuc.lenghth-1) {
-                next;
-            }
-        })
-    }
-}
-
-function updateLinhVucNhoCuaLonForGV(req, res, next) {
-    models.LinhVuc.getChildLevel1OfParen(parseInt(req.body.linhvuc[i]), function (data) {
-        for(var j = 0; j < data.length; j++) {
-            models.LinhVucLienQuan.addNew(data[j].id, req.body.id, function () {
-                if(i == req.body.linhvuc2.length) {
-                    next;
-                }
-            })
-        }
+function deleteLinhVucOfGV(req, res, next) {
+    models.LinhVucLienQuan.deleteAllLinhVucOf(req.user.id, function () {
+        return next();
     })
+}
+
+function updateLinhVucForGV(req, res, next) {
+    for (var i = 0; i < req.body.arrayListLV.length; i++) {
+        models.LinhVucLienQuan.addNew(req.user.id, req.body.arrayListLV[i], function () {
+            if (i >= req.body.arrayListLV.length - 1) {
+                return next();
+            }
+        })
+    }
 }
 
 module.exports = router;
