@@ -74,23 +74,24 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
 })
 //render trang dang ki cho sinh vien
 router.get('/dangkikhoaluan',function (req,res) {
-    res.render('student/thongTinDeTai', {
-        title: "Đăng kí khóa luận",
-        
+    res.render('student/SVdangkidetai', {
+        title: "Đăng kí đề tài",
     })
 })
 //sinh vien dang ki khoa luan
-router.post('/dangkikhoaluan',function (req,res) {
+router.post('/insertdetai',function (req,res) {
+    console.log(req.body)
     if(req.body){
         var data = {
             GiangVienId : req.body.GiangVienId,
-            SinhVienId :req.body.SinhVienId,
+            SinhVienId :req.user.id,
             tenDeTai : req.body.tenDeTai,
             thoiGianNop: null,
             thoiGianSua: null,
             nopHoSoChua: 0,
             duocBaoVeKhong: 0,
-            nopQuyenChua: 0
+            nopQuyenChua: 0,
+            duocGiangVienChapNhan : 0
         }
         if(validateDeTai(data)){
             models.DeTai.insertDeTai(data,models,function () {
@@ -99,28 +100,28 @@ router.post('/dangkikhoaluan',function (req,res) {
                 })
             },function (msg) {
                 res.json({
-                    msg : msg
+                    msg : msg,
+                    status : 400
                 })
             })
         }
         else {
             res.json({
-                msg : "sai form, vui lòng xem lại"
+                msg : 'Sai form vui lòng kiểm tra lại',
+                status : 400
             })
         }
     }else {
         res.json({
-            msg : "Quá trình đăng kí bị lỗi, vui lòng xem lại"
+            msg : "Quá trình đăng kí bị lỗi, vui lòng xem lại",
+            status : 400
         })
     }
 })
 function validateDeTai(data) {
     return (
-          !validator.isEmpty(data.GiangVienId)
-        &&!validator.isEmpty(data.SinhVienId)
-        &&!validator.isEmpty(data.tenDeTai)
-        &&validator.isAscii(data.GiangVienId.toString())
-        &&validator.isInt(data.SinhVienId.toString())
+          !validator.isEmpty(data.GiangVienId.toString())
+        &&!validator.isEmpty(data.tenDeTai.toString())
     )
 }
 module.exports = router;

@@ -103,23 +103,24 @@ function checkContain(idLv, array) {
 router.get('/dangkikhoaluan',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
     models.DeTai.getDeTaiAndSinhVienByGiangVienId(req.user.id,models,function (data) {
         res.render('giangvien/dkkl_giangvien',{
-            title : "Danh sách giảng viên đăng kí khóa luận",
+            title : "Danh sách sinh viên đăng kí khóa luận",
             data : data
         })
     },function (err) {
         res.render('error',{
-            message : "Hệ thống phát sinh lỗi vui lòng thử lại"
+            title : "Hệ thống phát sinh lỗi vui lòng thử lại"
         })
     })
 
 })
-/*
- * post control gom
+/**
+ * mudule 3
+ * post control gom (chấp nhận hoặc xóa)
  * + control = submit || delete
  * + idSinhVien
  */
 router.post('/controldetai',utility.reqIsAuthen,utility.reqIsGV,function (req,res) {
-    if(req.body&&req.body.control == 'submit'){
+    if(req.body&&req.body.id&&req.body.control == 'submit'){
         var svId = req.body.id ;
         models.DeTai.submitDeTaiBySinhVienId(svId,function () {
             res.json({

@@ -47,6 +47,9 @@ module.exports = function (sequelize, DataTypes) {
                     .then(callback)
                     .catch(callback2)
             },
+            insertOneSV : function (sv,success,failure) {
+                this.create(sv).then(success).catch(failure)
+            },
             getSinhVienByTaiKhoan: function (taiKhoan, callback) {
                 this.findOne({
                     where: {

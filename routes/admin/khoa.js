@@ -9,9 +9,7 @@ var XLSX = require('xlsx');
 var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var validator = require('validator')
-
 var nodemailer = require('nodemailer');
-
 var smtpTransport = {
     host: "ctmail.vnu.edu.vn", // hostname
     secure: false, // use SSL
@@ -26,25 +24,10 @@ var smtpTransport = {
 }
 var transporter = nodemailer.createTransport(smtpTransport);
 
-router.get('/', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
-    res.send('day la trang admin-khoa')
-})
 
 router.get('/admin', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('admin/upload-giangvien',{
         title : "Thêm giảng viên"
-    })
-})
-
-//trang profile khoa
-router.get('/profile/:idKhoa',function (req,res) {
-    var idKhoa = req.params.idKhoa;
-    console.log(idKhoa);
-    models.Khoa.getKhoaAndDonViByIdKhoa(idKhoa,models,function (data) {
-        var khoa = data.dataValues;
-        //render
-        res.json(khoa)
-
     })
 })
 
@@ -74,151 +57,7 @@ router.get('/sendmailtogiangvien',utility.reqIsAuthen,utility.reqIsKhoa,function
             })
     });
 })
-//Gui mail đén tất cả các sinh viên có trạng thái được đăng kí
-router.get('/sendmailtosinhvienduocdangki',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
-    models.SinhVien.getSinhVienDuocDangKiKhoaLuan(function (sv) {
-        if(sv){
-            var listEmail = "";
-            for(var i=0;i<sv.length;i++){
-                if(i==sv.length -1){
-                    listEmail += sv[i].vnuMail
-                }else
-                    listEmail += sv[i].vnuMail + ' ,'
-            }
-            // setup e-mail data with unicode symbols
-            //noi dung mail nhe
-            var mailOptions = {
-                from: 'Hệ thống đăng kí khóa luận', // sender address
-                to: listEmail, // list of receivers
-                subject: 'Hệ thống đăng kí khóa luận', // Subject line
-                text: 'Hệ thống thông báo, Bạn đã được phép đăng kí khóa luận trên hệ thống\n Trân trọng thông báo!'
-            };
 
-            // // send mail with defined transport object
-            // transporter.sendMail(mailOptions, function(error, info){
-            //     if(error){
-            //         console.log(error);
-            //         res.json({
-            //             msg : "Thất bại"
-            //         })
-            //     }else
-            //         res.json({
-            //             msg:"Thành công"
-            //         })
-            // });
-        }
-    },function (err) {
-        res.json({
-            msg: "Hệ thống có lỗi, vui lòng kiểm tra lại"
-        })
-    })
-
-})
-//test mo cong dang ki khoa luan
-router.get('/testopenport',function (req,res) {
-    var openPortDK = require('../../config/config_Khoa_moDangKi.json');
-    switch ('fit'){
-        case 'fit':{
-            res.json({
-                trangthai : openPortDK.fit
-            })
-            break;
-        }
-        case 'fet':{
-            res.json({
-                trangthai : openPortDK.fet
-            })
-            break;
-        }
-        case 'fema':{
-            res.json({
-                trangthai : openPortDK.fema
-            })
-            break;
-        }
-        case 'fepn':{
-            res.json({
-                trangthai : openPortDK.fepn
-            })
-            break;
-        }
-    }
-
-})
-//Mo hoac dong cong dang ki
-router.post('/openport',function (req,res) {
-    var openPortDK = require('../../config/config_Khoa_moDangKi.json');
-    if(req.body.permission){
-        if(req.body.permission == 'open'){
-            switch (req.body.id){
-                case 'fit':{
-                    openPortDK.fit = true;
-                    break;
-                }
-                case 'fet':{
-                    openPortDK.fet = true;
-                    break;
-                }
-                case 'fema':{
-                    openPortDK.fema = true;
-                    break;
-                }
-                case 'fepn':{
-                    openPortDK.fepn = true;
-                    break;
-                }
-            }
-            res.json({
-                msg: 'đã mở cổng đăng kí'
-            })
-
-        }else {
-            switch (req.user.id){
-                case 'fit':{
-                    openPortDK.fit = false;
-                    break;
-                }
-                case 'fet':{
-                    openPortDK.fet = false
-                    break;
-                }
-                case 'fema':{
-                    openPortDK.fema = false;
-                    break;
-                }
-                case 'fepn':{
-                    openPortDK.fepn = false;
-                    break;
-                }
-            }
-            res.json({
-                msg: 'đã đóng cổng đăng kí'
-            })
-        }
-    }else {
-        switch (req.user.id){
-            case 'fit':{
-                openPortDK.fit = false;
-                break;
-            }
-            case 'fet':{
-                openPortDK.fet = false
-                break;
-            }
-            case 'fema':{
-                openPortDK.fema = false;
-                break;
-            }
-            case 'fepn':{
-                openPortDK.fepn = false;
-                break;
-            }
-        }
-        res.json({
-            msg: 'Có lỗi xảy ra'
-        })
-    }
-})
 //ghi file tra ve admin
 router.get('/getXLSX',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var data = [{
@@ -231,61 +70,7 @@ router.get('/getXLSX',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     res.xls('data.xlsx',data)
 })
 
-/**
- * Kiếm tra đóng cổng rồi chót đề tài
- * xóa tất cả các đề tài chưa được chấp nhận
- *
- */
-router.get('/chotdetaiduocnhapnhan',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
-    models.DeTai.deleteDeTaiByKoDuocChapNhan(function () {
-        res.json({
-            msg : "Chốt đề tài thành công"
-        })
-    },function () {
-        res.json({
-            msg : "Chốt đề tài thất bại"
-        })
-    })
-})
-//update sinh vien duoc dang ki
-router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
-    if(req.body.id){
-        var id = req.body.id
-        if(validator.isInt(id.toString())&&!validator.isEmpty(id.toString())){
-            models.SinhVien.updateSinhVienDuocDangKiByID(req.body.id,function () {
-                res.json({
-                    msg : "Update thanh cong",
-                    status : 200
-                })
-            },function () {
-                res.json({
-                    msg : "Update that bai",
-                    status : 500
-                })
-            })
-        }
-    }else{
-        res.json({
-            msg : "Update that bai",
-            status : 500
-        })
-    }
-
-})
-
-//trang Khoa => DonVi( co thong tin don vi va cac giao vien cua don vi do)
-router.get('/donvi/:idDonVi',   function (req,res) {
-    var idDonVi = req.params.idDonVi;
-    console.log(idDonVi);
-    models.DonVi.getDonViAndGiangVienByIdDonVi(idDonVi,models,function (data) {
-        var donvi = data.dataValues;
-        //render
-        res.json(donvi);
-    })
-})
-
 //create 1 giang vien ~ ho tro nhap tay
-//users/khoa/insertonegv
 router.post('/insertonegv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     if(req.body){
         var data = req.body;
@@ -320,15 +105,53 @@ router.post('/insertonegv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
     }
 })
 
+/**
+ * Hộ trơ nhập tay sinh viên
+ */
+router.post('/insertonesv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+    if(req.body){
+        var data = req.body;
+        //kiem tra xem trong db co chua
+        // neu chua co thi insert
+        //neu co roi thì bo qua insert chay ham tiep theo
+        if(validateSV(data)){
+            var sv = {
+                id : data.id,
+                tenSinhVien : data.tenSinhVien,
+                vnuMail : data.vnuMail,
+                duocDangKiKhoaLuanKhong : 0,
+                KhoaHocKh : data.KhoaHoc,
+                NganhHocKh : data.NganhHoc,
+                matKhau : "12345"
+            }
+            models.SinhVien.insertOneSV(sv,function (sv) {
+                res.json({
+                    msg: "insert thành công"
+                })
+            },function (error) {
+                if(error){
+                    res.json({
+                        msg: "Sinh viên đã tồn tại!",
+                        error : error.name
+                    })
+                }
+            })
+        }
+    }else {
+        res.json({
+            msg: "Thêm sinh viên bị lỗi!"
+        })
+    }
+})
+
 /*
  * them du lieu Sinh vien bang file xlsx
- *
  * can kiem tra dau vao de insert vao bang
  */
 router.post('/insertbulkgv',utility.reqIsAuthen,
     utility.reqIsKhoa,
     multipartMiddleware,
-    getArrayFromXlsx,
+    utility.getArrayFromXlsx,
     insertDataToGiangVien,
     function (req, res) {
         res.json({
@@ -336,16 +159,14 @@ router.post('/insertbulkgv',utility.reqIsAuthen,
         })
     }
 )
-
 /*
  * them du lieu giao vien bang file xlsx
- *
  * can kiem tra dau vao de insert vao bang
 */
 router.post('/insertbulksv',utility.reqIsAuthen,
     utility.reqIsKhoa,
     multipartMiddleware,
-    getArrayFromXlsx,
+    utility.getArrayFromXlsx,
     insertDataToSinhVien,
     function (req, res) {
         res.json({
@@ -353,64 +174,8 @@ router.post('/insertbulksv',utility.reqIsAuthen,
         })
     }
 )
-/*
- * Thay đổi trang thai tu ko đc dang kí thanh duoc dang ki
- * */
-router.post('/updatesinhvien',utility.reqIsAuthen,
-    utility.reqIsKhoa,
-    multipartMiddleware,
-    getArrayFromXlsx,
-    updateSinhVienDuocDangki,
-    function (req, res) {
-        res.json({
-            msg: "Insert thanh cong"
-        })
-    }
-)
 
 
-
-
-function updateSinhVienDuocDangki(data,req,res,next) {
-    var svs = new Array();
-    // validate data
-    //
-    //start
-    for(var i=0;i<data.length;i++){
-        if(validateUpdateSinhVien(data[i])){
-            var sv = {
-                id : data[i].id,
-                tenSinhVien : data[i].tenSinhVien.trim(),
-                duocDangKiKhoaLuanKhong: 1
-            }
-            svs.push(sv)
-        }
-        else {
-            res.json({
-                msg : "import data false! please check again !",
-                situation : i
-            })
-        }
-    }
-    //update
-    models.SinhVien.updateSinhVienDuocDangKi(svs,function () {
-        console.log("Update thanh cong")
-        return next();
-    },function (position) {
-
-        res.json({
-            msg : "import data false! please check again",
-            position : position
-        })
-    })
-}
-function validateUpdateSinhVien(data) {
-    return (
-        !validator.isEmpty(data.id.toString())
-        && !validator.isEmpty(data.tenSinhVien)
-        && validator.isInt(data.id.toString())
-    )
-}
 function insertDataToGiangVien(data,req,res,next) {
     var gvs = new Array();
     alert(1);
@@ -485,66 +250,6 @@ function insertDataToSinhVien(data,req,res,next) {
         })
     })
 }
-/*
- * đọc dữ liệu theo hàng
- *
- */
-function getArrayFromXlsx(req,res,next) {
-
-    var file = req.files.file;
-
-    // Tên file
-    var originalFilename = file.name;
-    console.log("Ten file vua up: "+ originalFilename)
-    // File type
-    var fileType         = file.type.split('/')[1];
-
-    // File size
-    var fileSize         = file.size;
-    // Đường dẫn lưu ảnh
-    var pathUpload       = __dirname + '/xlsx/' + originalFilename;
-
-    // START READ XLSX DATA
-    //doc du lieu tu xlsx dua ve object
-    var workbook = XLSX.readFile(file.path);
-    var sheet_name_list = workbook.SheetNames;
-    var data = [];
-    sheet_name_list.forEach(function(y) {
-        var worksheet = workbook.Sheets[y];
-        var headers = {};
-
-        for(z in worksheet) {
-            if(z[0] === '!') continue;
-            //parse out the column, row, and value
-            var tt = 0;
-            for (var i = 0; i < z.length; i++) {
-                if (!isNaN(z[i])) {
-                    tt = i;
-                    break;
-                }
-            };
-            var col = z.substring(0,tt);
-            var row = parseInt(z.substring(tt));
-            var value = worksheet[z].v;
-
-            //store header names
-            if(row == 1 && value) {
-                headers[col] = value;
-                continue;
-            }
-
-            if(!data[row]) data[row]={};
-            data[row][headers[col]] = value;
-        }
-
-        //drop those first two rows which are empty
-        data.shift();
-        data.shift();
-    });
-
-    return next(data);
-}
-
 function validateGV(data) {
     return (
         !validator.isEmpty(data.tenGiangVien)
@@ -557,7 +262,6 @@ function validateGV(data) {
     )
 }
 function validateSV(data) {
-
     return (
         data.id
         && !validator.isEmpty(data.tenSinhVien)
@@ -574,6 +278,9 @@ function validateSV(data) {
 var createLv = require('./createLV');
 var module4 = require('./suadoidetai');
 var module5 = require('./dangkibaove');
+var module3 = require('./dangkidetai');
+
+router.use('/',module3);
 router.use('/',createLv);
 router.use('/',module4);
 router.use('/',module5);

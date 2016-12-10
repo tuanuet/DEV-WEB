@@ -173,7 +173,7 @@ router.post('/searchsinhvien',utility.reqIsAuthen,utility.reqIsKhoa,function (re
 })
 
 /**
- * chuyển đổi trạng thái nộp quyển,được bảo vệ không,nộp hồ sơ
+ * chuyển đổi trạng thái nộp quyển,nộp hồ sơ
  * @param nopQuyen
  * @param nopHoSo
  */

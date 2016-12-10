@@ -96,10 +96,16 @@ module.exports = function (sequelize, DataTypes) {
                     where: {SinhVienId: svId}
                 }).then(sucess).catch(failure)
             },
-            deleteDeTaiByKoDuocChapNhan : function (success,failure) {
-                this.destroy({
-                    where : {duocGiangVienChapNhan : 0}
-                }).then(success).catch(failure)
+            chotDeTaiDuocChapNhan : function (success,failure) {
+                this.findAll({
+                    where : {duocGiangVienChapNhan : 1}
+                }).then(function (data) {
+                    this.destroy({
+                        where : {duocGiangVienChapNhan : 0}
+                    }).then(function () {
+                        success(data)
+                    }).catch(failure)
+                }).catch(failure)
             },
             getDeTaiAndSinhVienChuaNop : function (models,success,failure) {
                 this.findAll({
@@ -177,13 +183,26 @@ module.exports = function (sequelize, DataTypes) {
                 this.findAll({
                     where : {
                         nopHoSoChua : 1,
-                        duocBaoVeKhong : 1
+                        duocGiangVienChapNhan : 1
                     },
                     include: [
                         {model : models.SinhVien},
                         {model : models.GiangVien}
                     ]
-                }).then(success).catch(failure)
+                }).then(function (data) {
+
+                    this.destroy({
+                        where : {
+                            $or : [{
+                                nopHoSoChua : 0
+                            },{
+                                duocGiangVienChapNhan : 0
+                            }]
+                        }
+                    }).then(function () {
+                        success(data)
+                    }).catch(failure)
+                }).catch(failure)
             }
         }
     });

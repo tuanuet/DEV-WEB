@@ -128,13 +128,49 @@ module.exports.getDataForNav = function (next) {
      */
 
 module.exports.checkOpenPortDK = function (req,res,next) {
-    if (openPortDK.moDangKi){
-        return next();
-    }else{
-        res.render('error',{
-            title : "Khoa chưa mở đăng kí"
-        })
+    switch (req.user.id){
+        case 'fit':{
+            if (openPortDK.fit){
+                return next();
+            }else{
+                res.render('error',{
+                    title : "Khoa chưa mở đăng kí"
+                })
+            }
+            break;
+        }
+        case 'fet':{
+            if (openPortDK.fet){
+                return next();
+            }else{
+                res.render('error',{
+                    title : "Khoa chưa mở đăng kí"
+                })
+            }
+            break;
+        }
+        case 'fema':{
+            if (openPortDK.fema){
+                return next();
+            }else{
+                res.render('error',{
+                    title : "Khoa chưa mở đăng kí"
+                })
+            }
+            break;
+        }
+        case 'fepn':{
+            if (openPortDK.fepn){
+                return next();
+            }else{
+                res.render('error',{
+                    title : "Khoa chưa mở đăng kí"
+                })
+            }
+            break;
+        }
     }
+
 }
 //Xu ly ten giang vien
 module.exports.chuyendoichuhoa =function(str)
@@ -163,4 +199,59 @@ module.exports.getMainHost =function(str)
 
     }
     return _dir;
+}
+module.exports.getArrayFromXlsx = function(req,res,next) {
+
+    var file = req.files.file;
+
+    // Tên file
+    var originalFilename = file.name;
+    console.log("Ten file vua up: "+ originalFilename)
+    // File type
+    var fileType         = file.type.split('/')[1];
+
+    // File size
+    var fileSize         = file.size;
+    // Đường dẫn lưu ảnh
+    var pathUpload       = __dirname + '/xlsx/' + originalFilename;
+
+    // START READ XLSX DATA
+    //doc du lieu tu xlsx dua ve object
+    var workbook = XLSX.readFile(file.path);
+    var sheet_name_list = workbook.SheetNames;
+    var data = [];
+    sheet_name_list.forEach(function(y) {
+        var worksheet = workbook.Sheets[y];
+        var headers = {};
+
+        for(z in worksheet) {
+            if(z[0] === '!') continue;
+            //parse out the column, row, and value
+            var tt = 0;
+            for (var i = 0; i < z.length; i++) {
+                if (!isNaN(z[i])) {
+                    tt = i;
+                    break;
+                }
+            };
+            var col = z.substring(0,tt);
+            var row = parseInt(z.substring(tt));
+            var value = worksheet[z].v;
+
+            //store header names
+            if(row == 1 && value) {
+                headers[col] = value;
+                continue;
+            }
+
+            if(!data[row]) data[row]={};
+            data[row][headers[col]] = value;
+        }
+
+        //drop those first two rows which are empty
+        data.shift();
+        data.shift();
+    });
+
+    return next(data);
 }
