@@ -9,7 +9,7 @@ var XLSX = require('xlsx');
 var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var validator = require('validator')
-var openPortDK = require('../../config/config_Khoa_moDangKi.json');
+
 var nodemailer = require('nodemailer');
 
 var smtpTransport = {
@@ -115,34 +115,109 @@ router.get('/sendmailtosinhvienduocdangki',utility.reqIsAuthen,utility.reqIsKhoa
 
 })
 //test mo cong dang ki khoa luan
-router.get('/testopenport',utility.reqIsAuthen,utility.reqIsKhoa,utility.checkOpenPortDK,function (req,res) {
-    res.json({
-        trangthai : openPortDK.moDangKi
-    })
+router.get('/testopenport',function (req,res) {
+    var openPortDK = require('../../config/config_Khoa_moDangKi.json');
+    switch ('fit'){
+        case 'fit':{
+            res.json({
+                trangthai : openPortDK.fit
+            })
+            break;
+        }
+        case 'fet':{
+            res.json({
+                trangthai : openPortDK.fet
+            })
+            break;
+        }
+        case 'fema':{
+            res.json({
+                trangthai : openPortDK.fema
+            })
+            break;
+        }
+        case 'fepn':{
+            res.json({
+                trangthai : openPortDK.fepn
+            })
+            break;
+        }
+    }
+
 })
 //Mo hoac dong cong dang ki
-router.post('/openport',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.post('/openport',function (req,res) {
+    var openPortDK = require('../../config/config_Khoa_moDangKi.json');
     if(req.body.permission){
         if(req.body.permission == 'open'){
-            openPortDK.moDangKi = true;
-            console.log(openPortDK.moDangKi)
+            switch (req.body.id){
+                case 'fit':{
+                    openPortDK.fit = true;
+                    break;
+                }
+                case 'fet':{
+                    openPortDK.fet = true;
+                    break;
+                }
+                case 'fema':{
+                    openPortDK.fema = true;
+                    break;
+                }
+                case 'fepn':{
+                    openPortDK.fepn = true;
+                    break;
+                }
+            }
             res.json({
                 msg: 'đã mở cổng đăng kí'
             })
+
         }else {
-            openPortDK.moDangKi = false;
-            console.log(openPortDK.moDangKi)
+            switch (req.user.id){
+                case 'fit':{
+                    openPortDK.fit = false;
+                    break;
+                }
+                case 'fet':{
+                    openPortDK.fet = false
+                    break;
+                }
+                case 'fema':{
+                    openPortDK.fema = false;
+                    break;
+                }
+                case 'fepn':{
+                    openPortDK.fepn = false;
+                    break;
+                }
+            }
             res.json({
                 msg: 'đã đóng cổng đăng kí'
             })
         }
     }else {
-        openPortDK.moDangKi = false;
+        switch (req.user.id){
+            case 'fit':{
+                openPortDK.fit = false;
+                break;
+            }
+            case 'fet':{
+                openPortDK.fet = false
+                break;
+            }
+            case 'fema':{
+                openPortDK.fema = false;
+                break;
+            }
+            case 'fepn':{
+                openPortDK.fepn = false;
+                break;
+            }
+        }
         res.json({
             msg: 'Có lỗi xảy ra'
         })
     }
-
 })
 //ghi file tra ve admin
 router.get('/getXLSX',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
