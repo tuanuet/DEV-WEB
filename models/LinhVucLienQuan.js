@@ -13,10 +13,32 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         timestamps: false,
         classMethods : {
-            addNew : function (idLV, idGV, callback) {
-                this.create({
-                    GiangVienId : idGV,
-                    LinhVucId : idLV
+            addNew : function (idGV, idLV, callback) {
+                this.findOrCreate ({
+                    where : {
+                        GiangVienId: idGV,
+                        LinhVucId: idLV
+                    }
+                }).then(callback)
+            },
+            findAllLinhVucOfGV : function (idGV, callback) {
+                this.findAll({
+                    where : {GiangVienId : idGV}
+                }).then(callback)
+            },
+            deleteLinhVuc : function (idGV, idLV, callback) {
+                this.destroy({
+                    where : {
+                        GiangVienId: idGV,
+                        LinhVucId : idLV
+                    }
+                }).then(callback)
+            },
+            deleteAllLinhVucOf : function (idGV, callback) {
+                this.destroy({
+                    where : {
+                        GiangVienId: idGV
+                    }
                 }).then(callback)
             }
         }

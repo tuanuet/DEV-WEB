@@ -27,7 +27,7 @@ router.post("/insertKH", function (req, res) {
     models.KhoaHoc.createKH(req.body, function () {
         res.json({msg:"Thêm khóa học thành công"})
     })
-}, function (err) {
+}, function () {
     res.json({msg : "Them that bai"})
 })
 

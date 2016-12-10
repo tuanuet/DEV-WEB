@@ -40,6 +40,35 @@ var ClickHandler = function () {
 
 var check = false;
 
+function updateInfor() {
+    var array = [];
+    for(var i = 0; i < $("#linhvuclienquan").find("ins").length; i++) {
+        if($("#linhvuclienquan").find("ins").eq(i).parent().hasClass("checked")) {
+            array.push($("#linhvuclienquan").find("ins").eq(i).parent().children().eq(0).val());
+        }
+    }
+    var gv = {
+        chude : $("#huongnghiencuu").val(),
+        arrayListLV : array
+    }
+    $.ajax({
+        url: "/users/giangvien/updateinfor",
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(gv),
+        success: function (datajson) {
+            console.log(datajson);
+            $("#addNoti").text(datajson.msg);
+            if (datajson.result == true) {
+                check = true;
+            } else {
+                check = false;
+            }
+        }
+
+    });
+}
+
 function changeType() {
     var gv = {
         id: $('#idGV').val(),

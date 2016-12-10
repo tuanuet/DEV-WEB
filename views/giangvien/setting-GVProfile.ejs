@@ -118,7 +118,7 @@
                                         <div class="tab-content">
                                             <!-- PERSONAL INFO TAB -->
                                             <div class="tab-pane active" id="tab_1_1">
-                                                <form action="/users/giangvien/updateinfor" method="post">
+                                                <form>
                                                     <div class="form-group">
                                                         <label class="control-label ">Tên giảng viên</label>
                                                         <input type="text" disabled value="<%= datagv.tenGiangVien %>"
@@ -175,7 +175,7 @@
                                                         <% } %>
                                                     </div>
                                                     <div class="margiv-top-10">
-                                                        <button class="btn green" type="submit"> Lưu </button>
+                                                        <button class="btn green" type="button" onclick="updateInfor()"> Lưu </button>
                                                         <a href="javascript:;" class="btn default"> Hủy </a>
                                                     </div>
                                                 </form>
