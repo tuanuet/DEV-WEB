@@ -122,7 +122,7 @@ router.post('/insertonesv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
                 duocDangKiKhoaLuanKhong : 0,
                 KhoaHocKh : data.KhoaHoc,
                 NganhHocKh : data.NganhHoc,
-                matKhau : "12345"
+                matKhau : Math.random().toString(36).slice(-9)
             }
             models.SinhVien.insertOneSV(sv,function (sv) {
                 res.json({
