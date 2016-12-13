@@ -68,10 +68,10 @@ module.exports = function (sequelize, DataTypes) {
                     where : {id : id}
                 }).then(callback).catch(failure)
             },
-            getGVByID: function (idKhoa, callback) {
+            getGVByID: function (id, callback) {
                 this.findOne({
                     where: {
-                        id: idKhoa
+                        id: id
                     }
                 }).then(callback)
             },

@@ -1,5 +1,5 @@
 <!-- Bắt đầu đoạn hiển thị sau khi kick chi tiết-->
-<div class="portlet light" >
+<div class="portlet light">
     <div class="portlet-title tabbable-line">
         <div class="caption caption-md">
             <i class="icon-globe theme-font hide"></i>
@@ -24,9 +24,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <form enctype="multipart/form-data">
-                                    <input class="btn green" type="file" name="file" id="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="checkfile(this);">
+                                    <input class="btn green" type="file" name="file" id="file"
+                                           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                           onchange="checkfile(this);">
                                     <br>
-                                    <button class="btn blue" type="button" id="tailen" onclick="uploadData(this)">Tải lên</button>
+                                    <button class="btn blue" type="button" id="tailen" onclick="uploadData(this)">Tải
+                                        lên
+                                    </button>
                                     <button id="xoa" class="btn red" type="reset">Xóa</button>
                                 </form>
                             </div>
@@ -36,7 +40,7 @@
                 <!-- END PAGE CONTENT INNER -->
             </div>
             <!-- END PERSONAL INFO TAB -->
-            
+
             <div class="tab-pane" id="tab_1_2">
                 <!-- BEGIN FORM-->
                 <form id="form_sample_2" class="form-horizontal">
@@ -57,144 +61,147 @@
                             <div class="col-md-4">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input type="text" class="form-control" name="name" placeholder="fit001" id="maGV" onkeyup="check()" />
+                                    <input type="text" class="form-control" name="name" placeholder="fit001" id="maGV"
+                                           onblur="check()"/>
+                                    <p id="show-result-check"></p>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Họ tên <span class="required">
                             * </span>
-                        </label>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang" id="tenGV"/>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang"
+                                           id="tenGV"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Đơn vị ID <span class="required">
+                        * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" name="number" placeholder="1" id="donviID"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Vnu mail <span class="required">
+                    * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" name="email" placeholder="trang@vnu.edu.vn"
+                                           id="vnuMail"/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Đơn vị ID <span class="required">
-                        * </span>
-                    </label>
-                    <div class="col-md-4">
-                        <div class="input-icon right">
-                            <i class="fa"></i>
-                            <input type="text" class="form-control" name="number" placeholder="1" id="donviID"/>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn green" id="luu" onclick="uploadData(this)">Lưu</button>
+                                <button type="button" class="btn default">Hủy</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">Vnu mail <span class="required">
-                    * </span>
-                </label>
-                <div class="col-md-4">
-                    <div class="input-icon right">
-                        <i class="fa"></i>
-                        <input type="text" class="form-control" name="email" placeholder="trang@vnu.edu.vn" id="vnuMail" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-actions">
-            <div class="row">
-                <div class="col-md-offset-3 col-md-9">
-                    <button type="button" class="btn green" id="luu" onclick="uploadData(this)">Lưu</button>
-                    <button type="button" class="btn default">Hủy</button>
-                </div>
-            </div>
-        </div>
-    </form>
-    <!-- END FORM-->
-    </div> <!-- End tab 2 -->
-    </div> <!-- End tab-content -->
+                </form>
+                <!-- END FORM-->
+            </div> <!-- End tab 2 -->
+        </div> <!-- End tab-content -->
     </div> <!--End portlet-body -->
-    </div> <!-- End portlet light -->
-    <script>
-    jQuery(document).ready(function() {
-    // initiate layout and plugins
-    Metronic.init(); // init metronic core components
-    Layout.init(); // init current layout
-    Demo.init(); // init demo features
-    FormValidation.init();
+</div> <!-- End portlet light -->
+<script>
+    jQuery(document).ready(function () {
+        // initiate layout and plugins
+        Metronic.init(); // init metronic core components
+        Layout.init(); // init current layout
+        Demo.init(); // init demo features
+        FormValidation.init();
     });
-    </script>
+</script>
 
-    <!-- Script check file -->     
-    <script type="text/javascript" language="javascript">
+<!-- Script check file -->
+<script type="text/javascript" language="javascript">
     function checkfile(sender) {
-    var validExts = new Array(".xlsx", ".xls");
-    var fileExt = sender.value;
-    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-    if (validExts.indexOf(fileExt) < 0) {
-    alert( " Vui lòng chọn file Excel");
-    document.getElementById("xoa").click();
-    return false;
-    }
-    else return true;
-    }
-    </script>
-    <!-- Script check file --> 
-
-    <!-- Ajax -->
-    <script type="text/javascript">
-        function uploadData(evt) {
-            var id = evt.id;
-            if (id == "tailen") {
-                var formData = new FormData();
-                formData.append('file', $('#file')[0].files[0]);
-
-                $.ajax({
-                       url : '/users/khoa/insertbulkgv',
-                       type : 'POST',
-                       data : formData,
-                       processData: false,  // tell jQuery not to process the data
-                       contentType: false,  // tell jQuery not to set contentType
-                       success : function(data) {
-                           console.log(data);
-                           alert(data);
-                            $('#showContentHere').append("<h1>Trang</h1>");
-                       }
-                });
-
-            } else {
-                var gv = {
-                        id : $('#maGV').val(),
-                        tenGiangVien : $('#tenGV').val(),
-                        vnuMail : $('#vnuMail').val(),
-                        DonViId : $('#donviID').val()
-                    };
-
-                 $.ajax({
-                    url: '/users/khoa/insertonegv',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(gv),
-                    success : function(data) {
-                           console.log(data);
-                           alert(data);
-                            $('#showContentHere').append("<h1>Trang kute</h1>");
-                        }
-                });
-            }
+        var validExts = new Array(".xlsx", ".xls");
+        var fileExt = sender.value;
+        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+        if (validExts.indexOf(fileExt) < 0) {
+            alert(" Vui lòng chọn file Excel");
+            document.getElementById("xoa").click();
+            return false;
         }
-        </script>
-        <script type="text/javascript">
-            function check(){
-                var maGV = $('#maGV').val();
-                var gv = {
-                    id : maGV
-                };
+        else return true;
+    }
+</script>
+<!-- Script check file -->
 
-                $.ajax({
-                    url: '/users/khoa/checkAjax',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(gv),
-                    success : function(data) {
-                           console.log(data);
-                           alert(data);
-                        }
-                })
-            }
-        </script>
-    <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
+<!-- Ajax -->
+<script type="text/javascript">
+    function uploadData(evt) {
+        var id = evt.id;
+        if (id == "tailen") {
+            var formData = new FormData();
+            formData.append('file', $('#file')[0].files[0]);
+
+            $.ajax({
+                url: '/users/khoa/insertbulkgv',
+                type: 'POST',
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    console.log(data);
+                    alert(data);
+                    $('#showContentHere').append("<h1>Trang</h1>");
+                }
+            });
+
+        } else {
+            var gv = {
+                id: $('#maGV').val(),
+                tenGiangVien: $('#tenGV').val(),
+                vnuMail: $('#vnuMail').val(),
+                DonViId: $('#donviID').val()
+            };
+
+            $.ajax({
+                url: '/users/khoa/insertonegv',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(gv),
+                success: function (data) {
+                    console.log(data);
+                    alert(data);
+                    $('#showContentHere').append("<h1>Trang kute</h1>");
+                }
+            });
+        }
+    }
+
+    /**
+     * Kiểm tra mã giảng viên đã tồn tại chưa ?
+     */
+    function check() {
+        if ($('#maGV').val() != "" && $('#maGV').val() != null)
+            $.ajax({
+                url: '/users/khoa/checkMatchMaGV',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id: $('#maGV').val()
+                }),
+                success: function (data) {
+                    $("#show-result-check").text(data.msg);
+                }
+            })
+    }
+</script>
+<!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->

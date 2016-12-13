@@ -275,24 +275,18 @@ function validateSV(data) {
     )
 }
 
-router.post('/checkAjax',
-    function (req, res) {
-        var data1 = req.body;
-        var id = data1.id;
-        // models.GiangVien.getGVById(id, function(data){
-        //     if (data){
-        //         res.json({
-        //             msg: "error"
-        //         })
-        //     }else {
-        //         res.json({
-        //             msg: "yes"
-        //         })
-        //     }
-        // })
-        res.json({
-                msg: id
-            })
+router.post('/checkMatchMaGV', function (req, res) {
+        models.GiangVien.getGVByID(req.body.id, function(data){
+            if (data){
+                res.json({
+                    msg: "Mã giảng viên đã bị trùng"
+                })
+            }else {
+                res.json({
+                    msg: "Mã giảng viên đúng"
+                })
+            }
+        })
     }
 )
 
