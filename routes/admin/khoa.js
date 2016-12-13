@@ -275,6 +275,27 @@ function validateSV(data) {
     )
 }
 
+router.post('/checkAjax',
+    function (req, res) {
+        var data1 = req.body;
+        var id = data1.id;
+        // models.GiangVien.getGVById(id, function(data){
+        //     if (data){
+        //         res.json({
+        //             msg: "error"
+        //         })
+        //     }else {
+        //         res.json({
+        //             msg: "yes"
+        //         })
+        //     }
+        // })
+        res.json({
+                msg: id
+            })
+    }
+)
+
 var createLv = require('./createLV');
 var module4 = require('./suadoidetai');
 var module5 = require('./dangkibaove');

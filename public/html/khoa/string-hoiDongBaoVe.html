@@ -10,75 +10,56 @@
                         <tr role="row">
                             <th class="sorting_asc" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="
                                      Username
-                                : activate to sort column ascending" style="width: 188px;"> Username </th>
+                                : activate to sort column ascending" style="width: 188px;"> ID hội đồng </th>
                             <th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
                                      Full Name
-                                : activate to sort column ascending" style="width: 235px;"> Full Name </th>
+                                : activate to sort column ascending" style="width: 235px;"> Tên hội đồng </th>
                             <th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
                                      Points
-                                : activate to sort column ascending" style="width: 133px;"> Points </th>
+                                : activate to sort column ascending" style="width: 133px;"> Ngày tổ chức</th>
                             <th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
                                      Notes
-                                : activate to sort column ascending" style="width: 154px;"> Notes </th>
-                            <th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
-                                     Edit
-                                : activate to sort column ascending" style="width: 95px;"> Edit </th>
-                            <th class="sorting" tabindex="0" aria-controls="sample_editable_1" rowspan="1" colspan="1" aria-label="
-                                     Delete
-                                : activate to sort column ascending" style="width: 132px;"> Delete </th>
+                                : activate to sort column ascending" style="width: 154px;"> Địa điểm </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr role="row" class="odd">
-                            <td class="sorting_1"> alex </td>
-                            <td> Alex Nilson </td>
-                            <td> 1234 </td>
-                            <td class="center"> power user </td>
-                            <td> <a class="edit" href="javascript:;">
-                                    Edit </a> </td>
-                            <td> <a class="delete" href="javascript:;">
-                                    Delete </a> </td>
-                        </tr>
-                        <tr role="row" class="even">
-                            <td class="sorting_1"> gist124 </td>
-                            <td> Nick Roberts </td>
-                            <td> 62 </td>
-                            <td class="center"> new user </td>
-                            <td> <a class="edit" href="javascript:;">
-                                    Edit </a> </td>
-                            <td> <a class="delete" href="javascript:;">
-                                    Delete </a> </td>
+                            <td class="sorting_1"> 1 </td>
+                            <td> Hội đồng G2 </td>
+                            <td> 22/10/2016 </td>
+                            <td class="center"> Giảng đường G2 </td>
                         </tr>
                         <tr role="row" class="odd">
-                            <td class="sorting_1"> goldweb </td>
-                            <td> Sergio Jackson </td>
-                            <td> 132 </td>
-                            <td class="center"> elite user </td>
-                            <td> <a class="edit" href="javascript:;">
-                                    Edit </a> </td>
-                            <td> <a class="delete" href="javascript:;">
-                                    Delete </a> </td>
-                        </tr>
-                        <tr role="row" class="even">
-                            <td class="sorting_1"> lisa </td>
-                            <td> Lisa Wong </td>
-                            <td> 434 </td>
-                            <td class="center"> new user </td>
-                            <td> <a class="edit" href="javascript:;">
-                                    Edit </a> </td>
-                            <td> <a class="delete" href="javascript:;">
-                                    Delete </a> </td>
+                            <td class="sorting_1"> 2 </td>
+                            <td> Hội đồng G3 </td>
+                            <td> 22/10/2016 </td>
+                            <td class="center"> Giảng đường G3 </td>
                         </tr>
                         <tr role="row" class="odd">
-                            <td class="sorting_1"> nick12 </td>
-                            <td> Nick Roberts </td>
-                            <td> 232 </td>
-                            <td class="center"> power user </td>
-                            <td> <a class="edit" href="javascript:;">
-                                    Edit </a> </td>
-                            <td> <a class="delete" href="javascript:;">
-                                    Delete </a> </td>
+                            <td class="sorting_1"> 3 </td>
+                            <td> Hội đồng E3 </td>
+                            <td> 22/10/2016 </td>
+                            <td class="center"> Giảng đường E3 </td>
                         </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1"> 1 </td>
+                            <td> Hội đồng G2 </td>
+                            <td> 22/10/2016 </td>
+                            <td class="center"> Giảng đường G2 </td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1"> 2 </td>
+                            <td> Hội đồng G3 </td>
+                            <td> 22/10/2016 </td>
+                            <td class="center"> Giảng đường G3 </td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1"> 3 </td>
+                            <td> Hội đồng E3 </td>
+                            <td> 22/10/2016 </td>
+                            <td class="center"> Giảng đường E3 </td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -87,32 +68,35 @@
 
     <div>
     <button id="nut" type="button" class="btn blue" style="margin-bottom: 10px;">Thêm</button>
-    <div id="them" class="form-group" style="margin-bottom: 10px;">
+    <div id="them">
+        <div  class="form-group" style="margin-bottom: 10px;">
         <div class="col-md-3">
-            <div class="input-icon right"> <i class="fa"></i>
-                <input type="text" class="form-control" name="name" placeholder="Họ tên" /> </div>
-        </div>
-        <div class="col-md-2">
             <select class="form-control" name="select" aria-required="true" aria-invalid="false" aria-describedby="select-error">
-                <option value="">Chức vụ</option>
-                <option value="Category 1">Chủ tịch</option>
-                <option value="Category 2">Category 2</option>
-                <option value="Category 3">Category 5</option>
-                <option value="Category 4">Category 4</option>
+                <option value="">ID hội đồng</option>
+                <option value="Category 1">1</option>
+                <option value="Category 2">2</option>
+                <option value="Category 3">3</option>
+                <option value="Category 4">4</option>
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="input-icon right"> <i class="fa"></i>
-                <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang" /> </div>
+                <input type="text" class="form-control" name="name" placeholder="Tên hội đồng" /> </div>
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="date">
         </div>
         <div class="col-md-3">
             <div class="input-icon right"> <i class="fa"></i>
-                <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang" /> </div>
+                <input type="text" class="form-control" name="name" placeholder="Địa điểm" /> </div>
         </div>
-        <button type="button" class="btn blue" type="sumit">Lưu</button>
-        <button id="xoa" class="btn red" type="reset">Xóa</button>
+        
     </div>
-</div>
+        <button type="button" class="btn blue" type="sumit" style="margin-top: 15px;">Lưu</button>
+        <button id="xoa" class="btn red" type="reset" style="margin-top: 15px;">Xóa</button>
+    </div>
+    
+    </div>
 
 </div>
 

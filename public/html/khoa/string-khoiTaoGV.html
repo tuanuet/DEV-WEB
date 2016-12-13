@@ -57,7 +57,7 @@
                             <div class="col-md-4">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input type="text" class="form-control" name="name" placeholder="fit001" id="maGV"/>
+                                    <input type="text" class="form-control" name="name" placeholder="fit001" id="maGV" onkeyup="check()" />
                                 </div>
                             </div>
                         </div>
@@ -177,5 +177,24 @@
                 });
             }
         }
+        </script>
+        <script type="text/javascript">
+            function check(){
+                var maGV = $('#maGV').val();
+                var gv = {
+                    id : maGV
+                };
+
+                $.ajax({
+                    url: '/users/khoa/checkAjax',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(gv),
+                    success : function(data) {
+                           console.log(data);
+                           alert(data);
+                        }
+                })
+            }
         </script>
     <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
