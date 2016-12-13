@@ -200,6 +200,16 @@ module.exports.getMainHost =function(str)
     }
     return _dir;
 }
+var bcrypt = require('bcryptjs')
+module.exports.randomMatKhau =function()
+{
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(Math.random().toString(36).slice(-9), salt, function(err, hash) {
+
+            return hash;
+        });
+    });
+}
 module.exports.getArrayFromXlsx = function(req,res,next) {
 
     var file = req.files.file;

@@ -9,6 +9,7 @@ var XLSX = require('xlsx');
 var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var validator = require('validator')
+var bcrypt = require('bcryptjs')
 var nodemailer = require('nodemailer');
 var smtpTransport = {
     host: "ctmail.vnu.edu.vn", // hostname
@@ -124,6 +125,7 @@ router.post('/insertonesv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
                 NganhHocKh : data.NganhHoc,
                 matKhau : Math.random().toString(36).slice(-9)
             }
+
             models.SinhVien.insertOneSV(sv,function (sv) {
                 res.json({
                     msg: "insert thành công"
