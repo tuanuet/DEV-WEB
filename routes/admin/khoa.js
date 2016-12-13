@@ -79,7 +79,7 @@ router.post('/insertonegv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
             tenGiangVien : data.tenGiangVien,
             vnuMail : data.vnuMail,
             DonViId : data.DonViId,
-            matKhau : "12345"
+            matKhau : Math.random().toString(36).slice(-9)
         }
         //kiem tra xem trong db co chua
         // neu chua co thi insert
@@ -190,7 +190,7 @@ function insertDataToGiangVien(data,req,res,next) {
                 tenGiangVien : data[i].tenGiangVien,
                 vnuMail : data[i].vnuMail,
                 DonViId : data[i].DonViId,
-                matKhau : "12345"
+                matKhau : Math.random().toString(36).slice(-9)
             }
             gvs.push(gv)
         }
@@ -227,7 +227,7 @@ function insertDataToSinhVien(data,req,res,next) {
                     duocDangKiKhoaLuanKhong : 0,
                     KhoaHocKh : data[i].KhoaHoc,
                     NganhHocKh : data[i].NganhHoc,
-                    matKhau : "12345"
+                    matKhau : Math.random().toString(36).slice(-9)
                 }
                 svs.push(sv)
             }
