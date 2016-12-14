@@ -62,13 +62,13 @@
                         <div class="portlet light profile-sidebar-portlet">
                             <!-- SIDEBAR USERPIC -->
                             <div class="profile-userpic">
-                                <img src="" class="img-responsive" alt="">
+                                <img src="<%= user.avatar%>" class="img-responsive" alt="">
                             </div>
                             <!-- END SIDEBAR USERPIC -->
                             <!-- SIDEBAR USER TITLE -->
                             <div class="profile-usertitle">
                                 <div class="profile-usertitle-name">
-
+                                    <%= user.tenKhoa%>
                                 </div>
                             </div>
                             <!-- END SIDEBAR USER TITLE -->
@@ -77,17 +77,52 @@
                                 <ul class="nav">
                                     <li>
                                         <a href="#quanly" data-toggle="collapse">
-                                            Bảo vệ khóa luận
+                                            Quản lý để tài
                                         </a>
                                         <ul class="nav collapse" id="quanly">
-                                            <li class="active">
+                                            <li>
                                                 <a href="quanlydetai">
+                                                    <i class="icon-collapse" aria-hidden="true"></i>
+                                                    Quản lý
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="validatehoso">
+                                                    <i class="icon-collapse" aria-hidden="true"></i>
+                                                    Kiểm tra hợp thức
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav">
+                                    <li class="active">
+                                        <a href="#" data-toggle="collapse">
+                                            Quản lý sửa đề tài
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav">
+                                    <li>
+                                        <a href="quanlyrutdetai">
+                                            Quản lý rút đề tài
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav">
+                                    <li>
+                                        <a href="#quanlyBV" data-toggle="collapse">
+                                            Quản lý bảo vệ
+                                        </a>
+                                        <ul class="nav collapse" id="quanlyBV">
+                                            <li>
+                                                <a href="laphoidong">
                                                     <i class="icon-collapse" aria-hidden="true"></i>
                                                     Lập hội đồng
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="validatehoso">
+                                                <a href="phancongphanbien">
                                                     <i class="icon-collapse" aria-hidden="true"></i>
                                                     Phân công phản biện
                                                 </a>
