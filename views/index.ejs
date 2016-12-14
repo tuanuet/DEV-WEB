@@ -128,7 +128,7 @@
           </div>
           <!-- END CONTENT NEWS -->
           <!-- BEGIN CONTENT INTRO -->
-          <div class="row col-md-12">
+          <div class="row col-md-12" style="margin-left: 3px;">
             <% for(var i = 0; i < allKhoa.length; i++) {%>
             <div class="col-md-6">
               <div class="portlet box blue-hoki">
@@ -143,11 +143,13 @@
                 </div>
                 <div class="portlet-body">
                   <ol>
-                    <% for(var temp = 0; temp < allKhoa[i].DonVis.length; temp++) {%>
+                    <% for(var temp = 0; temp < 5; temp++) {%>
                     <li>
                       <%= allKhoa[i].DonVis[temp].tenDonVi %>
                     </li>
+
                     <% } %>
+                    <a href="/intro/khoa/<%= allKhoa[i].id %> " class="pull-right" ;">Xem thêm</a>
                   </ol>
                 </div>
               </div>
