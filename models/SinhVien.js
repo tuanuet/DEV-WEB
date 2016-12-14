@@ -132,6 +132,9 @@ module.exports = function (sequelize, DataTypes) {
                     {avatar : url},{
                     where : {id : id}
                 }).then(success).catch(failure)
+            },
+            getAllSV : function (callback) {
+                this.findAll({}).then(callback)
             }
         }
     });

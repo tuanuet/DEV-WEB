@@ -124,4 +124,13 @@ function validateDeTai(data) {
         &&!validator.isEmpty(data.tenDeTai.toString())
     )
 }
+
+router.post("/getAllSV", function (req, res) {
+    models.SinhVien.getAllSV(function (data) {
+        res.json({
+            dataSV : data
+        })
+    })
+})
+
 module.exports = router;

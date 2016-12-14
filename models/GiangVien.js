@@ -79,6 +79,11 @@ module.exports = function (sequelize, DataTypes) {
             insertOneGV : function (gv,callback,callback2) {
                 this.create(gv).then(callback).catch(callback2)
             },
+            getAllGV : function (callback) {
+                this.findAll({
+                    attributes:["id", "tenGiangVien", "DonViId", "vnuMail"]
+                }).then(callback)
+            },
             getGiangVienAndKhoaAndDonViAndLinhVucLienQuan : function (id,models,success,failure) {
                 this.findOne({
                     where : {id : id},
