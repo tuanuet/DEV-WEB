@@ -292,6 +292,16 @@ router.post('/checkMatchMaGV', function (req, res) {
     }
 )
 
+router.post("/getDonVi", utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    console.log("Toan : " + req.user.id)
+    models.DonVi.getAllDonViOfIdKhoa(req.user.id, function (data) {
+        console.log(data)
+        res.json({
+            dataDV : data
+        })
+    })
+})
+
 var createLv = require('./createLV');
 var module4 = require('./suadoidetai');
 var module5 = require('./dangkibaove');

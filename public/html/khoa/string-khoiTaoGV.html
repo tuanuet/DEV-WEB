@@ -80,16 +80,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3">Select2 Dropdown <span class="required">
+                            <label class="control-label col-md-3">Đơn vị ID <span class="required">
 										* </span>
                             </label>
                             <div class="col-md-4">
-                                <select class="form-control select2me" name="options2">
-                                    <option value="">Select...</option>
-                                    <option value="Option 1">Option 1</option>
-                                    <option value="Option 2">Option 2</option>
-                                    <option value="Option 3">Option 3</option>
-                                    <option value="Option 4">Option 4</option>
+                                <select class="form-control select2me" name="options2" id="donviID">
                                 </select>
                             </div>
                         </div>
@@ -159,16 +154,28 @@
     jQuery(document).ready(function () {
         FormValidation.init();
         $.ajax({
+            url: '/users/khoa/getDonVi',
+            type: 'POST',
+            success: function (datajson) {
+                for(var i = 0 ; i < datajson.dataDV.length; i++) {
+                    $("#donviID").append($('<option>', {
+                        value: datajson.dataDV[i].id,
+                        text: datajson.dataDV[i].tenDonVi
+                    }));
+                }
+            }
+        })
+        $.ajax({
             url: '/users/giangvien/getAllGV',
             type: 'POST',
             success: function (datajson) {
-                console.log(datajson );
                 var table = $("#sample_6").DataTable();
                 for(var i = 0; i < datajson.dataGV.length; i++) {
                     table.row.add([datajson.dataGV[i].id, datajson.dataGV[i].tenGiangVien,datajson.dataGV[i].DonViId,datajson.dataGV[i].vnuMail]).draw();
                 }
             }
-        })
+        });
+
     });
 
     <!-- Script check file -->
@@ -242,7 +249,6 @@
                 }
             })
     }
-
 
 </script>
 
