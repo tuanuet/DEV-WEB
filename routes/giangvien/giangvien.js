@@ -279,7 +279,7 @@ router.post("/updateBangPhanBien" , function (req, res) {
 })
 
 function updateChuDeMoi(req, res, next) {
-    models.GiangVien.updateChudeNghienCuu(req.body.id, req.body.chude, function () {
+    models.GiangVien.updateChudeNghienCuu(req.user.id, req.body.chude, function () {
         return next();
     });
 }
