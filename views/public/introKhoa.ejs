@@ -25,63 +25,78 @@
 			<div class="page-content">
 				<div class="container">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="profile-sidebar" style="width: 250px;">
-								<!-- PORTLET MAIN -->
-								<div class="portlet light profile-sidebar-portlet">
-									<!--  BEGIN TITLE SIDEBAR -->
-									<div class="profile-usertitle">
-										<div class="profile-usertitle-name">
-											<%= khoa.tenKhoa %>
-										</div>
-									</div>
-									<!--  BEGIN TITLE SIDEBAR -->
-									<!-- SIDEBAR MENU -->
-									<div class="profile-usermenu" >
-										<ul class="nav" >
-											<% for(var i = 0; i < khoa.DonVis.length; i++) {%>
-											<li>
-												<a href="# " id="<%= khoa.DonVis[i].id %>" onclick="displayLectures(this)">
-													<%= khoa.DonVis[i].tenDonVi %>
-												</a>
-											</li>
-											<% } %>
-										</ul>
-									</div>
-									<!-- END MENU -->
-								</div>
-								<!-- END PORTLET MAIN -->
-							</div>
-							<!-- BEGIN LIST LECTURES -->
-							<div class="col-md-9">
-								<div class="portlet light">
-									<div class="portlet-title">
-										<div class="caption">
-											<i class="fa fa-graduation-cap" aria-hidden="true"></i>
-											<span class="caption-subject bold uppercase">Danh sách giảng viên</span>
-										</div>
-									</div>
-									<div class="portlet-body">
-										<div class="row thumbnails">
-											<% for(var i = 0; i < khoa.DonVis.length; i++) {
-														for(var j = 0; j < khoa.DonVis[i].GiangViens.length; j++) {%>
-											<!-- BEGIN LECTURES -->
-											<div class="col-md-4">
-												<div class="meet-our-team <%= khoa.DonVis[i].id %>">
-													<a href="/intro/giangvien/<%= khoa.DonVis[i].GiangViens[j].id%>">
-														<img src=<%= khoa.DonVis[i].GiangViens[j].avatar == null ? "/assets/admin/pages/media/pages/3.jpg" : khoa.DonVis[i].GiangViens[j].avatar %> class="img-responsive">
-														<h3 style="text-align: center"><%= khoa.DonVis[i].GiangViens[j].tenGiangVien %></h3>
-													</a>
-												</div>
-											</div>
-											<!-- END LECTURES -->
-											<% } } %>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- END LIST LECTURES -->
-						</div>
+						<!-- BEGIN PAGE CONTENT INNER -->
+<div class="row margin-top-10">
+    <div class="col-md-12">
+        <!-- BEGIN PROFILE SIDEBAR -->
+        <div class="profile-sidebar" style="width: 250px;">
+            <!-- PORTLET MAIN -->
+            <div class="portlet light profile-sidebar-portlet">
+                <!-- SIDEBAR USERPIC -->
+                <!--  BEGIN TITLE SIDEBAR -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        <%= khoa.tenKhoa %>
+                    </div>
+                </div>
+                <!--  BEGIN TITLE SIDEBAR -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu" >
+                    <ul class="nav" >
+                        <% for(var i = 0; i < khoa.DonVis.length; i++) {%>
+                        <li>
+                            <a href="# " id="<%= khoa.DonVis[i].id %>" onclick="displayLectures(this)">
+                                <%= khoa.DonVis[i].tenDonVi %>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+            <!-- END PORTLET MAIN -->
+        </div>
+        <!-- END BEGIN PROFILE SIDEBAR -->
+        <!-- BEGIN PROFILE CONTENT -->
+        <div class="profile-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            <span class="caption-subject bold uppercase">Danh sách giảng viên</span>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="row thumbnails">
+                                            <% for(var i = 0; i < khoa.DonVis.length; i++) {
+                                                        for(var j = 0; j < khoa.DonVis[i].GiangViens.length; j++) {%>
+                                            <!-- BEGIN LECTURES -->
+                                            <div class="col-md-4">
+                                                <div class="meet-our-team <%= khoa.DonVis[i].id %>">
+                                                    <a href="/intro/giangvien/<%= khoa.DonVis[i].GiangViens[j].id%>">
+                                                        <img src=<%= khoa.DonVis[i].GiangViens[j].avatar == null ? "/assets/admin/pages/media/pages/3.jpg" : khoa.DonVis[i].GiangViens[j].avatar %> class="img-responsive">
+                                                        <h3 style="text-align: center"><%= khoa.DonVis[i].GiangViens[j].tenGiangVien %></h3>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <!-- END LECTURES -->
+                                            <% } } %>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PROFILE CONTENT -->
+            </div>
+        </div>
+        <!-- END PAGE CONTENT INNER -->
+    </div>
+</div>
+</div>
+<!-- END PAGE CONTAINER -->
 					</div>
 				</div>
 			</div>
