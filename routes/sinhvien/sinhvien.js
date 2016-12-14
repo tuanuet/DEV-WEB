@@ -249,7 +249,7 @@ function validate(id,GiangVienId,tenDeTai) {
         !validator.isEmpty(GiangVienId.toString())&&
         !validator.isEmpty(tenDeTai.toString())
 }
-router.post("/getAllSV",utility.reqIsAuthen,utility.reqIsSV, function (req, res) {
+router.post("/getAllSV",utility.reqIsAuthen, function (req, res) {
     models.SinhVien.getAllSV(function (data) {
         res.json({
             dataSV : data

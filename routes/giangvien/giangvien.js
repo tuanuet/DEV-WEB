@@ -217,7 +217,7 @@ router.post("/updateinfor",utility.reqIsAuthen,utility.reqIsGV,
         })
     })
 
-router.post("/getAllGV",utility.reqIsAuthen,utility.reqIsGV, function (req, res) {
+router.post("/getAllGV",utility.reqIsAuthen, function (req, res) {
     models.GiangVien.getAllGV(function (data) {
         res.json({
             dataGV : data

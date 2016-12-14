@@ -16,9 +16,6 @@ function submitButtonHandler(evt) {
         case "moDK" :
            $('#showContentHere').load("../../html/khoa/string-moDK.html");
             break;
-        case "hoidong" :
-           $('#showContentHere').load("../../html/khoa/string-hoiDongBaoVe.html");
-            break;
         case "QLLV" :
             $('#showContentHere').load("../../html/khoa/string-quanLyLinhVuc.html");
             break;
@@ -28,6 +25,9 @@ function submitButtonHandler(evt) {
         case "gioiThieu" :
             $('#showContentHere').load("../../html/khoa/string-gioiThieu.html");
         break;
+        case "moSua" :
+            $('#showContentHere').load("../../html/khoa/string-moSua.html");
+            break;
         default:
     }
 }

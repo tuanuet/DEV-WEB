@@ -126,13 +126,68 @@ router.get('/xuatdenghithaydodetai',function (req,res) {
     res.json({msg: "xuatdenghithaydodetai"})
 })
 
+router.get('/openorclosesua',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+    var openPortSua = require('../../config/config_Khoa_moSuaDoi.json');
+    switch (req.user.id){
+        case 'fit':{
+            if (openPortSua.fit){
+                res.json({
+                    status : "open"
+                })
+            }else{
+                res.json({
+                    status : "close"
+                })
+            }
+            break;
+        }
+        case 'fet':{
+            if (openPortSua.fet){
+                res.json({
+                    status : "open"
+                })
+            }else{
+                res.json({
+                    status : "close"
+                })
+            }
+            break;
+        }
+        case 'fema':{
+            if (openPortSua.fema){
+                res.json({
+                    status : "open"
+                })
+            }else{
+                res.json({
+                    status : "close"
+                })
+            }
+            break;
+        }
+        case 'fepn':{
+            if (openPortSua.fepn){
+                res.json({
+                    status : "open"
+                })
+            }else{
+                res.json({
+                    status : "close"
+                })
+            }
+            break;
+        }
+    }
+})
+
 //Mo hoac dong cong sửa đề tai
 //van dang dung body.id ==> phai chuyen sang user.id
 router.post('/openportsua',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var openPortSua = require('../../config/config_Khoa_moSuaDoi.json');
+    console.log(req.body)
     if(req.body.permission){
         if(req.body.permission == 'open'){
-            switch (req.body.id){
+            switch (req.user.id){
                 case 'fit':{
                     openPortSua.fit = true;
                     break;
@@ -151,11 +206,12 @@ router.post('/openportsua',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
                 }
             }
             res.json({
-                msg: 'đã mở cổng sửa đề tài'
+                msg: 'đã mở cổng sửa đề tài',
+                status : 'opened'
             })
 
         }else if(req.body.permission == 'close') {
-            switch (req.body.id){
+            switch (req.user.id){
                 case 'fit':{
                     openPortSua.fit = false;
                     break;
@@ -174,11 +230,12 @@ router.post('/openportsua',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
                 }
             }
             res.json({
-                msg: 'đã đóng cổng sửa đề tài'
+                msg: 'đã đóng cổng sửa đề tài',
+                status : 'closed'
             })
         }
     }else {
-        switch (req.body.id){
+        switch (req.user.id){
             case 'fit':{
                 openPortSua.fit = false;
                 break;

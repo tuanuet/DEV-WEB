@@ -178,7 +178,6 @@
                 }
             }
         })
-
         //Dữ liệu sinh viên
         $.ajax({
             url: '/users/sinhvien/getAllSV',
@@ -190,7 +189,6 @@
                 }
             }
         });
-
     });
 
     <!-- Script check file -->
@@ -218,7 +216,23 @@
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             success: function (data) {
-                showtoastr("success", data.msg);
+                if(data.error){
+                    showtoastr("error", data.msg);
+                }else{
+                    showtoastr("success", data.msg);
+                    //Dữ liệu sinh viên
+                    $.ajax({
+                        url: '/users/sinhvien/getAllSV',
+                        type: 'POST',
+                        success: function (datajson) {
+                            for (var i = 0; i < datajson.dataSV.length; i++) {
+                                addRowTable(datajson.dataSV[i].id, datajson.dataSV[i].tenSinhVien,
+                                    datajson.dataSV[i].KhoaHocKh, datajson.dataSV[i].NganhHocKh, datajson.dataSV[i].vnuMail);
+                            }
+                        }
+                    });
+
+                }
             }
         });
     }

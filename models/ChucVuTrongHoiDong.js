@@ -21,9 +21,24 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                this.belongsTo(models.HoiDong);
-                this.belongsTo(models.ChucVu);
-                this.belongsTo(models.GiangVien);
+                this.belongsTo(models.HoiDong, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull: false
+                    }
+                });
+                this.belongsTo(models.ChucVu, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull: false
+                    }
+                });
+                this.belongsTo(models.GiangVien, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull: false
+                    }
+                });
             },
             insertNewData : function(hoidongId, chucvuid, giangvienid, callback) {
                 this.create({
@@ -32,14 +47,14 @@ module.exports = function (sequelize, DataTypes) {
                     GiangVienId : giangvienid
                 }).then(callback)
             },
-            getAllHoiDongOfGV(gvID, callback) {
+            getAllHoiDongOfGV:function(gvID, callback) {
                 this.findAll({
                     where : {
                         GiangVienId : gvID
                     }
                 }).then(callback)
             },
-            getAllGiangVien(idHD, models, callback) {
+            getAllGiangVien:function(idHD, models, callback) {
                 console.log(idHD);
                 this.findAll({
                     where : {

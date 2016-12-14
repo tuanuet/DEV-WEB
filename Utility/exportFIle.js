@@ -132,5 +132,6 @@ module.exports.createFile = function (titleTable, arrayTile, rowData, nameFile) 
     var out = fs.createWriteStream(FILENAME);
     docx.generate(out);
     out.on('close', function () {
+        console.log(FILENAME)
     });
 }

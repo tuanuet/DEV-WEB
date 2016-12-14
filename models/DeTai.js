@@ -112,9 +112,24 @@ module.exports = function (sequelize, DataTypes) {
                     })
                 }
             },
-            chotDeTaiDuocChapNhan : function (success,failure) {
+            chotDeTaiDuocChapNhan : function (khoaId,models,success,failure) {
                 this.findAll({
-                    where : {duocGiangVienChapNhan : 1}
+                    where : {duocGiangVienChapNhan : 1},
+                    include : [
+                        {
+                            model: models.GiangVien,
+                            include : [
+                                {
+                                    model : models.DonVi,
+                                    include : {
+                                        model : models.Khoa,
+                                        where : {
+                                            id : khoaId
+                                        }
+                                    }
+                                }
+                            ]
+                        }]
                 }).then(function (data) {
                     this.destroy({
                         where : {duocGiangVienChapNhan : 0}

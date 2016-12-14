@@ -28,7 +28,7 @@ var transporter = nodemailer.createTransport(smtpTransport);
 
 router.get('/admin', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     res.render('admin/upload-giangvien', {
-        title: "Thêm giảng viên"
+        title: "Trang ADMIN"
     })
 })
 
@@ -257,7 +257,8 @@ function insertDataToGiangVien(data, req, res, next) {
         else {
             res.json({
                 msg: "import data false! please check again !",
-                situation: i
+                situation: i,
+                error : "error"
             })
         }
     }
@@ -295,7 +296,8 @@ function insertDataToSinhVien(data, req, res, next) {
         else {
             res.json({
                 msg: "import data false! please check again !",
-                situation: i
+                situation: i,
+                error: "error"
             })
         }
     }

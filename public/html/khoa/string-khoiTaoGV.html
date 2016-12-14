@@ -166,16 +166,16 @@
                 }
             }
         })
-        $.ajax({
-            url: '/users/giangvien/getAllGV',
-            type: 'POST',
-            success: function (datajson) {
-                for (var i = 0; i < datajson.dataGV.length; i++) {
-                    addRowTable(datajson.dataGV[i].id, datajson.dataGV[i].tenGiangVien, datajson.dataGV[i].DonViId, datajson.dataGV[i].vnuMail);
-                }
-            }
-        });
 
+    });
+    $.ajax({
+        url: '/users/giangvien/getAllGV',
+        type: 'POST',
+        success: function (datajson) {
+            for (var i = 0; i < datajson.dataGV.length; i++) {
+                addRowTable(datajson.dataGV[i].id, datajson.dataGV[i].tenGiangVien, datajson.dataGV[i].DonViId, datajson.dataGV[i].vnuMail);
+            }
+        }
     });
 
     <!-- Script check file -->
@@ -203,7 +203,20 @@
                 processData: false,  // tell jQuery not to process the data
                 contentType: false,  // tell jQuery not to set contentType
                 success: function (data) {
-                    showtoastr("success", data.msg);
+                    if(data.error){
+                        showtoastr("error", data.msg);
+                    }else{
+                        showtoastr("success", data.msg);
+                        $.ajax({
+                            url: '/users/giangvien/getAllGV',
+                            type: 'POST',
+                            success: function (datajson) {
+                                for (var i = 0; i < datajson.dataGV.length; i++) {
+                                    addRowTable(datajson.dataGV[i].id, datajson.dataGV[i].tenGiangVien, datajson.dataGV[i].DonViId, datajson.dataGV[i].vnuMail);
+                                }
+                            }
+                        });
+                    }
                 }
             });
 
