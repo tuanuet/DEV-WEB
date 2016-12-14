@@ -13,7 +13,7 @@ router.post("/getAllLV", function (req, res) {
 router.post("/insertLV", function(req, res) {
   models.LinhVuc.themLinhVuc( req.body.nameLV, req.body.idParent , function() {
     res.json({
-        msg : "Thanh cong",
+        msg : "Thành công",
         data : req.body.nameLV
     })
   }), function() {
@@ -28,18 +28,18 @@ router.post("/insertKH", function (req, res) {
         res.json({msg:"Thêm khóa học thành công"})
     })
 }, function () {
-    res.json({msg : "Them that bai"})
+    res.json({msg : "Thêm thất bại"})
 })
 
 router.post("/checkKH", function (req, res) {
     models.KhoaHoc.getKH(req.body.kh, function (data) {
         if(data) {
             res.json({
-                msg : "Ki hieu bi trung"
+                msg : "Ký hiệu bị trùng"
             })
         } else {
             res.json({
-                msg : "Ki hieu phu hop"
+                msg : "Ký hiệu phù hợp"
             })
         }
     })
@@ -59,7 +59,7 @@ router.post("/insertNH", function (req, res) {
         res.json({msg:"Thêm nghành học thành công"})
     })
 }, function (err) {
-    res.json({msg : "Them that bai"})
+    res.json({msg : "Thêm thất bại"})
 })
 
 module.exports = router;
