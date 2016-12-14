@@ -25,6 +25,9 @@ function submitButtonHandler(evt) {
         case "KHCTDT" :
             $('#showContentHere').load("../../html/khoa/string-themKhoaHoc-CTDT.html");
             break;
+        case "gioiThieu" :
+            $('#showContentHere').load("../../html/khoa/string-gioiThieu.html");
+        break;
         default:
     }
 }
