@@ -9,6 +9,7 @@ var XLSX = require('xlsx');
 var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var validator = require('validator')
+var exportFile = require('../../Utility/exportFIle')
 var nodemailer = require('nodemailer');
 var smtpTransport = {
     host: "ctmail.vnu.edu.vn", // hostname
