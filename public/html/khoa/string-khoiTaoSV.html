@@ -269,9 +269,7 @@
             NganhHocKh: $('#nganhhocID').val()
         };
 
-        console.log("toan");
         if (checkMaSVVal && $('#tenSV').val() && checkEmailVal) {
-            console.log("toan2");
             $.ajax({
                 url: '/users/khoa/insertonesv',
                 type: 'POST',
@@ -284,7 +282,6 @@
                 }
             });
         } else {
-            console.log("toan1");
             showtoastr("error", "Vui lòng xem lại các trường thông tin");
         }
     }

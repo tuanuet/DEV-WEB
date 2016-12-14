@@ -1,5 +1,5 @@
 <!-- Bắt đầu đoạn hiển thị sau khi kick chi tiết-->
-<div class="portlet light" >
+<div class="portlet light">
     <div class="portlet-title tabbable-line">
         <div class="caption caption-md">
             <i class="icon-globe theme-font hide"></i>
@@ -23,10 +23,12 @@
                     <div class="portlet-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="/users/khoa/insertbulkgv" method="POST" enctype="multipart/form-data">
-                                    <input class="btn green" type="file" name="file" id="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="checkfile(this);">
+                                <form enctype="multipart/form-data">
+                                    <input class="btn green" type="file" name="file" id="file"
+                                           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                           onchange="checkfile(this);">
                                     <br>
-                                    <button class="btn blue" type="submit">Tải lên</button>
+                                    <button class="btn blue" type="button" onclick="uploadData()">Tải lên</button>
                                     <button id="xoa" class="btn red" type="reset">Xóa</button>
                                 </form>
                             </div>
@@ -36,78 +38,134 @@
                 <!-- END PAGE CONTENT INNER -->
             </div>
             <!-- END PERSONAL INFO TAB -->
-            
+
             <div class="tab-pane" id="tab_1_2">
                 <!-- BEGIN FORM-->
                 <form action="javascript:;" id="form_sample_2" class="form-horizontal">
                     <div class="form-body">
-                        <div class="alert alert-danger display-hide">
-                            <button class="close" data-close="alert"></button>
-                            Một vài thông tin chưa đúng.
-                            Xin vui lòng nhập lại.
-                        </div>
-                        <div class="alert alert-success display-hide">
-                            <button class="close" data-close="alert"></button>
-                            Tải lên sinh viên đủ điều kiện đăng ký khóa luận thành công.
-                        </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Mã sinh viên <span class="required">
                             * </span>
-                        </label>
-                        <div class="col-md-4">
-                            <div class="input-icon right">
-                                <i class="fa"></i>
-                                <input type="text" class="form-control" name="number" placeholder="14020613"/>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input id="idSV" type="text" class="form-control" name="number"
+                                           placeholder="14020613" onblur="checkMSSV()"/>
+                                    <p style="color : red" id="show-result-check"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Họ tên <span class="required">
-                        * </span>
-                    </label>
-                    <div class="col-md-4">
-                        <div class="input-icon right">
-                            <i class="fa"></i>
-                            <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang"/>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn green" onclick="submitData()">Lưu</button>
+                                <button type="button" class="btn default">Hủy</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-            </div>
-            <div class="form-actions">
-                <div class="row">
-                    <div class="col-md-offset-3 col-md-9">
-                        <button type="submit" class="btn green">Lưu</button>
-                        <button type="button" class="btn default">Hủy</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <!-- END FORM-->
-        </div> <!-- End tab 2 -->
+                </form>
+                <!-- END FORM-->
+            </div> <!-- End tab 2 -->
         </div> <!-- End tab-content -->
-        </div> <!--End portlet-body -->
-        </div> <!-- End portlet light -->
-        <script>
-        jQuery(document).ready(function() {
-        // initiate layout and plugins
-        Metronic.init(); // init metronic core components
-        Layout.init(); // init current layout
-        Demo.init(); // init demo features
-        FormValidation.init();
-        });
-        </script>
-        <script type="text/javascript" language="javascript">
-        function checkfile(sender) {
+    </div> <!--End portlet-body -->
+</div> <!-- End portlet light -->
+<script>
+
+</script>
+<script type="text/javascript" language="javascript">
+    function checkfile(sender) {
         var validExts = new Array(".xlsx", ".xls");
         var fileExt = sender.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
         if (validExts.indexOf(fileExt) < 0) {
-        alert( " Vui lòng chọn file Excel");
-        document.getElementById("xoa").click();
-        return false;
+            alert(" Vui lòng chọn file Excel");
+            document.getElementById("xoa").click();
+            return false;
         }
         else return true;
+    }
+
+    function uploadData() {
+        var formData = new FormData();
+        formData.append('file', $('#file')[0].files[0]);
+
+        $.ajax({
+            url: '/users/khoa/updatesinhvien',
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (data) {
+                showtoastr("success", data.msg);
+            }
+        });
+    }
+
+    var checkMaSVVal = false;
+
+    function checkMSSV() {
+        if ($('#idSV').val() != "" && $('#idSV').val() != null)
+            $.ajax({
+                url: '/users/khoa/checkMatchMaSV',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id: $('#idSV').val()
+                }),
+                success: function (data) {
+                    console.log("Taon : " +  data.msg);
+                    if (data.msg == "") {
+                        checkMaSVVal = false;
+                        $("#show-result-check").text("Không tìm thấy mã sinh viên!!!!")
+                    } else {
+                        checkMaSVVal = true;
+                        $("#show-result-check").text("");
+                    }
+                }
+            })
+    }
+
+    function submitData() {
+        if (checkMaSVVal)
+            $.ajax({
+                url: '/users/khoa/updatesinhvienbyid',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id: $("#idSV").val()
+                }),
+                success: function (datajson) {
+                    if(datajson.status == 500) {
+                        showtoastr("error", datajson.msg);
+                    } else {
+                        showtoastr("success", datajson.msg);
+                    }
+                }
+            });
+    }
+
+    function showtoastr(type, msg) {
+        toastr[type](msg);
+
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
         }
-        </script>
-        <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
+    }
+</script>
+
+<script src="/assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
+</script>
+<!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
