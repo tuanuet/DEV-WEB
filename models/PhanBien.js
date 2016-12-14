@@ -37,6 +37,33 @@ module.exports = function (sequelize, DataTypes) {
                         allowNull: false
                     }
                 });
+            },
+            insertYkien : function (idDT , idChucVu, yKien , diem, callback) {
+                this.find({
+                    where : {
+                        DeTaiId : idDT,
+                        ChucVuId : parseInt(idChucVu)
+                    }
+                }).then(function (data) {
+                    if(data) {
+                        this.update({
+                            yKien : yKien,
+                            diem : parseInt(diem)
+                        }, {
+                            where : {
+                                DeTaiId : idDT,
+                                ChucVuId : parseInt(idChucVu)
+                            }
+                        }).then(callback)
+                    } else {
+                        this.create({
+                            yKien : yKien,
+                            diem : parseInt(diem),
+                            DeTaiId : idDT,
+                            ChucVuId : parseInt(idChucVu)
+                        }).then(callback)
+                    }
+                })
             }
         }
     });

@@ -36,7 +36,8 @@ module.exports = function (sequelize, DataTypes) {
                 });
                 this.belongsToMany(models.LinhVuc,{through: 'LinhVucLienQuans',timestamps: false});
                 this.hasMany(models.DeTai);
-                this.hasMany(models.PhanBien)
+                this.hasMany(models.PhanBien);
+                this.hasMany(models.ChucVuTrongHoiDong);
             },
             insertBulkGV : function (gvs,callback,callback2) {
                 this.bulkCreate(gvs).then(callback).catch(callback2)

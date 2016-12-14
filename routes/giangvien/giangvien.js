@@ -225,6 +225,59 @@ router.post("/getAllGV",utility.reqIsAuthen,utility.reqIsGV, function (req, res)
     })
 })
 
+router.get("/quanlyphanbien", function (req, res) {
+    utility.isThuKy(req.user.id, function (list) {
+        if (list.length > 0) {
+            // for(var i = 0; i < list.length; i++) {
+            models.DeTai.getAllDeTaiHasIDHoiDong(list[0], function (data) {
+                console.log("Hanh : " + data[0].tenDeTai);
+                res.render("giangvien/phanBienKL", {
+                    title: "Danh sách các đề tài",
+                    dataDT: data
+                })
+            })
+            //  }
+        } else {
+            res.render("giangvien/phanBienKL", {
+                title: "Danh sách các đề tài",
+                dataDT: []
+            })
+        }
+    })
+})
+
+router.get("/quanlyphanbien/detai/:idDT" , function (req, res) {
+    var idDT = req.params.idDT;
+    models.DeTai.getHoiDongOfDeTai(idDT, function (data) {
+        if(data) {
+            console.log("hanh : " + data.HoiDongId);
+            models.ChucVuTrongHoiDong.getAllGiangVien(data.HoiDongId, models, function (data2) {
+                console.log(data2);
+                res.render("giangvien/nhapdiemChoDeTai", {
+                    title : "Nhập điểm cho đề tài",
+                    data : data2
+                })
+            })
+        }
+    })
+
+});
+
+router.post("/updateBangPhanBien" , function (req, res) {
+    var array = req.body.list;
+    var dem = 0;
+    for(var i = 0; i < array.length; i++) {
+        models.PhanBien.insertYkien(parseInt(req.body.idDT), array[i][1], array[i][2], array[i][3], function () {
+            dem++;
+            if(dem == array.length - 1) {
+                res.json({
+                    msg : "Thành công"
+                })
+            }
+        })
+    }
+})
+
 function updateChuDeMoi(req, res, next) {
     models.GiangVien.updateChudeNghienCuu(req.body.id, req.body.chude, function () {
         return next();
