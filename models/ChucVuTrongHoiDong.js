@@ -20,6 +20,13 @@ module.exports = function (sequelize, DataTypes) {
             associate: function (models) {
                 this.belongsTo(models.HoiDong);
                 this.belongsTo(models.ChucVu);
+            },
+            insertNewData : function(hoidongId, chucvuid, giangvienid, callback) {
+                this.create({
+                    HoiDongId : hoidongId,
+                    ChucVuId : chucvuid,
+                    GiangVienId : giangvienid
+                }).then(callback)
             }
         }
     });

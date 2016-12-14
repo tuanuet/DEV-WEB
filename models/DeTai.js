@@ -222,6 +222,20 @@ module.exports = function (sequelize, DataTypes) {
                     }).catch(failure)
                 }
 
+            },
+            getAllDeTaiDuocBaoVe : function (callback) {
+                this.findAll({
+                    where : {
+                        duocBaoVeKhong : 1
+                    }
+                }).then(callback)
+            },
+            updateHoiDong : function (idDeTai, hoidongid, callbback) {
+                this.update({
+                    HoiDongId: hoidongid
+                }, {
+                    where : {id : idDeTai}
+                }).then(callbback)
             }
         }
     });

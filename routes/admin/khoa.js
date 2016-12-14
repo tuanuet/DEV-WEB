@@ -394,7 +394,9 @@ var createLv = require('./createLV');
 var module4 = require('./suadoidetai');
 var module5 = require('./dangkibaove');
 var module3 = require('./dangkidetai');
+var module6 = require('./laphoiDong');
 
+router.use('/', module6);
 router.use('/', module3);
 router.use('/', createLv);
 router.use('/', module4);

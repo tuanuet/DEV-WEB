@@ -17,6 +17,9 @@ module.exports = function (sequelize, DataTypes) {
             associate: function (models) {
                 this.hasOne(models.PhanBien)
                 this.hasMany(models.ChucVuTrongHoiDong);
+            },
+            getAllChucVu : function (callback) {
+                this.findAll({}).then(callback)
             }
         }
     });

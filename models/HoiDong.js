@@ -20,6 +20,15 @@ module.exports = function (sequelize, DataTypes) {
                 this.hasMany(models.PhanBien);
                 this.hasMany(models.ChucVuTrongHoiDong);
                 this.hasMany(models.DeTai);
+            },
+            insertHoiDong : function (tenHD, diadiem, callback) {
+                this.create({
+                    tenHoiDong : tenHD,
+                    diaDiem : diadiem
+                }).then(callback)
+            },
+            getAllHoiDong : function (callback) {
+                this.findAll({}).then(callback)
             }
         }
     });
