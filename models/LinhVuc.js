@@ -32,7 +32,7 @@ module.exports = function (sequelize, DataTypes) {
                                 idParent: idParent
                             }).then(callback).catch(failure)
                         } else {
-                            failure;
+                            failure();
                         }
                     })
                 },

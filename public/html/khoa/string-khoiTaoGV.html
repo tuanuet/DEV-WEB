@@ -125,7 +125,7 @@
             <span class="caption-subject font-green-sharp bold uppercase">Danh sách giảng viên</span>
         </div>
         <div class="tools">
-            <button class="btn green">Gửi mail</button>
+            <button class="btn green" onclick="sendMail()">Gửi mail</button>
         </div>
     </div>
     <div class="portlet-body">
@@ -283,6 +283,18 @@
     function addRowTable(ma, ten, donviId, vnumail) {
         var table = $("#sample_6").DataTable();
         table.row.add([ma, ten, donviId, vnumail]).draw();
+    }
+
+    function sendMail() {
+        $.ajax({
+            url: '/users/khoa/',
+            type: 'POST',
+            success: function (data) {
+                showtoastr("success", data.msg);
+                addRowTable($('#maGV').val(),$('#tenGV').val(),$('#donviID').val(),$('#vnuMail').val() );
+                reset();
+            }
+        });
     }
 
     function showtoastr(type, msg) {

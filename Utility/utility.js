@@ -122,54 +122,62 @@ module.exports.getDataForNav = function (next) {
         return next(data);
     })
 }
-    /**
-     *  khiem tra xem cong đăng kí khóa luận đã mở chưa
-     *  Chua mở thì chuyển về
-     */
-
+/**
+ *  Sinh vien khiem tra xem cong đăng kí khóa luận đã mở chưa
+ *  Chua mở thì chuyển về error
+ */
 module.exports.checkOpenPortDK = function (req,res,next) {
-    switch (req.user.id){
-        case 'fit':{
-            if (openPortDK.fit){
-                return next();
-            }else{
-                res.render('error',{
-                    title : "Khoa chưa mở đăng kí"
-                })
+    models.SinhVien.findOne({
+        where :{id : req.user.id},
+        include :[{
+            model : models.NganhHoc
+        }]
+    }).then(function (sv) {
+        var KhoaId  = sv.dataValues.NganhHoc.KhoaId;
+        switch (KhoaId){
+            case 'fit':{
+                if (openPortDK.fit){
+                    return next();
+                }else{
+                    res.render('error',{
+                        title : "Khoa chưa mở đăng kí"
+                    })
+                }
+                break;
             }
-            break;
-        }
-        case 'fet':{
-            if (openPortDK.fet){
-                return next();
-            }else{
-                res.render('error',{
-                    title : "Khoa chưa mở đăng kí"
-                })
+            case 'fet':{
+                if (openPortDK.fet){
+                    return next();
+                }else{
+                    res.render('error',{
+                        title : "Khoa chưa mở đăng kí"
+                    })
+                }
+                break;
             }
-            break;
-        }
-        case 'fema':{
-            if (openPortDK.fema){
-                return next();
-            }else{
-                res.render('error',{
-                    title : "Khoa chưa mở đăng kí"
-                })
+            case 'fema':{
+                if (openPortDK.fema){
+                    return next();
+                }else{
+                    res.render('error',{
+                        title : "Khoa chưa mở đăng kí"
+                    })
+                }
+                break;
             }
-            break;
-        }
-        case 'fepn':{
-            if (openPortDK.fepn){
-                return next();
-            }else{
-                res.render('error',{
-                    title : "Khoa chưa mở đăng kí"
-                })
+            case 'fepn':{
+                if (openPortDK.fepn){
+                    return next();
+                }else{
+                    res.render('error',{
+                        title : "Khoa chưa mở đăng kí"
+                    })
+                }
+                break;
             }
-            break;
         }
-    }
+    })
+
 
 }
 //Xu ly ten giang vien
@@ -210,58 +218,4 @@ module.exports.randomMatKhau =function()
         });
     });
 }
-module.exports.getArrayFromXlsx = function(req,res,next) {
 
-    var file = req.files.file;
-
-    // Tên file
-    var originalFilename = file.name;
-    console.log("Ten file vua up: "+ originalFilename)
-    // File type
-    var fileType         = file.type.split('/')[1];
-
-    // File size
-    var fileSize         = file.size;
-    // Đường dẫn lưu ảnh
-    var pathUpload       = __dirname + '/xlsx/' + originalFilename;
-
-    // START READ XLSX DATA
-    //doc du lieu tu xlsx dua ve object
-    var workbook = XLSX.readFile(file.path);
-    var sheet_name_list = workbook.SheetNames;
-    var data = [];
-    sheet_name_list.forEach(function(y) {
-        var worksheet = workbook.Sheets[y];
-        var headers = {};
-
-        for(z in worksheet) {
-            if(z[0] === '!') continue;
-            //parse out the column, row, and value
-            var tt = 0;
-            for (var i = 0; i < z.length; i++) {
-                if (!isNaN(z[i])) {
-                    tt = i;
-                    break;
-                }
-            };
-            var col = z.substring(0,tt);
-            var row = parseInt(z.substring(tt));
-            var value = worksheet[z].v;
-
-            //store header names
-            if(row == 1 && value) {
-                headers[col] = value;
-                continue;
-            }
-
-            if(!data[row]) data[row]={};
-            data[row][headers[col]] = value;
-        }
-
-        //drop those first two rows which are empty
-        data.shift();
-        data.shift();
-    });
-
-    return next(data);
-}

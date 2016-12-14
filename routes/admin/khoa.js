@@ -6,7 +6,7 @@ var router = express.Router();
 var utility = require('../../Utility/utility')
 var models = require('../../models');
 var XLSX = require('xlsx');
-var multipart  = require('connect-multiparty');
+var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var validator = require('validator')
 var bcrypt = require('bcryptjs')
@@ -27,13 +27,13 @@ var transporter = nodemailer.createTransport(smtpTransport);
 
 
 router.get('/admin', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
-    res.render('admin/upload-giangvien',{
-        title : "Thêm giảng viên"
+    res.render('admin/upload-giangvien', {
+        title: "Thêm giảng viên"
     })
 })
 
 //Gui mail den tat ca cac giang vien de khoi tao
-router.get('/sendmailtogiangvien',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.get('/sendmailtogiangvien', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
 
     // setup e-mail data with unicode symbols
     //noi dung mail nhe
@@ -46,41 +46,41 @@ router.get('/sendmailtogiangvien',utility.reqIsAuthen,utility.reqIsKhoa,function
     };
 
     // send mail with defined transport object
-    transporter.sendMail(mailOptions, function(error, info){
-        if(error){
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
             console.log(error);
             res.json({
-                msg : "Thất bại"
+                msg: "Thất bại"
             })
-        }else
+        } else
             res.json({
-                msg:"Thành công"
+                msg: "Thành công"
             })
     });
 })
 
 //ghi file tra ve admin
-router.get('/getXLSX',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.get('/getXLSX', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     var data = [{
-        ten : "tuan",
-        lop : "K95clc"
-    },{
-        ten : "lan",
-        lop : "k60cb"
+        ten: "tuan",
+        lop: "K95clc"
+    }, {
+        ten: "lan",
+        lop: "k60cb"
     }]
-    res.xls('data.xlsx',data)
+    res.xls('data.xlsx', data)
 })
 
 //create 1 giang vien ~ ho tro nhap tay
-router.post('/insertonegv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
-    if(req.body){
+router.post('/insertonegv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    if (req.body) {
         var data = req.body;
         var gv = {
-            id : data.id,
-            tenGiangVien : data.tenGiangVien,
-            vnuMail : data.vnuMail,
-            DonViId : data.DonViId,
-            matKhau : Math.random().toString(36).slice(-9)
+            id: data.id,
+            tenGiangVien: data.tenGiangVien,
+            vnuMail: data.vnuMail,
+            DonViId: data.DonViId,
+            matKhau: Math.random().toString(36).slice(-9)
         }
         //kiem tra xem trong db co chua
         // neu chua co thi insert
@@ -90,16 +90,16 @@ router.post('/insertonegv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
                 res.json({
                     msg: "insert thành công"
                 })
-            },function (error) {
-                if(error){
+            }, function (error) {
+                if (error) {
                     res.json({
                         msg: "Giảng viên đã tồn tại!",
-                        error : error.name
+                        error: error.name
                     })
                 }
             })
         }
-    }else {
+    } else {
         res.json({
             msg: "Thêm giảng viên bị lỗi!"
         })
@@ -109,37 +109,37 @@ router.post('/insertonegv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
 /**
  * Hộ trơ nhập tay sinh viên
  */
-router.post('/insertonesv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
-    if(req.body){
+router.post('/insertonesv', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    if (req.body) {
         var data = req.body;
         //kiem tra xem trong db co chua
         // neu chua co thi insert
         //neu co roi thì bo qua insert chay ham tiep theo
-        if(validateSV(data)){
+        if (validateSV(data)) {
             var sv = {
-                id : data.id,
-                tenSinhVien : data.tenSinhVien,
-                vnuMail : data.vnuMail,
-                duocDangKiKhoaLuanKhong : 0,
-                KhoaHocKh : data.KhoaHoc,
-                NganhHocKh : data.NganhHoc,
-                matKhau : Math.random().toString(36).slice(-9)
+                id: data.id,
+                tenSinhVien: data.tenSinhVien,
+                vnuMail: data.vnuMail,
+                duocDangKiKhoaLuanKhong: 0,
+                KhoaHocKh: data.KhoaHoc,
+                NganhHocKh: data.NganhHoc,
+                matKhau: Math.random().toString(36).slice(-9)
             }
 
-            models.SinhVien.insertOneSV(sv,function (sv) {
+            models.SinhVien.insertOneSV(sv, function (sv) {
                 res.json({
                     msg: "insert thành công"
                 })
-            },function (error) {
-                if(error){
+            }, function (error) {
+                if (error) {
                     res.json({
                         msg: "Sinh viên đã tồn tại!",
-                        error : error.name
+                        error: error.name
                     })
                 }
             })
         }
-    }else {
+    } else {
         res.json({
             msg: "Thêm sinh viên bị lỗi!"
         })
@@ -150,10 +150,10 @@ router.post('/insertonesv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
  * them du lieu Sinh vien bang file xlsx
  * can kiem tra dau vao de insert vao bang
  */
-router.post('/insertbulkgv',utility.reqIsAuthen,
+router.post('/insertbulkgv', utility.reqIsAuthen,
     utility.reqIsKhoa,
     multipartMiddleware,
-    utility.getArrayFromXlsx,
+    getArrayFromXlsx,
     insertDataToGiangVien,
     function (req, res) {
         res.json({
@@ -164,11 +164,11 @@ router.post('/insertbulkgv',utility.reqIsAuthen,
 /*
  * them du lieu giao vien bang file xlsx
  * can kiem tra dau vao de insert vao bang
-*/
-router.post('/insertbulksv',utility.reqIsAuthen,
+ */
+router.post('/insertbulksv', utility.reqIsAuthen,
     utility.reqIsKhoa,
     multipartMiddleware,
-    utility.getArrayFromXlsx,
+    getArrayFromXlsx,
     insertDataToSinhVien,
     function (req, res) {
         res.json({
@@ -178,76 +178,77 @@ router.post('/insertbulksv',utility.reqIsAuthen,
 )
 
 
-function insertDataToGiangVien(data,req,res,next) {
+function insertDataToGiangVien(data, req, res, next) {
     var gvs = new Array();
     // validate data
     //chua validate dau, vẫn phải code
     //start
     console.log(data)
-    for(var i=0;i<data.length;i++){
+    for (var i = 0; i < data.length; i++) {
         if (validateGV(data[i])) {
             var gv = {
-                id : data[i].id,
-                tenGiangVien : data[i].tenGiangVien,
-                vnuMail : data[i].vnuMail,
-                DonViId : data[i].DonViId,
-                matKhau : Math.random().toString(36).slice(-9)
+                id: data[i].id,
+                tenGiangVien: data[i].tenGiangVien,
+                vnuMail: data[i].vnuMail,
+                DonViId: data[i].DonViId,
+                matKhau: Math.random().toString(36).slice(-9)
             }
             gvs.push(gv)
         }
         else {
             res.json({
-                msg : "import data false! please check again !",
-                situation : i
+                msg: "import data false! please check again !",
+                situation: i
             })
         }
     }
     //end
-    models.GiangVien.insertBulkGV(gvs,function () {
+    models.GiangVien.insertBulkGV(gvs, function () {
         console.log("insert Thanh cong")
         return next();
-    },function (error) {
+    }, function (error) {
         res.json({
-            msg : " Đã tồn tại giảng viên",
-            error : error
+            msg: " Đã tồn tại giảng viên",
+            error: error
         })
     })
 
 }
-function insertDataToSinhVien(data,req,res,next) {
+function insertDataToSinhVien(data, req, res, next) {
     var svs = new Array();
-        // validate data
-        //chua validate dau, vẫn phải code
-        //start
-        for(var i=0;i<data.length;i++){
-            if(validateSV(data[i])){
-                var sv = {
-                    id : data[i].id,
-                    tenSinhVien : data[i].tenSinhVien,
-                    vnuMail : data[i].vnuMail,
-                    duocDangKiKhoaLuanKhong : 0,
-                    KhoaHocKh : data[i].KhoaHoc,
-                    NganhHocKh : data[i].NganhHoc,
-                    matKhau : Math.random().toString(36).slice(-9)
-                }
-                svs.push(sv)
+    // validate data
+    //chua validate dau, vẫn phải code
+    //start
+    for (var i = 0; i < data.length; i++) {
+        if (validateSV(data[i])) {
+            var sv = {
+                id: data[i].id,
+                tenSinhVien: data[i].tenSinhVien,
+                vnuMail: data[i].vnuMail,
+                duocDangKiKhoaLuanKhong: 0,
+                KhoaHocKh: data[i].KhoaHoc,
+                NganhHocKh: data[i].NganhHoc,
+                matKhau: Math.random().toString(36).slice(-9)
             }
-            else {
-                res.json({
-                    msg : "import data false! please check again !",
-                    situation : i
-                })
-            }
+            svs.push(sv)
 
+        }
+        else {
+            res.json({
+                msg: "import data false! please check again !",
+                situation: i
+            })
+        }
     }
+    console.log(svs)
     //end
-    models.SinhVien.insertBulkSV(svs,function () {
+    models.SinhVien.insertBulkSV(svs, function () {
         console.log("insert Thanh cong")
         return next();
-    },function (error) {
+    }, function (error) {
         res.json({
-            msg : " Đã tồn tại sinh viên",
-            error : error
+            msg: " Đã tồn tại sinh viên",
+            error: error
         })
     })
 }
@@ -255,8 +256,8 @@ function validateGV(data) {
     return (
         !validator.isEmpty(data.tenGiangVien)
         && data.id
-        &&!validator.isEmpty(data.vnuMail)
-        &&!validator.isEmpty(parseInt(data.DonViId).toString())
+        && !validator.isEmpty(data.vnuMail)
+        && !validator.isEmpty(parseInt(data.DonViId).toString())
         && validator.isAscii(data.id)
         && validator.isEmail(data.vnuMail)
         && validator.isInt(parseInt(data.DonViId).toString())
@@ -277,12 +278,12 @@ function validateSV(data) {
 }
 
 router.post('/checkMatchMaGV', function (req, res) {
-        models.GiangVien.getGVByID(req.body.id, function(data){
-            if (data){
+        models.GiangVien.getGVByID(req.body.id, function (data) {
+            if (data) {
                 res.json({
                     msg: "Mã giảng viên đã bị trùng"
                 })
-            }else {
+            } else {
                 res.json({
                     msg: ""
                 })
@@ -290,6 +291,62 @@ router.post('/checkMatchMaGV', function (req, res) {
         })
     }
 )
+function getArrayFromXlsx(req, res, next) {
+
+    var file = req.files.file;
+
+    // Tên file
+    var originalFilename = file.name;
+    console.log("Ten file vua up: " + originalFilename)
+    // File type
+    var fileType = file.type.split('/')[1];
+
+    // File size
+    var fileSize = file.size;
+    // Đường dẫn lưu ảnh
+    var pathUpload = __dirname + '/xlsx/' + originalFilename;
+
+    // START READ XLSX DATA
+    //doc du lieu tu xlsx dua ve object
+    var workbook = XLSX.readFile(file.path);
+    var sheet_name_list = workbook.SheetNames;
+    var data = [];
+    sheet_name_list.forEach(function (y) {
+        var worksheet = workbook.Sheets[y];
+        var headers = {};
+
+        for (z in worksheet) {
+            if (z[0] === '!') continue;
+            //parse out the column, row, and value
+            var tt = 0;
+            for (var i = 0; i < z.length; i++) {
+                if (!isNaN(z[i])) {
+                    tt = i;
+                    break;
+                }
+            }
+            ;
+            var col = z.substring(0, tt);
+            var row = parseInt(z.substring(tt));
+            var value = worksheet[z].v;
+
+            //store header names
+            if (row == 1 && value) {
+                headers[col] = value;
+                continue;
+            }
+
+            if (!data[row]) data[row] = {};
+            data[row][headers[col]] = value;
+        }
+
+        //drop those first two rows which are empty
+        data.shift();
+        data.shift();
+    });
+
+    return next(data);
+}
 
 router.post("/getDonVi", utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     console.log("Toan : " + req.user.id)
@@ -306,9 +363,9 @@ var module4 = require('./suadoidetai');
 var module5 = require('./dangkibaove');
 var module3 = require('./dangkidetai');
 
-router.use('/',module3);
-router.use('/',createLv);
-router.use('/',module4);
-router.use('/',module5);
+router.use('/', module3);
+router.use('/', createLv);
+router.use('/', module4);
+router.use('/', module5);
 
 module.exports = router;

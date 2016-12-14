@@ -190,7 +190,6 @@ module.exports = function (sequelize, DataTypes) {
                         {model : models.GiangVien}
                     ]
                 }).then(function (data) {
-
                     this.destroy({
                         where : {
                             $or : [{
@@ -203,6 +202,20 @@ module.exports = function (sequelize, DataTypes) {
                         success(data)
                     }).catch(failure)
                 }).catch(failure)
+            },
+            deleteBulkDeTaiById : function (ids,success,failure) {
+                for(var i=0;i<ids.length;i++){
+                    this.destroy({
+                        where :{ id : ids[i]}
+                    }).then(function (detai) {
+                        if(i==ids.length-1){
+                            success(true,detai)
+                        }else {
+                            success(false)
+                        }
+                    }).catch(failure)
+                }
+
             }
         }
     });
