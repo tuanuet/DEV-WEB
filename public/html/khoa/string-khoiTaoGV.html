@@ -286,15 +286,14 @@
     }
 
     function sendMail() {
-        $.ajax({
-            url: '/users/khoa/',
-            type: 'POST',
-            success: function (data) {
-                showtoastr("success", data.msg);
-                addRowTable($('#maGV').val(),$('#tenGV').val(),$('#donviID').val(),$('#vnuMail').val() );
-                reset();
-            }
-        });
+//        $.ajax({
+//            type: 'POST',
+//            success: function (data) {
+//                showtoastr("success", "gửi mail thành công");
+//            }
+//        });
+
+        showtoastr("error", "Gửi mail thất bại");
     }
 
     function showtoastr(type, msg) {

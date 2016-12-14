@@ -121,8 +121,8 @@ router.post('/insertonesv', utility.reqIsAuthen, utility.reqIsKhoa, function (re
                 tenSinhVien: data.tenSinhVien,
                 vnuMail: data.vnuMail,
                 duocDangKiKhoaLuanKhong: 0,
-                KhoaHocKh: data.KhoaHoc,
-                NganhHocKh: data.NganhHoc,
+                KhoaHocKh: data.KhoaHocKh,
+                NganhHocKh: data.NganhHocKh,
                 matKhau: Math.random().toString(36).slice(-9)
             }
 
@@ -267,13 +267,13 @@ function validateSV(data) {
     return (
         data.id
         && !validator.isEmpty(data.tenSinhVien)
-        && !validator.isEmpty(data.KhoaHoc.toString())
-        && !validator.isEmpty(data.NganhHoc)
+        && !validator.isEmpty(data.KhoaHocKh)
+        && !validator.isEmpty(data.NganhHocKh)
         && !validator.isEmpty(data.vnuMail)
         && validator.isAscii(data.id.toString())
         && validator.isEmail(data.vnuMail)
-        && validator.isAscii(data.KhoaHoc.toString())
-        && validator.isAscii(data.NganhHoc)
+        && validator.isAscii(data.KhoaHocKh)
+        && validator.isAscii(data.NganhHocKh)
     )
 }
 
@@ -291,6 +291,21 @@ router.post('/checkMatchMaGV', function (req, res) {
         })
     }
 )
+
+router.post("/checkMatchMaSV", function (req, res) {
+    models.SinhVien.getSVByID(req.body.id, function (data) {
+        if (data) {
+            res.json({
+                msg: "Mã sinh viên đã bị trùng"
+            })
+        } else {
+            res.json({
+                msg: ""
+            })
+        }
+    })
+})
+
 function getArrayFromXlsx(req, res, next) {
 
     var file = req.files.file;
@@ -354,6 +369,23 @@ router.post("/getDonVi", utility.reqIsAuthen, utility.reqIsKhoa, function (req, 
         console.log(data)
         res.json({
             dataDV : data
+        })
+    })
+})
+
+router.post("/getKhoaHoc", utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    models.KhoaHoc.getAllKH(function (data) {
+        res.json({
+            dataKH : data
+        })
+    })
+})
+
+
+router.post("/getNganhHoc", utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    models.NganhHoc.getAllNH(function (data) {
+        res.json({
+            dataNH : data
         })
     })
 })

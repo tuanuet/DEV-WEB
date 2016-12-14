@@ -31,6 +31,9 @@ module.exports = function (sequelize, DataTypes) {
                     moTa: data.moTa,
                     KhoaId : data.KhoaId
                 }).then(callback).catch(failure)
+            },
+            getAllNH : function (callback) {
+                this.findAll({}).then(callback)
             }
         }
     });

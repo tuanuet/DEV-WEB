@@ -28,7 +28,7 @@
                                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                            onchange="checkfile(this);">
                                     <br>
-                                    <button class="btn blue" type="submit">Tải lên</button>
+                                    <button class="btn blue" type="button" onclick="uploadData()">Tải lên</button>
                                     <button id="xoa" class="btn red" type="reset">Xóa</button>
                                 </form>
                             </div>
@@ -42,15 +42,6 @@
                 <!-- BEGIN FORM-->
                 <form action="javascript:;" id="form_sample_2" class="form-horizontal">
                     <div class="form-body">
-                        <div class="alert alert-danger display-hide">
-                            <button class="close" data-close="alert"></button>
-                            Một vài thông tin chưa đúng.
-                            Xin vui lòng nhập lại.
-                        </div>
-                        <div class="alert alert-success display-hide">
-                            <button class="close" data-close="alert"></button>
-                            Thêm thông tin sinh viên thành công.
-                        </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Mã sinh viên <span class="required">
                             * </span>
@@ -58,7 +49,9 @@
                             <div class="col-md-4">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input type="text" class="form-control" name="number" placeholder="14020613"/>
+                                    <input id="maSV" type="text" class="form-control" name="number"
+                                           placeholder="14020613" onblur="check()"/>
+                                    <p style="color : red" id="show-result-check"></p>
                                 </div>
                             </div>
                         </div>
@@ -69,41 +62,37 @@
                             <div class="col-md-4">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
-                                    <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang"/>
+                                    <input type="text" class="form-control" name="name" placeholder="Phan Hà Trang" id="tenSV"/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Khóa học <span class="required">
-                    * </span>
+										* </span>
                             </label>
                             <div class="col-md-4">
-                                <div class="input-icon right">
-                                    <i class="fa"></i>
-                                    <input type="text" class="form-control" name="name" placeholder="QH-2014-I/CQ"/>
-                                </div>
+                                <select class="form-control select2me" name="options2" id="khoahocID">
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Ngành học <span class="required">
-                * </span>
+										* </span>
                             </label>
                             <div class="col-md-4">
-                                <div class="input-icon right">
-                                    <i class="fa"></i>
-                                    <input type="text" class="form-control" name="name" placeholder="CNTT"/>
-                                </div>
+                                <select class="form-control select2me" name="options2" id="nganhhocID">
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3">Vnu mail <span class="required">
-            * </span>
+                            <label class="control-label col-md-3">Vnu mail <span class="required">* </span>
                             </label>
                             <div class="col-md-4">
                                 <div class="input-icon right">
                                     <i class="fa"></i>
                                     <input type="text" class="form-control" name="email"
-                                           placeholder="trang@vnu.edu.vn"/>
+                                           placeholder="trang@vnu.edu.vn" id="vnuMail" onblur="checkEmail()"/>
+                                    <p style="color:red" id="msg-checkemail"></p>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +100,7 @@
                     <div class="form-actions">
                         <div class="row">
                             <div class="col-md-offset-3 col-md-9">
-                                <button type="submit" class="btn green">Lưu</button>
+                                <button type="button" class="btn green" onclick="submitFormSV()">Lưu</button>
                                 <button type="button" class="btn default">Hủy</button>
                             </div>
                         </div>
@@ -130,7 +119,7 @@
             <span class="caption-subject font-green-sharp bold uppercase">Danh sách giảng viên</span>
         </div>
         <div class="tools">
-            <button class="btn green">Gửi mail</button>
+            <button class="btn green" onclick="sendMail()">Gửi mail</button>
         </div>
     </div>
     <div class="portlet-body">
@@ -161,22 +150,50 @@
 </div>
 <script type="text/javascript">
     jQuery(document).ready(function () {
-        FormValidation.init();
+
+        //Dữ liệu các khóa học
+        $.ajax({
+            url: '/users/khoa/getKhoaHoc',
+            type: 'POST',
+            success: function (datajson) {
+                for (var i = 0; i < datajson.dataKH.length; i++) {
+                    $("#khoahocID").append($('<option>', {
+                        value: datajson.dataKH[i].kh,
+                        text: datajson.dataKH[i].kh
+                    }));
+                }
+            }
+        })
+
+        // Dữ liệu các ngành học
+        $.ajax({
+            url: '/users/khoa/getNganhHoc',
+            type: 'POST',
+            success: function (datajson) {
+                for (var i = 0; i < datajson.dataNH.length; i++) {
+                    $("#nganhhocID").append($('<option>', {
+                        value: datajson.dataNH[i].kh,
+                        text: datajson.dataNH[i].tenNganhHoc
+                    }));
+                }
+            }
+        })
+
+        //Dữ liệu sinh viên
         $.ajax({
             url: '/users/sinhvien/getAllSV',
             type: 'POST',
             success: function (datajson) {
-                console.log(datajson);
-                var table = $("#sample_6").DataTable();
                 for (var i = 0; i < datajson.dataSV.length; i++) {
-                    table.row.add([datajson.dataSV[i].id, datajson.dataSV[i].tenSinhVien,
-                        datajson.dataSV[i].KhoaHocKh, datajson.dataSV[i].NganhHocKh, datajson.dataSV[i].vnuMail]).draw();
+                    addRowTable(datajson.dataSV[i].id, datajson.dataSV[i].tenSinhVien,
+                        datajson.dataSV[i].KhoaHocKh, datajson.dataSV[i].NganhHocKh, datajson.dataSV[i].vnuMail);
                 }
             }
-        })
+        });
+
     });
-</script>
-<script type="text/javascript" language="javascript">
+
+    <!-- Script check file -->
     function checkfile(sender) {
         var validExts = new Array(".xlsx", ".xls");
         var fileExt = sender.value;
@@ -188,45 +205,132 @@
         }
         else return true;
     }
-</script>
-<!-- Ajax -->
-<script type="text/javascript">
-    function uploadData(evt) {
-        var id = evt.id;
-        if (id == "tailen") {
-            var formData = new FormData();
-            formData.append('file', $('#file')[0].files[0]);
+
+    function uploadData() {
+
+        var formData = new FormData();
+        formData.append('file', $('#file')[0].files[0]);
+
+        $.ajax({
+            url: '/users/khoa/insertbulksv',
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (data) {
+                showtoastr("success", data.msg);
+            }
+        });
+    }
+
+    /**
+     * Kiểm tra thông tin form thêm giảng viên
+     /**
+     * Kiểm tra mã giảng viên đã tồn tại chưa ?
+     */
+    var checkMaSVVal = false;
+    var checkEmailVal = false;
+    function check() {
+        if ($('#maSV').val() != "" && $('#maSV').val() != null)
             $.ajax({
-                url: '/users/khoa/insertbulkgv',
+                url: '/users/khoa/checkMatchMaSV',
                 type: 'POST',
-                data: formData,
-                processData: false,  // tell jQuery not to process the data
-                contentType: false,  // tell jQuery not to set contentType
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id: $('#maSV').val()
+                }),
                 success: function (data) {
-                    console.log(data);
-                    alert(data);
-                    $('#showContentHere').append("<h1>Trang</h1>");
+                    $("#show-result-check").text(data.msg);
+                    if (data.msg == "") {
+                        checkMaSVVal = true;
+                    } else
+                        checkMaSVVal = false;
+                }
+            })
+    }
+
+    function checkEmail() {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test($('#vnuMail').val())) {
+            $("#msg-checkemail").text("");
+            checkEmailVal = true;
+        } else {
+            checkEmailVal = false;
+            $("#msg-checkemail").text("Định dạng email sai!");
+        }
+    }
+
+    function submitFormSV() {
+        var sv = {
+            id: $('#maSV').val(),
+            tenSinhVien: $('#tenSV').val(),
+            vnuMail:$('#vnuMail').val(),
+            KhoaHocKh: $('#khoahocID').val(),
+            NganhHocKh: $('#nganhhocID').val()
+        };
+
+        console.log("toan");
+        if (checkMaSVVal && $('#tenSV').val() && checkEmailVal) {
+            console.log("toan2");
+            $.ajax({
+                url: '/users/khoa/insertonesv',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(sv),
+                success: function (data) {
+                    showtoastr("success", data.msg);
+                    addRowTable($('#maSV').val(), $('#tenSV').val(), $('#khoahocID').val(),$('#nganhhocID').val(),$('#vnuMail').val());
+                    reset();
                 }
             });
         } else {
-            var gv = {
-                id: $('#maGV').val(),
-                tenGiangVien: $('#tenGV').val(),
-                vnuMail: $('#vnuMail').val(),
-                DonViId: $('#donviID').val()
-            };
-            $.ajax({
-                url: '/users/khoa/insertonegv',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(gv),
-                success: function (data) {
-                    console.log(data);
-                    alert(data);
-                    $('#showContentHere').append("<h1>Trang kute</h1>");
-                }
-            });
+            console.log("toan1");
+            showtoastr("error", "Vui lòng xem lại các trường thông tin");
+        }
+    }
+
+    function reset() {
+        //Reset button
+        $('#maSV').val("");
+        $('#tenSV').val("");
+        $('#vnuMail').val("");
+    }
+
+    function addRowTable(ma, ten, khoahoc, nghanhhoc, vnumail) {
+        var table = $("#sample_6").DataTable();
+        table.row.add([ma, ten, khoahoc, nghanhhoc, vnumail]).draw();
+    }
+
+    function sendMail() {
+//        $.ajax({
+//            type: 'POST',
+//            success: function (data) {
+//                showtoastr("success", "gửi mail thành công");
+//            }
+//        });
+
+        showtoastr("error", "Gửi mail thất bại");
+    }
+
+    function showtoastr(type, msg) {
+        toastr[type](msg);
+
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
         }
     }
 </script>
+
+<script src="/assets/global/plugins/bootstrap-toastr/toastr.min.js"></script>
 <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->

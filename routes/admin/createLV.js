@@ -32,7 +32,7 @@ router.post("/insertKH", function (req, res) {
 })
 
 router.post("/checkKH", function (req, res) {
-    models.KhoaHoc.getAllKH(req.body.kh, function (data) {
+    models.KhoaHoc.getKH(req.body.kh, function (data) {
         if(data) {
             res.json({
                 msg : "Ki hieu bi trung"
