@@ -70,7 +70,7 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
 
 })
 //render trang dang ki cho sinh vien
-router.get('/dangki',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpenPortDK,function (req,res) {
+router.get('/dangki',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
     res.render('student/SVdangki', {
         title: "Hệ thống đăng ký đề tài",
     })
@@ -132,7 +132,7 @@ router.post('/insertdetai',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpen
  */
 
 //render ra các thông tin về đề tài đó
-router.get('/rutdetai',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
+router.get('/rutdetai',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpenPortSua,function (req,res) {
     models.DeTai.getDeTaiAndSinhVienAndGiangVienBySinhVienId(req.user.id,models,function (detai) {
         if(detai){
             res.render('student/SVrutdetai',{
@@ -151,7 +151,7 @@ router.get('/rutdetai',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
     })
 })
 //ấn nút xin rút đề tài
-router.get('/xinrutdetai',insertToXoaDeTai,function (req,res) {
+router.get('/xinrutdetai',utility.reqIsAuthen,utility.reqIsSV,insertToXoaDeTai,function (req,res) {
     res.json({
         msg : "Gửi đơn xin rút đề tài thành công"
     })
@@ -163,7 +163,7 @@ router.get('/xinrutdetai',insertToXoaDeTai,function (req,res) {
  * Khi duoc chap nhan thay doi thi
  *  update DeTai
  */
-router.get('/suadetai',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
+router.get('/suadetai',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpenPortSua,function (req,res) {
     models.DeTai.getDeTaiBySinhVienId(req.user.id,function (detai) {
         if(detai){
             res.render('student/SVsuadetai',{
@@ -186,7 +186,7 @@ router.get('/suadetai',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
 /**
  * idDeTai,GiangVienId,tenDetai
  */
-router.post('/luutamthoi',utility.reqIsAuthen,utility.reqIsSV,insertToChangeDeTai,function (req,res) {
+router.post('/luutamthoi',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpenPortSua,insertToChangeDeTai,function (req,res) {
     res.json({
         msg : "Đăng ký chỉnh sửa thành công"
     })

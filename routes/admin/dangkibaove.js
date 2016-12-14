@@ -47,12 +47,11 @@ router.get('/mailthongbaodangkibaove',utility.reqIsAuthen,utility.reqIsKhoa,func
             // setup e-mail data with unicode symbols
             //noi dung mail nhe
             var mailOptions = {
-                from: '"Fred Foo ?" <14020521@vnu.edu.vn>', // sender address
+                from: '"Hệ thống đăng ký" <14020521@vnu.edu.vn>', // sender address
                 // to: listEmail, // list of receivers
                 to : '14020477@vnu.edu.vn,14020557@vnu.edu.vn',
-                subject: 'Hello ✔', // Subject line
-                text: 'Hello world ?', // plaintext body
-                html: '<b>Hello world </b>' // html body
+                subject: 'Thông báo mở đăng ký bảo vệ', // Subject line
+                text: 'Hệ thống thông báo, Hệ thống mở đợt đăng kí bảo vệ\n Trân trọng thông báo'
             };
 
             // send mail with defined transport object
@@ -127,25 +126,25 @@ router.get('/sendmailthongbaodangki',utility.reqIsAuthen,utility.reqIsKhoa,funct
         // setup e-mail data with unicode symbols
         //noi dung mail nhe
         var mailOptions = {
-            from: '"Fred Foo ?" <14020521@vnu.edu.vn>', // sender address
-            to: listEmail, // list of receivers
-            subject: 'Hello ✔', // Subject line
-            text: 'Hello world ?', // plaintext body
-            html: '<b>Hello world </b>' // html body
+            from: '"Hệ thống đăng ký" <14020521@vnu.edu.vn>', // sender address
+            // to: listEmail, // list of receivers
+            to : '14020477@vnu.edu.vn,14020557@vnu.edu.vn',
+            subject: 'Thông báo mở nộp hồ sơ', // Subject line
+            text: 'Hệ thống thông báo, Bạn chưa nộp hồ sơ. Hãy mau chóng nộp hồ sơ\n Trân trọng thông báo'
         };
 
         // send mail with defined transport object
-        // transporter.sendMail(mailOptions, function(error, info){
-        //     if(error){
-        //         console.log(error);
-        //         res.json({
-        //             msg : "Thất bại"
-        //         })
-        //     }else
-        //         res.json({
-        //             msg:"Thành công"
-        //         })
-        // });
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+                res.json({
+                    msg : "Thất bại"
+                })
+            }else
+                res.json({
+                    msg:"Thành công"
+                })
+        });
     },function () {
         res.json({
             msg : "Lỗi không gửi được thông báo"
@@ -215,6 +214,7 @@ router.post('/updatedetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
         })
     }
 })
+//nut bam xóa đê tài chưa nộp hồ sơ
 router.get('/deletedetaikhonghople',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     models.DeTai.deleteDeTaiUnvalidate(function (arg1,arg2) {
         res.json({

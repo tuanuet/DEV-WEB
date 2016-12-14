@@ -200,7 +200,7 @@ module.exports.checkOpenPortSua = function (req,res,next) {
                     return next();
                 }else{
                     res.render('error',{
-                        title : "Khoa chưa mở đăng kí"
+                        title : "Khoa chưa mở cổng sửa đề tài"
                     })
                 }
                 break;
@@ -210,7 +210,7 @@ module.exports.checkOpenPortSua = function (req,res,next) {
                     return next();
                 }else{
                     res.render('error',{
-                        title : "Khoa chưa mở đăng kí"
+                        title : "Khoa chưa mở cổng sửa đề tài"
                     })
                 }
                 break;
@@ -220,7 +220,7 @@ module.exports.checkOpenPortSua = function (req,res,next) {
                     return next();
                 }else{
                     res.render('error',{
-                        title : "Khoa chưa mở đăng kí"
+                        title : "Khoa chưa mở cổng sửa đề tài"
                     })
                 }
                 break;
@@ -230,7 +230,7 @@ module.exports.checkOpenPortSua = function (req,res,next) {
                     return next();
                 }else{
                     res.render('error',{
-                        title : "Khoa chưa mở đăng kí"
+                        title : "Khoa chưa mở cổng sửa đề tài"
                     })
                 }
                 break;

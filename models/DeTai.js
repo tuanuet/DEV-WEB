@@ -131,30 +131,6 @@ module.exports = function (sequelize, DataTypes) {
                     }]
                 }).then(success).catch(failure)
             },
-            getDeTaiAndSinhVienAndGiangVienXinRut :function (idDeTais,khoaId,page,models,success,failure) {
-                this.findAll({
-                    include : [
-                        {model : models.SinhVien},
-                        {
-                            model : models.GiangVien,
-                            include : [
-                                {
-                                    model : models.DonVi,
-                                    include : {
-                                        model : models.Khoa,
-                                        where : {
-                                            id : khoaId
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    limit : 10,
-                    offset : page*10,
-                    order : 'SinhVienId ASC'
-                }).then(success).catch(failure)
-            },
             getDeTaiAndSinhVienAndGiangVien :function (khoaId,page,models,success,failure) {
                 this.findAll({
                     include : [
@@ -195,7 +171,7 @@ module.exports = function (sequelize, DataTypes) {
                             attributes : ['tenGiangVien']
                         }
                     ],
-                    attributes: ['tenDeTai','nopQuyenChua','nopHoSoChua','duocBaoVeKhong']
+                    attributes: ['tenDeTai','nopQuyenChua','nopHoSoChua','duocBaoVeKhong','duocGiangVienChapNhan']
                 }).then(success).catch(failure)
             },
             updateNopHoSoBySinhVienId :function (SinhVienId,data,success,failure) {
