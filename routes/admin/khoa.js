@@ -86,7 +86,7 @@ router.post('/insertonegv',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
         // neu chua co thi insert
         //neu co roi thì bo qua insert chay ham tiep theo
         if(validateGV(gv)){
-            models.GiangVien.insertOneGV(gv,function (gv) {
+            models.GiangVien.insertOneGV(gv,function () {
                 res.json({
                     msg: "insert thành công"
                 })
@@ -180,7 +180,6 @@ router.post('/insertbulksv',utility.reqIsAuthen,
 
 function insertDataToGiangVien(data,req,res,next) {
     var gvs = new Array();
-    alert(1);
     // validate data
     //chua validate dau, vẫn phải code
     //start
@@ -285,7 +284,7 @@ router.post('/checkMatchMaGV', function (req, res) {
                 })
             }else {
                 res.json({
-                    msg: "Mã giảng viên đúng"
+                    msg: ""
                 })
             }
         })
