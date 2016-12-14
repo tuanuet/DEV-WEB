@@ -214,6 +214,20 @@ router.post('/updatedetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
         })
     }
 })
+router.get('/deletedetaikhonghople',function (req,res) {
+    models.DeTai.deleteDeTaiUnvalidate(function (arg1,arg2) {
+        res.json({
+            msg : "xóa thành công",
+            arg1: arg1,
+            arg2 : arg2
+        })
+    },function (err) {
+        res.json({
+            msg : "Xóa thất bại",
+            err :err
+        })
+    })
+})
 /**
  * kiểm tra hợ thức hồ sơ và chốt danh sách
  * kiểm tra xem detai nop ho so chua

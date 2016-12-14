@@ -136,7 +136,8 @@ router.get('/testopenport',utility.reqIsAuthen,utility.reqIsKhoa,utility.checkOp
 
 })
 //Mo hoac dong cong dang ki
-router.post('/openport',function (req,res) {
+//van dang dung body.id ==> phai chuyen sang user.id
+router.post('/openportdk',function (req,res) {
     var openPortDK = require('../../config/config_Khoa_moDangKi.json');
     if(req.body.permission){
         if(req.body.permission == 'open'){
@@ -162,7 +163,7 @@ router.post('/openport',function (req,res) {
                 msg: 'đã mở cổng đăng kí'
             })
 
-        }else {
+        }else if(req.body.permission == 'close'){
             switch (req.user.id){
                 case 'fit':{
                     openPortDK.fit = false;

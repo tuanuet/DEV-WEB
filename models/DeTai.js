@@ -196,30 +196,55 @@ module.exports = function (sequelize, DataTypes) {
                         {model : models.GiangVien}
                     ]
                 }).then(function (data) {
-                    this.destroy({
-                        where : {
-                            $or : [{
-                                nopHoSoChua : 0
-                            },{
-                                duocGiangVienChapNhan : 0
-                            }]
-                        }
-                    }).then(function () {
-                        success(data)
-                    }).catch(failure)
+                    success(data)
                 }).catch(failure)
             },
-            deleteBulkDeTaiById : function (ids,success,failure) {
-                for(var i=0;i<ids.length;i++){
-                    this.destroy({
-                        where :{ id : ids[i]}
-                    }).then(function (detai) {
-                        if(i==ids.length-1){
-                            success(true,detai)
-                        }else {
-                            success(false)
+            deleteDeTaiUnvalidate :function (success,failure) {
+                this.destroy({
+                    where : {
+                        $or : [{
+                            nopHoSoChua : 0
+                        },{
+                            duocGiangVienChapNhan : 0
+                        }]
+                    }
+                }).then(success).catch(failure)
+            },
+            updateDeTaiSuaDoi : function (detais,success,failure) {
+                var dem=0;
+                for(var i = 0;i<detais.length;i++){
+                    this.update({
+                        GiangVienId :detais[i].GiangVienId,
+                        tenDeTai : detais[i].tenDeTai
+                    },{where :{id : detais[i].id}}).then(function (dts) {
+                        dem++;
+                        if(dem == detais.length){
+                            success();
                         }
-                    }).catch(failure)
+                    }).catch(function () {
+                        return failure(i)
+                    })
+                }
+            },
+            getDeTaiBySinhVienId : function (idSinhVien,success,failure) {
+                this.findOne({
+                    where :{SinhVienId  : idSinhVien}
+                }).then(success).catch(failure)
+            },
+            getNameOldDeTaiByChangeDeTai : function (ids,success,failure) {
+                var arr = new Array()
+                for(var i=0;i<ids.length;i++){
+                    this.findOne({
+                        where : {id : ids[i]}
+                    }).then(function (detai) {
+                        var name = detai.dataValues.tenDeTai
+                        arr.push(name)
+                        if(arr.length == ids.length){
+                            success(arr);
+                        }
+                    }).catch(function (err) {
+                        failure("Lỗi hệ thống")
+                    })
                 }
 
             },

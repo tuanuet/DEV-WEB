@@ -4,6 +4,7 @@
 var utility = require('../Utility/utility');
 var models = require('../models')
 var openPortDK = require('../config/config_Khoa_moDangKi.json')
+var openPortSua = require('../config/config_Khoa_moSuaDoi.json')
 module.exports.reqIsSV = function (req, res, next) {
     if (req.isAuthenticated() && req.user.tenSinhVien) {
         return next();
@@ -180,6 +181,66 @@ module.exports.checkOpenPortDK = function (req,res,next) {
 
 
 }
+
+/**
+ *  Sinh vien khiem tra xem cổng sửa đề tài đã mở chưa
+ *  Chua mở thì chuyển về error
+ */
+module.exports.checkOpenPortSua = function (req,res,next) {
+    models.SinhVien.findOne({
+        where :{id : req.user.id},
+        include :[{
+            model : models.NganhHoc
+        }]
+    }).then(function (sv) {
+        var KhoaId  = sv.dataValues.NganhHoc.KhoaId;
+        switch (KhoaId){
+            case 'fit':{
+                if (openPortSua.fit){
+                    return next();
+                }else{
+                    res.render('error',{
+                        title : "Khoa chưa mở đăng kí"
+                    })
+                }
+                break;
+            }
+            case 'fet':{
+                if (openPortSua.fet){
+                    return next();
+                }else{
+                    res.render('error',{
+                        title : "Khoa chưa mở đăng kí"
+                    })
+                }
+                break;
+            }
+            case 'fema':{
+                if (openPortSua.fema){
+                    return next();
+                }else{
+                    res.render('error',{
+                        title : "Khoa chưa mở đăng kí"
+                    })
+                }
+                break;
+            }
+            case 'fepn':{
+                if (openPortSua.fepn){
+                    return next();
+                }else{
+                    res.render('error',{
+                        title : "Khoa chưa mở đăng kí"
+                    })
+                }
+                break;
+            }
+        }
+    })
+
+
+}
+
 //Xu ly ten giang vien
 module.exports.chuyendoichuhoa =function(str)
 {

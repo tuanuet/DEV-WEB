@@ -71,17 +71,17 @@
                             <div class="profile-usermenu">
                                 <ul class="nav">
                                     <li>
-                                        <a href="#update" data-toggle="collapse">
+                                        <a href="#quanly" data-toggle="collapse">
                                             Quản lý để tài
                                         </a>
-                                        <ul class="nav collapse out" id="update">
-                                            <li>
+                                        <ul class="nav collapse" id="quanly">
+                                            <li class="active">
                                                 <a href="quanlydetai">
                                                     <i class="icon-collapse" aria-hidden="true"></i>
                                                     Quản lý
                                                 </a>
                                             </li>
-                                            <li class="active">
+                                            <li>
                                                 <a href="validatehoso">
                                                     <i class="icon-collapse" aria-hidden="true"></i>
                                                     Kiểm tra hợp thức
@@ -89,11 +89,10 @@
                                             </li>
                                         </ul>
                                     </li>
-
                                 </ul>
                                 <ul class="nav">
                                     <li>
-                                        <a href="quanlysuadetai">
+                                        <a href="#" data-toggle="collapse">
                                             Quản lý sửa đề tài
                                         </a>
                                     </li>
@@ -110,13 +109,7 @@
                                 <div class="portlet light">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <span class="caption-subject font-green-sharp bold uppercase">Đề tài đã được kiểm tra</span>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6">
-                                                <button type="button" id="deleteDeTai" class="btn btn-danger">Xóa đề tài không hợp lệ</button>
-                                                <button type="button" class="btn btn-primary" >Xuất Excel</button>
-                                            </div>
+                                            <span class="caption-subject font-green-sharp bold uppercase">Quản lý đề tài</span>
                                         </div>
                                     </div>
                                     <div class="portlet-body">
@@ -131,36 +124,52 @@
                                                         Tên Sinh Viên
                                                     </th>
                                                     <th>
-                                                        Tên đề tài
+                                                        Tên đề tài mới
+                                                    </th>
+                                                    <th>
+                                                        Tên đề tài cũ
                                                     </th>
                                                     <th>
                                                         Tên giảng viên
                                                     </th>
-                                                    <th>
-                                                        Hội đồng phản biện
-                                                    </th>
+
                                                 </tr>
                                                 </thead>
                                                 <tbody class="tbody-hide">
                                                 <% for(var i=0;i<data.length;i++){%>
                                                 <tr>
-                                                    <td><%= data[i].dataValues.SinhVien.id%></td>
-                                                    <td><%= data[i].dataValues.SinhVien.tenSinhVien%></td>
-                                                    <td><%= data[i].dataValues.tenDeTai%></td>
-                                                    <td><%= data[i].dataValues.GiangVien.tenGiangVien%></td>
+                                                    <td><%= data[i].data.SinhVien.id%></td>
+                                                    <td><%= data[i].data.SinhVien.tenSinhVien%></td>
+                                                    <td><%= data[i].data.tenDeTai%></td>
+                                                    <td><%= data[i].oldName%></td>
+                                                    <td><%= data[i].data.GiangVien.tenGiangVien%></td>
                                                 </tr>
                                                 <%}%>
                                                 </tbody>
                                             </table>
-
+                                            <div class="tbody-hide">
+                                                <ul class="pagination pagination-sm">
+                                                    <% for(var i = 0 ;i < pagination; i++){%>
+                                                    <% if(i == page){%>
+                                                    <li>
+                                                        <a href="#">
+                                                            <%= i+1%> </a>
+                                                    </li>
+                                                    <%} else {%>
+                                                    <li>
+                                                        <a href="/users/khoa/quanlysuadetai?page=<%= i%>">
+                                                            <%= i+1%> </a>
+                                                    </li>
+                                                    <%}%>
+                                                    <%}%>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <!-- END PAGE CONTENT INNER -->
@@ -199,7 +208,6 @@
 <script src="/assets/admin/layout3/scripts/layout.js" type="text/javascript"></script>
 <script src="/assets/admin/layout3/scripts/demo.js" type="text/javascript"></script>
 <script src="/assets/admin/pages/scripts/profile.js" type="text/javascript"></script>
-<script src="/javascipt/quanlydetai-validate.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
     jQuery(document).ready(function() {
