@@ -347,7 +347,7 @@ INSERT INTO `sinhviens` (`id`, `tenSinhVien`, `vnuMail`, `matKhau`, `avatar`, `d
 (14020522, 'Vũ Minh a', '14020521@vnu.edu.vn', '12345', NULL, 0, 'QH-2014-I/CQ', 'cntt'),
 (14020578, 'Lê Bảo Cường', '14020578@vnu.edu.vn', '12345', NULL, 0, 'QH-2014-I/CQ', 'cntt'),
 (14020582, 'Châu Quốc Đạt', '14020582@vnu.edu.vn', '12345', NULL, 0, 'QH-2014-I/CQ', 'httt'),
-(14020585, 'Nguyễn Thị Hồng Hải', '14020585@vnu.edu.vn', '12345', NULL, 0, 'QH-2014-I/CQ', 'httt');
+(14020585, 'Phan Hà Trang', '14020613@vnu.edu.vn', '12345', NULL, 0, 'QH-2014-I/CQ', 'cntt');
 
 --
 -- Indexes for dumped tables
