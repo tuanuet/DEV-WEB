@@ -123,6 +123,40 @@ router.post('/insertdetai',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpen
         })
     }
 })
+/*===========================================================================================*/
+/**
+ * Sinh vien xin duoc rut de tai
+ *  + insert vao bang XoaDeTai
+ *  Khi được chấp nhận rút đề tài
+ *  + delete bang DeTai
+ */
+
+//render ra các thông tin về đề tài đó
+router.get('/rutdetai',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
+    models.DeTai.getDeTaiAndSinhVienAndGiangVienBySinhVienId(req.user.id,models,function (detai) {
+        if(detai){
+            res.render('student/SVrutdetai',{
+                title : "Rút đề tài",
+                data : detai
+            })
+        }else{
+            res.render('error',{
+                title : "Bạn chưa đăng kí đề tài"
+            })
+        }
+    },function (err) {
+        res.render('error',{
+            title : "Hệ thống có lỗi, vui lòng thử lại sau"
+        })
+    })
+})
+//ấn nút xin rút đề tài
+router.get('/xinrutdetai',insertToXoaDeTai,function (req,res) {
+    res.json({
+        msg : "Gửi đơn xin rút đề tài thành công"
+    })
+})
+/*===========================================================================================*/
 /**
  * Sua đổi đề tài
  * INSERT vao bang ChangeDeTai (Luutamthoi)
@@ -132,7 +166,7 @@ router.post('/insertdetai',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpen
 router.get('/suadetai',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
     models.DeTai.getDeTaiBySinhVienId(req.user.id,function (detai) {
         if(detai){
-            res.render('student/Svsuadetai',{
+            res.render('student/SVsuadetai',{
                 title : "Chỉnh sửa đề tài",
                 data : detai
             })
@@ -186,6 +220,22 @@ function insertToChangeDeTai(req,res,next) {
             msg : "Vui lòng kiểm tra lại!"
         })
     }
+}
+/**
+ * insert vao bang DeTaiXoa cac id cua bang DeTai
+ * @param req
+ * @param res
+ * @param next
+ */
+function insertToXoaDeTai(req,res,next) {
+    models.DeTaiXoa.insertDeTaiIdBySinhVienId(req.user.id,models,function () {
+        return next();
+    },function (err) {
+        res.json({
+            msg : "Bạn đã gửi xin đơn rút đề tài",
+            error : err
+        })
+    })
 }
 function validateDeTai(data) {
     return (

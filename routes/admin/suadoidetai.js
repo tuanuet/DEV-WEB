@@ -28,18 +28,38 @@ var transporter = nodemailer.createTransport(smtpTransport);
  * Sửa dổi đề tài
  */
 
-//Rút đáng kí
-router.post('/rutdangki',function (req,res) {
-    var svId ;
-    models.DeTai.deleteDeTaiBySinhVienId(svId,function () {
+
+//trang admin quan lý để tài
+router.get('/quanlyrutdetai',utility.reqIsAuthen,utility.reqIsKhoa,getArrDeTaiXinRut,function (data,req,res,next) {
+    console.log(data)
+    var page;
+    if(req.query.page && validator.isInt(req.query.page.toString())) {
+        page = req.query.page;
+    }else{
+        page = 0;
+    }
+    var soPage = parseInt(data.length/10);
+    console.log(soPage)
+    res.render('admin/quanlyrutdetai',{
+        title : "Quản lý rút đề tài",
+        data : data,
+        page : page,
+        pagination: soPage
+    })
+
+})
+//Nha truong chap nhan đơn
+router.get('/rutdangki',function (req,res) {
+    models.DeTai.deleteBulkDeTaiBySinhVienId(SinhVienIds,function () {
         res.json({
             msg : "Xóa thành công",
             isDelete : true
         })
-    },function () {
+    },function (position) {
         res.json({
             msg : "Xóa thất bại",
-            isDelete : false
+            isDelete : false,
+            position : position
         })
     })
 })
@@ -47,7 +67,6 @@ router.post('/rutdangki',function (req,res) {
 router.get('/xuatdenghihuydetai',function () {
 
 })
-
 //trang admin quan lý để tài
 router.get('/quanlysuadetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var page;
@@ -57,37 +76,44 @@ router.get('/quanlysuadetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req
         page = 0;
     }
     models.ChangeDeTai.getCountDeTai(function (result) {
-        //pagination limt = 10
-        var soPage = result.count/10;
-        models.ChangeDeTai.getDeTaiAndSinhVienAndGiangVien(req.user.id,page,models,function (newData) {
-            var ids = new Array();
-            for(var i=0;i<newData.length;i++){
-                ids.push(newData[i].id)
-            }
-            //lay tat ca cac ten de tai cu
-            models.DeTai.getNameOldDeTaiByChangeDeTai(ids,function (oldName) {
-                var arr = new Array();
+        if(result==0){
+            //pagination limt = 10
+            var soPage = result.count/10;
+            models.ChangeDeTai.getDeTaiAndSinhVienAndGiangVien(req.user.id,page,models,function (newData) {
+                var ids = new Array();
                 for(var i=0;i<newData.length;i++){
-                    var item = {
-                        oldName : oldName[i],
-                        data : newData[i]
-                    }
-                    arr.push(item)
+                    ids.push(newData[i].id)
                 }
-                res.render('admin/quanlysuadetai',{
-                    title : "Quản lý chỉnh sửa đề tài",
-                    data : arr,
-                    page : page,
-                    pagination: soPage
+                //lay tat ca cac ten de tai cu
+                models.DeTai.getNameOldDeTaiByChangeDeTai(ids,function (oldName) {
+                    var arr = new Array();
+                    for(var i=0;i<newData.length;i++){
+                        var item = {
+                            oldName : oldName[i],
+                            data : newData[i]
+                        }
+                        arr.push(item)
+                    }
+                    res.render('admin/quanlysuadetai',{
+                        title : "Quản lý chỉnh sửa đề tài",
+                        data : arr,
+                        page : page,
+                        pagination: soPage
+                    })
+                },function () {
+
                 })
             },function () {
-
+                res.render('error',{
+                    title : "Lỗi hệ thống"
+                })
             })
-        },function () {
+        }else{
             res.render('error',{
-                title : "Lỗi hệ thống"
+                title : "Không có đề tài nào sửa đổi"
             })
-        })
+        }
+
     },function (err) {
         res.render('error',{
             title : "Lỗi hệ thống"
@@ -175,8 +201,6 @@ router.post('/openportsua',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
         })
     }
 })
-
-
 /**
  * Truowng bam nut chap nhan sua de tai
  * thi update du lieu tu bang ChangeDeTai sang bang DeTai
@@ -207,4 +231,61 @@ router.get('/truongchapnhansua',utility.reqIsAuthen,utility.reqIsKhoa,function (
 
 })
 
+//Tìm đề tài được xin rút
+function getArrDeTaiXinRut(req,res,next) {
+    var page;
+    if(req.query.page && validator.isInt(req.query.page.toString())) {
+        page = req.query.page;
+    }else{
+        page = 0;
+    }
+    models.DeTaiXoa.findAll({}).then(function (dtx) {
+        console.log(dtx)
+        if(dtx.length!=0){
+            var arr = new Array();
+            for(var i=0;i<dtx.length;i++){
+                arr.push(dtx[i].dataValues.DeTaiId)
+            }
+            var result = new Array();
+            for(var i=0;i<dtx.length;i++){
+                models.DeTai.findOne({
+                    where : {id : arr[i]},
+                    include : [
+                        {model : models.SinhVien},
+                        {
+                            model : models.GiangVien,
+                            include : [
+                                {
+                                    model : models.DonVi,
+                                    include : {
+                                        model : models.Khoa,
+                                        where : {
+                                            id : req.user.id
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    limit : 10,
+                    offset : page*10,
+                    order : 'SinhVienId ASC'
+                }).then(function (detai) {
+                    result.push(detai.dataValues)
+                    if(result.length == dtx.length){
+                        return next(result)
+                    }
+                })
+            }
+        }else{
+            res.render('error',{
+                title : "Không có đề tài xin rút "
+            })
+        }
+    }).catch(function () {
+        res.render('error',{
+            title : "Hệ thồng sinh lỗi "
+        })
+    })
+}
 module.exports = router;
