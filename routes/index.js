@@ -15,7 +15,7 @@ router.get('/',function(req, res) {
 router.get("/search",searchGiangVien,searchHuongNghienCuu,function(data,req,res,next) {
        var queryString = req.query.query;
        res.render('public/search',{
-             title : "Search",
+             title : "Tìm kiếm",
             query : queryString,
              data : data
     })
@@ -24,7 +24,7 @@ router.get("/search",searchGiangVien,searchHuongNghienCuu,function(data,req,res,
 //Profile khoa
 router.get("/profileKhoa", utility.reqIsAuthen , function(req, res) { // tạo 1 trang profileKhoa
     res.render("public/khoaprofile", { //nó sẽ lấy file intro.ejs để sinh ra trang mình cần
-        title : "Profile Khoa", //Dữ liệu đi kèm để hiển thị
+        title : "Hồ sơ Khoa", //Dữ liệu đi kèm để hiển thị
         Object : "khoa"
     })
 })
@@ -32,7 +32,7 @@ router.get("/profileKhoa", utility.reqIsAuthen , function(req, res) { // tạo 1
 //Setting khoa
 router.get("/settingKhoa", utility.reqIsAuthen , function(req, res) {
     res.render("public/khoa_setting", {
-        title : "Setting khoa",
+        title : "Cài đặt khoa",
         Object : "khoa"
     })
 })
@@ -62,7 +62,7 @@ function searchGiangVien(req,res,next) {
             return next(null);
         }
     },function (arg1) {
-        res.send("Quá trình search gặp lỗi!")
+        res.send("Quá trình tìm kiếm gặp lỗi!")
     })
 }
 
@@ -75,7 +75,7 @@ function searchHuongNghienCuu(gv,req,res,next) {
             }
            return next(data)
        },function () {
-           res.send("Quá trình search gặp lỗi!")
+           res.send("Quá trình tìm kiếm gặp lỗi!")
        })
 }
 module.exports = router; //Dòng này phải ở dưới

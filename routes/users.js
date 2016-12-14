@@ -14,7 +14,7 @@ var validator = require('validator')
 // Login
 router.get('/login', utility.reqIsNotAuthen, function (req, res) {
     res.render('login', {
-        title: "Login"
+        title: "Đăng nhập"
     })
 });
 
@@ -39,7 +39,7 @@ passport.use(new LocalStrategy(
                         if (isMatch) {
                             return done(null, userKhoa.dataValues);
                         } else {
-                            return done(null, false, {message: 'Sai mat khau'});
+                            return done(null, false, {message: 'Sai mật khẩu'});
                         }
                     })
                 }
@@ -51,21 +51,21 @@ passport.use(new LocalStrategy(
                                 if (isMatch) {
                                     return done(null, userSV.dataValues);
                                 } else {
-                                    return done(null, false, {message: 'Sai mat khau'});
+                                    return done(null, false, {message: 'Sai mật khẩu'});
                                 }
                             })
                         }
                         else {
                             models.GiangVien.getGiangVienByTaiKhoan(taiKhoan, function (userGV) {
                                 if (!userGV) {
-                                    return done(null, false, {message: 'Khong tim thay tai khoan'});
+                                    return done(null, false, {message: 'Không tìm thấy tài khoản'});
                                 }
                                 models.GiangVien.comparePassword(matKhau, userGV.dataValues.matKhau, function (err, isMatch) {
                                     if (err) throw err;
                                     if (isMatch) {
                                         return done(null, userGV.dataValues);
                                     } else {
-                                        return done(null, false, {message: 'Sai mat khau'});
+                                        return done(null, false, {message: 'Sai mật khẩu'});
                                     }
                                 })
                             })
@@ -75,7 +75,7 @@ passport.use(new LocalStrategy(
 
             })
         }else {
-            return done(null, false, {message: 'Sai tai khoan'});
+            return done(null, false, {message: 'Sai tài khoản'});
         }
 
     }));

@@ -192,7 +192,7 @@ router.post("/updateinfor",
     function (req, res) {
         res.json({
             status: 200,
-            msg: "thanh cong",
+            msg: "Thành công",
         })
     })
 
