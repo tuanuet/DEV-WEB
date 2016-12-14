@@ -105,6 +105,9 @@ module.exports = function (sequelize, DataTypes) {
                 }).catch(failure)
 
             },
+            getAllSinhVien : function (success,failure) {
+                this.findAll({}).then(success).catch(failure)
+            },
             updateSinhVienDuocDangKi : function (svs,success,failure) {
                 var dem=0;
                 for(var i = 0;i<svs.length;i++){

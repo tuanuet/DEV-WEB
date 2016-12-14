@@ -8,7 +8,21 @@ var models = require('../../models');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var path = require('path');
-var fs = require('fs')
+var fs = require('fs');
+var nodemailer = require('nodemailer');
+var smtpTransport = {
+    host: "ctmail.vnu.edu.vn", // hostname
+    secure: false, // use SSL
+    port: 25, // port for secure SMTP
+    auth: {
+        user: "14020521",
+        pass: "1391996"
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+}
+var transporter = nodemailer.createTransport(smtpTransport);
 
 router.get('/', utility.reqIsAuthen, utility.reqIsGV, function (req, res) {
     res.send('day la trang giang vien')
@@ -42,7 +56,7 @@ router.get('/settings', utility.reqIsAuthen, utility.reqIsGV, function (req, res
 
 })
 //upload hinh anh
-router.post('/updateavatar', multipartMiddleware, function (req, res) {
+router.post('/updateavatar',utility.reqIsAuthen,utility.reqIsGV, multipartMiddleware,function (req, res) {
     var file = req.files.file;
 
     // Tên file
@@ -86,7 +100,6 @@ function findLVLQ(gv, lv) {
             array.push(checkContain(lv[i].LinhVucs[j].id, gv.LinhVucs));
         }
     }
-
     return array;
 }
 
@@ -119,14 +132,19 @@ router.get('/dangkikhoaluan', utility.reqIsAuthen, utility.reqIsGV, function (re
  * + control = submit || delete
  * + idSinhVien
  */
-router.post('/controldetai', utility.reqIsAuthen, utility.reqIsGV, function (req, res) {
+router.post('/controldetai', utility.reqIsAuthen, utility.reqIsGV,function (req, res) {
     if (req.body && req.body.id && req.body.control == 'submit') {
         var svId = req.body.id;
+        var mail = svId+"@vnu.edu.vn"
+
         models.DeTai.submitDeTaiBySinhVienId(svId, function () {
-            res.json({
-                msg: "Update thành công",
-                isSubmit: true
+            guiMailToSinhVien("14020477@vnu.edu.vn","Đề tài của bạn được chấp nhận!\n Chúc mừng bạn.",req,res,function () {
+                res.json({
+                    msg: "Update thành công",
+                    isSubmit: true
+                })
             })
+
         }, function () {
             res.json({
                 msg: "Update thất bại",
@@ -136,9 +154,11 @@ router.post('/controldetai', utility.reqIsAuthen, utility.reqIsGV, function (req
     } else if (req.body && req.body.control == 'delete') {
         var svId = req.body.id
         models.DeTai.deleteDeTaiBySinhVienId(svId, function () {
-            res.json({
-                msg: "Delete thành công",
-                isDelete: true
+            guiMailToSinhVien("14020477@vnu.edu.vn","Đề tài của bạn không được chấp nhận! Vui lòng đăng ký lại",req,res,function () {
+                res.json({
+                    msg: "Delete thành công",
+                    isDelete: true
+                })
             })
         }, function () {
             res.json({
@@ -149,10 +169,11 @@ router.post('/controldetai', utility.reqIsAuthen, utility.reqIsGV, function (req
     }
 })
 
+
 /**
  * Xu ly khi go mat khau cu
  */
-router.post("/comparepass", function (req, res) {
+router.post("/comparepass",utility.reqIsAuthen,utility.reqIsGV,function (req, res) {
     models.GiangVien.getPassword(req.body.id, function (data) {
         if (data.matKhau == req.body.password) {
             res.json({
@@ -172,7 +193,7 @@ router.post("/comparepass", function (req, res) {
  * Lưu mật khẩu
  */
 
-router.post("/savepass", function (req, res) {
+router.post("/savepass",utility.reqIsAuthen,utility.reqIsGV, function (req, res) {
     models.GiangVien.updatePassword(req.body.id, req.body.password, function () {
         res.json({
             msg: "Mật khẩu thay đổi thành công"
@@ -187,7 +208,7 @@ router.post("/savepass", function (req, res) {
 /**
  * Xử lý khi gửi form cập nhật thông tin
  */
-router.post("/updateinfor",
+router.post("/updateinfor",utility.reqIsAuthen,utility.reqIsGV,
     updateChuDeMoi, deleteLinhVucOfGV, updateLinhVucForGV,
     function (req, res) {
         res.json({
@@ -196,7 +217,7 @@ router.post("/updateinfor",
         })
     })
 
-router.post("/getAllGV", function (req, res) {
+router.post("/getAllGV",utility.reqIsAuthen,utility.reqIsGV, function (req, res) {
     models.GiangVien.getAllGV(function (data) {
         res.json({
             dataGV : data
@@ -224,6 +245,22 @@ function updateLinhVucForGV(req, res, next) {
             }
         })
     }
+}
+//Gui mail toi sinh vien khi giang vien chap nhan hay xoa de tai
+function guiMailToSinhVien(mail,thongBao,req,res,next) {
+    // setup e-mail data with unicode symbols
+    //noi dung mail nhe
+    var mailOptions = {
+        from: '"Hệ thống đăng kí khóa luận" <14020521@vnu.edu.vn>', // sender address
+        to: mail, // list of receivers
+        subject: 'Thông báo đăng ký khóa luận', // Subject line
+        text: thongBao
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function (error, info) {
+        next();
+    });
 }
 
 module.exports = router;

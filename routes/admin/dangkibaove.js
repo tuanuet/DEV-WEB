@@ -48,24 +48,25 @@ router.get('/mailthongbaodangkibaove',utility.reqIsAuthen,utility.reqIsKhoa,func
             //noi dung mail nhe
             var mailOptions = {
                 from: '"Fred Foo ?" <14020521@vnu.edu.vn>', // sender address
-                to: listEmail, // list of receivers
+                // to: listEmail, // list of receivers
+                to : '14020477@vnu.edu.vn,14020557@vnu.edu.vn',
                 subject: 'Hello ✔', // Subject line
                 text: 'Hello world ?', // plaintext body
                 html: '<b>Hello world </b>' // html body
             };
 
-            // // send mail with defined transport object
-            // transporter.sendMail(mailOptions, function(error, info){
-            //     if(error){
-            //         console.log(error);
-            //         res.json({
-            //             msg : "Thất bại"
-            //         })
-            //     }else
-            //         res.json({
-            //             msg:"Thành công"
-            //         })
-            // });
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                    res.json({
+                        msg : "Thất bại"
+                    })
+                }else
+                    res.json({
+                        msg:"Thành công"
+                    })
+            });
         },function (err) {
             res.render('error',{
                 title : "Lỗi hệ thống"
@@ -214,12 +215,10 @@ router.post('/updatedetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
         })
     }
 })
-router.get('/deletedetaikhonghople',function (req,res) {
+router.get('/deletedetaikhonghople',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     models.DeTai.deleteDeTaiUnvalidate(function (arg1,arg2) {
         res.json({
-            msg : "xóa thành công",
-            arg1: arg1,
-            arg2 : arg2
+            msg : "xóa thành công"
         })
     },function (err) {
         res.json({
@@ -234,7 +233,7 @@ router.get('/deletedetaikhonghople',function (req,res) {
  * + chua nop ho so xoa luon de tai
  * trả về 1 bẳng gồm sinh viên, giảng viên , đề tài
  */
-router.get('/validatehoso',function (req,res) {
+router.get('/validatehoso',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     models.DeTai.validateHoSo(models,function (data) {
         res.render('admin/quanlydetai-validate',{
             title : "Kiểm tra hợp thức hồ sơ",
@@ -246,16 +245,5 @@ router.get('/validatehoso',function (req,res) {
         })
     })
 })
-function validateUpdateDeTai(data) {
-    return (
-        validator.isInt(data.id.toString())
-        &&!validator.isEmpty(data.id.toString())
-        &&!validator.isEmpty(data.duocBaoVeKhong.toString())
-        &&!validator.isEmpty(data.nopQuyenChua.toString())
-        &&!validator.isEmpty(data.nopHoSoChua.toString())
-        &&(data.duocBaoVeKhong==0 ||data.duocBaoVeKhong==1)
-        &&(data.nopQuyenChua==0 ||data.nopQuyenChua==1)
-        &&(data.nopHoSoChua==0 ||data.nopHoSoChua==1))
-}
 
 module.exports = router;

@@ -4,13 +4,13 @@ var router = express.Router();
 var utility = require('../../Utility/utility')
 var models = require('../../models')
 
-router.post("/getAllLV", function (req, res) {
+router.post("/getAllLV",utility.reqIsAuthen,utility.reqIsKhoa, function (req, res) {
     models.LinhVuc.showAllLinhVuc(function (data) {
         res.json(data);
     })
 })
 
-router.post("/insertLV", function(req, res) {
+router.post("/insertLV",utility.reqIsAuthen,utility.reqIsKhoa,function(req, res) {
   models.LinhVuc.themLinhVuc( req.body.nameLV, req.body.idParent , function() {
     res.json({
         msg : "Thành công",
@@ -23,7 +23,7 @@ router.post("/insertLV", function(req, res) {
   }
 })
 
-router.post("/insertKH", function (req, res) {
+router.post("/insertKH",utility.reqIsAuthen,utility.reqIsKhoa,function (req, res) {
     models.KhoaHoc.createKH(req.body, function () {
         res.json({msg:"Thêm khóa học thành công"})
     })
@@ -31,7 +31,7 @@ router.post("/insertKH", function (req, res) {
     res.json({msg : "Thêm thất bại"})
 })
 
-router.post("/checkKH", function (req, res) {
+router.post("/checkKH",utility.reqIsAuthen,utility.reqIsKhoa, function (req, res) {
     models.KhoaHoc.getKH(req.body.kh, function (data) {
         if(data) {
             res.json({
@@ -45,7 +45,7 @@ router.post("/checkKH", function (req, res) {
     })
 })
 
-router.post("/getKhoaID", function (req, res) {
+router.post("/getKhoaID",utility.reqIsAuthen,utility.reqIsKhoa, function (req, res) {
     models.Khoa.gettAllKhoa(function (data) {
         res.json({
             dataKhoa : data
@@ -53,7 +53,7 @@ router.post("/getKhoaID", function (req, res) {
     })
 })
 
-router.post("/insertNH", function (req, res) {
+router.post("/insertNH",utility.reqIsAuthen,utility.reqIsKhoa, function (req, res) {
     console.log(req.body)
     models.NganhHoc.createNH(req.body, function () {
         res.json({msg:"Thêm nghành học thành công"})

@@ -34,31 +34,90 @@ router.get('/admin', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res)
 
 //Gui mail den tat ca cac giang vien de khoi tao
 router.get('/sendmailtogiangvien', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    models.GiangVien.getAllGV(function (gv) {
+        if(gv){
+            var listEmail = "";
+            for(var i=0;i<gv.length;i++){
+                if(i==gv.length -1){
+                    listEmail += gv[i].vnuMail
+                }else
+                    listEmail += gv[i].vnuMail + ' ,'
+            }
+            // setup e-mail data with unicode symbols
+            //noi dung mail nhe
+            var mailOptions = {
+                from: '"Hệ thống đăng kí khóa luận" <14020521@vnu.edu.vn>', // sender address
+                to: '14020477@vnu.edu.vn', // list of receivers
+                subject: 'Đăng ký khóa luân', // Subject line
+                text: 'Hệ thống thông báo, Bạn đã được khởi tạo trên hệ thống\n Trân trọng thông báo!\n Tài khoản : email \n Mật khẩu : abca',
+                html: '<a href="http://localhost:3000/users/login">Click vào đây</a>'
+            };
 
-    // setup e-mail data with unicode symbols
-    //noi dung mail nhe
-    var mailOptions = {
-        from: '"Fred Foo ?" <14020521@vnu.edu.vn>', // sender address
-        to: '14020557@vnu.edu.vn', // list of receivers
-        subject: 'Hello ✔', // Subject line
-        text: 'Hello world ?', // plaintext body
-        html: '<b>Hello world </b>' // html body
-    };
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                    res.json({
+                        msg: "Thất bại",
+                        err: error
+                    })
+                } else
+                    res.json({
+                        msg: "Thành công"
+                    })
+            });
+        }
+    })
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-            res.json({
-                msg: "Thất bại"
-            })
-        } else
-            res.json({
-                msg: "Thành công"
-            })
-    });
 })
+//Gui mail den tat ca cac sinh vien de khoi tao
+router.get('/sendmailtosinhvien', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    models.SinhVien.getAllSinhVien(function (sv) {
+        if(sv){
+            var listEmail = "";
+            for(var i=0;i<sv.length;i++){
+                if(i==sv.length -1){
+                    listEmail += sv[i].vnuMail
+                }else
+                    listEmail += sv[i].vnuMail + ' ,'
+            }
+            // setup e-mail data with unicode symbols
+            //noi dung mail nhe
+            var mailOptions = {
+                from: '"Hệ thống đăng kí khóa luận" <14020521@vnu.edu.vn>', // sender address
+                to: '14020557@vnu.edu.vn', // list of receivers
+                subject: 'Đăng ký khóa luân', // Subject line
+                text: 'Hệ thống thông báo, Bạn đã được khởi tạo trên hệ thống\n Trân trọng thông báo!\n Tài khoản : email \n Mật khẩu : abca',
+                html: '<a href="http://localhost:3000/users/login">Click vào đây</a>'
+            };
+            // var mailOptions = {
+            //     from: 'Hệ thống đăng kí khóa luận', // sender address
+            //     // to: listEmail, // list of receivers
+            //     form: '14020557@vnu.edu.vn',
+            //     subject: 'Hệ thống đăng kí khóa luận', // Subject line
+            //     text: 'Hệ thống thông báo, Bạn đã được phép đăng kí khóa luận trên hệ thống\n Trân trọng thông báo!'
+            // };
 
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, function(error){
+                if(error){
+                    console.log(error);
+                    res.json({
+                        msg : "Thất bại",
+                        err: error
+                    })
+                }else
+                    res.json({
+                        msg:"Thành công"
+                    })
+            });
+        }
+    },function (err) {
+        res.json({
+            msg: "Hệ thống có lỗi, vui lòng kiểm tra lại"
+        })
+    })
+})
 //ghi file tra ve admin
 router.get('/getXLSX', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     var data = [{
@@ -226,8 +285,8 @@ function insertDataToSinhVien(data, req, res, next) {
                 tenSinhVien: data[i].tenSinhVien,
                 vnuMail: data[i].vnuMail,
                 duocDangKiKhoaLuanKhong: 0,
-                KhoaHocKh: data[i].KhoaHoc,
-                NganhHocKh: data[i].NganhHoc,
+                KhoaHocKh: data[i].KhoaHocKh,
+                NganhHocKh: data[i].NganhHocKh,
                 matKhau: Math.random().toString(36).slice(-9)
             }
             svs.push(sv)
@@ -277,7 +336,7 @@ function validateSV(data) {
     )
 }
 
-router.post('/checkMatchMaGV', function (req, res) {
+router.post('/checkMatchMaGV',utility.reqIsAuthen,utility.reqIsKhoa,function (req, res) {
         models.GiangVien.getGVByID(req.body.id, function (data) {
             if (data) {
                 res.json({
@@ -292,7 +351,7 @@ router.post('/checkMatchMaGV', function (req, res) {
     }
 )
 
-router.post("/checkMatchMaSV", function (req, res) {
+router.post("/checkMatchMaSV",utility.reqIsAuthen,utility.reqIsKhoa, function (req, res) {
     models.SinhVien.getSVByID(req.body.id, function (data) {
         if (data) {
             res.json({

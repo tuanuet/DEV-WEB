@@ -299,14 +299,18 @@
     }
 
     function sendMail() {
-//        $.ajax({
-//            type: 'POST',
-//            success: function (data) {
-//                showtoastr("success", "gửi mail thành công");
-//            }
-//        });
+        $.ajax({
+            type: 'get',
+            url: '/users/khoa/sendmailtosinhvien',
+            success: function (data) {
+                if(data.err){
+                    showtoastr("error", data.msg);
+                }else{
+                    showtoastr("success", data.msg);
+                }
 
-        showtoastr("error", "Gửi mail thất bại");
+            }
+        });
     }
 
     function showtoastr(type, msg) {

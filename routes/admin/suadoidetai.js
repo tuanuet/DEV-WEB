@@ -102,7 +102,7 @@ router.get('/xuatdenghithaydodetai',function (req,res) {
 
 //Mo hoac dong cong sửa đề tai
 //van dang dung body.id ==> phai chuyen sang user.id
-router.post('/openportsua',function (req,res) {
+router.post('/openportsua',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var openPortSua = require('../../config/config_Khoa_moSuaDoi.json');
     if(req.body.permission){
         if(req.body.permission == 'open'){
@@ -181,7 +181,7 @@ router.post('/openportsua',function (req,res) {
  * Truowng bam nut chap nhan sua de tai
  * thi update du lieu tu bang ChangeDeTai sang bang DeTai
  */
-router.get('/truongchapnhansua',function (req,res) {
+router.get('/truongchapnhansua',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     models.ChangeDeTai.findAll({}).then(function (detai) {
         if(detai){
             models.DeTai.updateDeTaiSuaDoi(detai,function () {

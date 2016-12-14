@@ -24,7 +24,7 @@ var smtpTransport = {
 }
 var transporter = nodemailer.createTransport(smtpTransport);
 
-//update sinh vien duoc dang ki
+//update sinh vien duoc dang ký băng tay
 router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     if(req.body.id){
         var id = req.body.id
@@ -52,7 +52,6 @@ router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function
 /*
  * Thay đổi trang thai tu ko đc dang kí thanh duoc dang ki
  * */
-
 router.post('/updatesinhvien',utility.reqIsAuthen,
     utility.reqIsKhoa,
     multipartMiddleware,
@@ -78,24 +77,25 @@ router.get('/sendmailtosinhvienduocdangki',utility.reqIsAuthen,utility.reqIsKhoa
             // setup e-mail data with unicode symbols
             //noi dung mail nhe
             var mailOptions = {
-                from: 'Hệ thống đăng kí khóa luận', // sender address
-                to: listEmail, // list of receivers
+                from: '"Hệ thống đăng ký khóa luận" <14020521@vnu.edu.vn>', // sender address
+                // to: listEmail, // list of receivers
+                to : '14020477@vnu.edu.vn',
                 subject: 'Hệ thống đăng kí khóa luận', // Subject line
                 text: 'Hệ thống thông báo, Bạn đã được phép đăng kí khóa luận trên hệ thống\n Trân trọng thông báo!'
             };
 
-            // // send mail with defined transport object
-            // transporter.sendMail(mailOptions, function(error, info){
-            //     if(error){
-            //         console.log(error);
-            //         res.json({
-            //             msg : "Thất bại"
-            //         })
-            //     }else
-            //         res.json({
-            //             msg:"Thành công"
-            //         })
-            // });
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                    res.json({
+                        msg : "Thất bại"
+                    })
+                }else
+                    res.json({
+                        msg:"Thành công"
+                    })
+            });
         }
     },function (err) {
         res.json({
@@ -135,13 +135,66 @@ router.get('/testopenport',utility.reqIsAuthen,utility.reqIsKhoa,utility.checkOp
     }
 
 })
+router.get('/openorclose',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+    var openPortDK = require('../../config/config_Khoa_moDangKi.json');
+    switch (req.user.id){
+        case 'fit':{
+            if (openPortDK.fit){
+                res.json({
+                    status : "open"
+                })
+            }else{
+                res.json({
+                    status : "close"
+                })
+            }
+            break;
+        }
+        case 'fet':{
+            if (openPortDK.fet){
+                res.json({
+                    status : "open"
+                })
+            }else{
+                res.json({
+                    status : "close"
+                })
+            }
+            break;
+        }
+        case 'fema':{
+            if (openPortDK.fema){
+                res.json({
+                    status : "open"
+                })
+            }else{
+                res.json({
+                    status : "close"
+                })
+            }
+            break;
+        }
+        case 'fepn':{
+            if (openPortDK.fepn){
+                res.json({
+                    status : "open"
+                })
+            }else{
+                res.json({
+                    status : "close"
+                })
+            }
+            break;
+        }
+    }
+})
 //Mo hoac dong cong dang ki
 //van dang dung body.id ==> phai chuyen sang user.id
-router.post('/openportdk',function (req,res) {
+router.post('/openportdk',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var openPortDK = require('../../config/config_Khoa_moDangKi.json');
     if(req.body.permission){
         if(req.body.permission == 'open'){
-            switch (req.body.id){
+            switch (req.user.id){
                 case 'fit':{
                     openPortDK.fit = true;
                     break;
@@ -160,7 +213,8 @@ router.post('/openportdk',function (req,res) {
                 }
             }
             res.json({
-                msg: 'đã mở cổng đăng kí'
+                msg: 'đã mở cổng đăng kí',
+                status :"opened"
             })
 
         }else if(req.body.permission == 'close'){
@@ -183,7 +237,8 @@ router.post('/openportdk',function (req,res) {
                 }
             }
             res.json({
-                msg: 'đã đóng cổng đăng kí'
+                msg: 'đã đóng cổng đăng kí',
+                status : "closed"
             })
         }
     }else {
@@ -216,9 +271,8 @@ router.post('/openportdk',function (req,res) {
  * xóa tất cả các đề tài chưa được chấp nhận
  * module 3 chốt đề tài được chấp nhập
  * Khoa khóa danh sách
- * Toan làm phần này
  */
-router.get('/chotdetaiduocnhapnhan',function (req,res) {
+router.get('/chotdetaiduocnhapnhan',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     models.DeTai.chotDeTaiDuocChapNhan(function (detai) {
         res.json({
             msg : "Chốt đề tài thành công",

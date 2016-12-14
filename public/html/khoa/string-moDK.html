@@ -1,15 +1,69 @@
 <script>
 $(document).ready(function(){
-
-    $("#off").hide();
+    $('#off').hide()
+    $('#on').hide()
+    $.ajax({
+        url: '/users/khoa/openorclose',
+        type: 'GET',
+        success: function (data) {
+            console.log(data)
+            if(data.status == "open"){
+                $('#off').show()
+			}else if(data.status == "close"){
+                $('#on').show()
+			}
+        }
+    });
     
     $("#show").click(function(){
-        $("#off").show();
-        $("#on").hide();
+        var item = {
+            permission : "open"
+		}
+        $.ajax({
+            url: '/users/khoa/openportdk',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(item),
+            success: function (data) {
+                if(data.status == "opened"){
+                    $("#off").show();
+                    $("#on").hide();
+				}
+				else{
+                    alert("có lỗi trên hệ thống")
+				}
+            }
+        });
     });
+
     $("#hide").click(function(){
-        $("#on").show();
-        $("#off").hide();
+        var item = {
+            permission : "close"
+        }
+        $.ajax({
+            url: '/users/khoa/openportdk',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(item),
+            success: function (data) {
+                if(data.status == 'closed'){
+                    $("#on").show();
+                    $("#off").hide();
+                    $.ajax({
+                        url: '/users/khoa/chotdetaiduocnhapnhan',
+                        type: 'GET',
+                        success: function (data) {
+                           alert(data.msg)
+                        }
+                    });
+                }
+                else{
+                    alert("có lỗi trên hệ thống")
+                }
+            }
+        });
+
+
     });
 
 });
@@ -24,9 +78,6 @@ $(document).ready(function(){
 	<h1>Đóng đăng ký đề tài</h1>
 	<button type="button" id="hide" class="btn btn-primary">Đóng đăng ký</button>
 	</center>
-	<hr>
-	<h2>Xuất danh sách sinh viên đăng ký đề tài và cán bộ hướng dẫn</h2>
-	<a>export</a>
 </div>
 <script type="text/javascript">
 	function exportFile() {

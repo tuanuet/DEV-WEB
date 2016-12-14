@@ -11,9 +11,6 @@ var multipartMiddleware = multipart();
 var path = require('path');
 var fs = require('fs')
 
-router.get('/',utility.reqIsAuthen,function (req,res) {
-    res.send('day la trang sinh vien')
-})
 router.get('/myprofile',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
     models.SinhVien.getSinhVienAndKhoaAndKhoaHocAndNganhHoc(req.user.id,models,function (sv) {
         res.render('student/SVProfile',{
@@ -26,7 +23,7 @@ router.get('/myprofile',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
 })
 
 //upload hinh anh
-router.post('/updateavatar',multipartMiddleware,function (req,res) {
+router.post('/updateavatar',utility.reqIsAuthen,utility.reqIsSV,multipartMiddleware,function (req,res) {
     var file = req.files.file;
 
     // Tên file
@@ -73,26 +70,27 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
 
 })
 //render trang dang ki cho sinh vien
-router.get('/dangki',function (req,res) {
+router.get('/dangki',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpenPortDK,function (req,res) {
     res.render('student/SVdangki', {
         title: "Hệ thống đăng ký đề tài",
     })
 })
 
 //render trang dang ki cho sinh vien
-router.get('/dangkikhoaluan',function (req,res) {
+router.get('/dangkikhoaluan',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpenPortDK,function (req,res) {
     res.render('student/SVdangkidetai', {
         title: "Đăng kí đề tài",
     })
 })
 //sinh vien dang ki khoa luan
-router.post('/insertdetai',function (req,res) {
+router.post('/insertdetai',utility.reqIsAuthen,utility.reqIsSV,utility.checkOpenPortDK,function (req,res) {
     console.log(req.body)
     if(req.body){
         var data = {
             GiangVienId : req.body.GiangVienId.trim(),
             SinhVienId :req.user.id,
             tenDeTai : req.body.tenDeTai.trim(),
+            HoiDongId : null,
             thoiGianNop: null,
             thoiGianSua: null,
             nopHoSoChua: 0,
@@ -131,7 +129,7 @@ router.post('/insertdetai',function (req,res) {
  * Khi duoc chap nhan thay doi thi
  *  update DeTai
  */
-router.get('/suadetai',function (req,res) {
+router.get('/suadetai',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
     models.DeTai.getDeTaiBySinhVienId(req.user.id,function (detai) {
         if(detai){
             res.render('student/Svsuadetai',{
@@ -154,7 +152,7 @@ router.get('/suadetai',function (req,res) {
 /**
  * idDeTai,GiangVienId,tenDetai
  */
-router.post('/luutamthoi',insertToChangeDeTai,function (req,res) {
+router.post('/luutamthoi',utility.reqIsAuthen,utility.reqIsSV,insertToChangeDeTai,function (req,res) {
     res.json({
         msg : "Đăng ký chỉnh sửa thành công"
     })
@@ -201,7 +199,7 @@ function validate(id,GiangVienId,tenDeTai) {
         !validator.isEmpty(GiangVienId.toString())&&
         !validator.isEmpty(tenDeTai.toString())
 }
-router.post("/getAllSV", function (req, res) {
+router.post("/getAllSV",utility.reqIsAuthen,utility.reqIsSV, function (req, res) {
     models.SinhVien.getAllSV(function (data) {
         res.json({
             dataSV : data
