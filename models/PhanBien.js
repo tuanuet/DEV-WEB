@@ -11,21 +11,14 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true
         },
         yKien: DataTypes.TEXT,
-        GiangVienId : DataTypes.STRING(11),
+        ChucVuId : DataTypes.INTEGER,
         DeTaiId : DataTypes.INTEGER(11),
         HoiDongId : DataTypes.INTEGER,
-        ChucVuId : DataTypes.INTEGER,
         diem: DataTypes.INTEGER(3),
     }, {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                this.belongsTo(models.GiangVien, {
-                    onDelete: "CASCADE",
-                    foreignKey: {
-                        allowNull: true
-                    }
-                });
                 this.belongsTo(models.DeTai, {
                     onDelete: "CASCADE",
                     foreignKey: {

@@ -16,6 +16,7 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 this.hasOne(models.PhanBien)
+                this.hasMany(models.ChucVuTrongHoiDong);
             }
         }
     });

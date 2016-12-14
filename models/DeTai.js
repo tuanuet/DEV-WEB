@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
+        HoiDongId : DataTypes.INTEGER,
         GiangVienId : DataTypes.STRING(11),
         SinhVienId: DataTypes.INTEGER(11),
         tenDeTai: DataTypes.STRING(225),
@@ -23,7 +24,12 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-              this.hasMany(models.PhanBien);
+                this.belongsTo(models.HoiDong, {
+                    onDelete: "CASCADE",
+                    foreignKey: {
+                        allowNull : true
+                    }
+                });
               this.belongsTo(models.GiangVien, {
                 onDelete: "CASCADE",
                 foreignKey: {

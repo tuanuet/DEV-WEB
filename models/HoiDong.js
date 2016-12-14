@@ -18,6 +18,8 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 this.hasMany(models.PhanBien);
+                this.hasMany(models.ChucVuTrongHoiDong);
+                this.hasMany(models.DeTai);
             }
         }
     });
