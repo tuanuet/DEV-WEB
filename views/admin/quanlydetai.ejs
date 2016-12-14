@@ -78,7 +78,7 @@
                                             <li class="active">
                                                 <a href="quanlydetai">
                                                     <i class="icon-collapse" aria-hidden="true"></i>
-                                                    Quản lý
+                                                    Quản lý đề tài
                                                 </a>
                                             </li>
                                             <li>
@@ -94,6 +94,13 @@
                                     <li>
                                         <a href="quanlysuadetai">
                                             Quản lý sửa đề tài
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav">
+                                    <li>
+                                        <a href="quanlyrutdetai">
+                                            Quản lý rút đề tài
                                         </a>
                                     </li>
                                 </ul>
@@ -140,6 +147,9 @@
                                                     <th>
                                                         Nộp quyển
                                                     </th>
+                                                    <th>
+                                                        Giảng viên chấp nhận
+                                                    </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody class="tbody-hide">
@@ -154,6 +164,13 @@
                                                     </td>
                                                     <td>
                                                         <input type="checkbox" class="input nopQuyenChua"<% if(data[i].dataValues.nopQuyenChua == 1){%> checked<%}%>>
+                                                    </td>
+                                                    <td>
+                                                        <%if(data[i].dataValues.duocGiangVienChapNhan==1){%>
+                                                            Chấp nhận
+                                                        <%}else {%>
+                                                            Chưa
+                                                        <%}%>
                                                     </td>
                                                 </tr>
                                                 <%}%>
