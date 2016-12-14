@@ -30,6 +30,7 @@
     "serve-favicon": "~2.3.0",
     "sqlite3": "*",
     "validator": "^6.1.0",
-    "xlsx": "^0.8.0"
+    "xlsx": "^0.8.0",
+    "officegen" : "*"
   }
 }

@@ -155,6 +155,28 @@ module.exports = function (sequelize, DataTypes) {
                     order : 'SinhVienId ASC'
                 }).then(success).catch(failure)
             },
+            getDeTaiAndSinhVienAndGiangVienForExport :function (khoaId, models,success,failure) {
+                this.findAll({
+                    include : [
+                        {model : models.SinhVien},
+                        {
+                            model : models.GiangVien,
+                            include : [
+                                {
+                                    model : models.DonVi,
+                                    include : {
+                                        model : models.Khoa,
+                                        where : {
+                                            id : khoaId
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    order : 'SinhVienId ASC'
+                }).then(success).catch(failure)
+            },
             getCountDeTai : function (success,failure) {
                 this.findAndCountAll().then(success).catch(failure)
             },

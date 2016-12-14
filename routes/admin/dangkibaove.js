@@ -6,6 +6,7 @@ var models = require('../../models');
 var XLSX = require('xlsx');
 var multipart  = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var exportFile = require('../../Utility/exportFIle');
 var validator = require('validator')
 var openPortDK = require('../../config/config_Khoa_moDangKi.json');
 var nodemailer = require('nodemailer');
@@ -242,6 +243,26 @@ router.get('/validatehoso',utility.reqIsAuthen,utility.reqIsKhoa,function (req,r
     },function (err) {
         res.json({
             title  : 'system has fail'
+        })
+    })
+})
+
+router.post("/exportSvDuocBaoVe", utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    models.DeTai.validateHoSo(models,function (data) {
+        var arrayTile = ["Tên học viên", "Tên đề tài", "Giảng viên hướng dẫn"];
+        var rowData = [];
+        for (var i = 0; i < data.length; i++) {
+            rowData.push([data[i].dataValues.SinhVien.tenSinhVien,
+                data[i].dataValues.tenDeTai, data[i].dataValues.GiangVien.tenGiangVien]);
+        }
+        var title = "DANH SÁCH SINH VIÊN ĐƯỢC BẢO VỆ KHÓA LUẬN";
+        exportFile.createFile(title, arrayTile,rowData,"danhsachhocviendcbaove");
+        res.json({
+            msg : " Xuất file thành công"
+        })
+    },function (err) {
+        res.json({
+            msg  : 'Xuất file lỗi'
         })
     })
 })

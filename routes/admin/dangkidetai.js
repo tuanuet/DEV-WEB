@@ -3,10 +3,11 @@
  */
 var express = require('express');
 var router = express.Router();
-var utility = require('../../Utility/utility')
+var utility = require('../../Utility/utility');
+var exportFile = require('../../Utility/exportFIle');
 var models = require('../../models');
 var XLSX = require('xlsx');
-var multipart  = require('connect-multiparty');
+var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var validator = require('validator')
 var nodemailer = require('nodemailer');
@@ -25,26 +26,26 @@ var smtpTransport = {
 var transporter = nodemailer.createTransport(smtpTransport);
 
 //update sinh vien duoc dang ký băng tay
-router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
-    if(req.body.id){
+router.post('/updatesinhvienbyid', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    if (req.body.id) {
         var id = req.body.id
-        if(validator.isInt(id.toString())&&!validator.isEmpty(id.toString())){
-            models.SinhVien.updateSinhVienDuocDangKiByID(req.body.id,function () {
+        if (validator.isInt(id.toString()) && !validator.isEmpty(id.toString())) {
+            models.SinhVien.updateSinhVienDuocDangKiByID(req.body.id, function () {
                 res.json({
-                    msg : "Update thanh cong",
-                    status : 200
+                    msg: "Update thanh cong",
+                    status: 200
                 })
-            },function () {
+            }, function () {
                 res.json({
-                    msg : "Update that bai",
-                    status : 500
+                    msg: "Update that bai",
+                    status: 500
                 })
             })
         }
-    }else{
+    } else {
         res.json({
-            msg : "Update that bai",
-            status : 500
+            msg: "Update that bai",
+            status: 500
         })
     }
 
@@ -52,7 +53,7 @@ router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function
 /*
  * Thay đổi trang thai tu ko đc dang kí thanh duoc dang ki
  * */
-router.post('/updatesinhvien',utility.reqIsAuthen,
+router.post('/updatesinhvien', utility.reqIsAuthen,
     utility.reqIsKhoa,
     multipartMiddleware,
     getArrayFromXlsx,
@@ -64,14 +65,14 @@ router.post('/updatesinhvien',utility.reqIsAuthen,
     }
 )
 //Gui mail đén tất cả các sinh viên có trạng thái được đăng kí
-router.get('/sendmailtosinhvienduocdangki',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.get('/sendmailtosinhvienduocdangki', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     models.SinhVien.getSinhVienDuocDangKiKhoaLuan(function (sv) {
-        if(sv){
+        if (sv) {
             var listEmail = "";
-            for(var i=0;i<sv.length;i++){
-                if(i==sv.length -1){
+            for (var i = 0; i < sv.length; i++) {
+                if (i == sv.length - 1) {
                     listEmail += sv[i].vnuMail
-                }else
+                } else
                     listEmail += sv[i].vnuMail + ' ,'
             }
             // setup e-mail data with unicode symbols
@@ -79,25 +80,25 @@ router.get('/sendmailtosinhvienduocdangki',utility.reqIsAuthen,utility.reqIsKhoa
             var mailOptions = {
                 from: '"Hệ thống đăng ký khóa luận" <14020521@vnu.edu.vn>', // sender address
                 // to: listEmail, // list of receivers
-                to : '14020477@vnu.edu.vn',
+                to: '14020477@vnu.edu.vn',
                 subject: 'Hệ thống đăng kí khóa luận', // Subject line
                 text: 'Hệ thống thông báo, Bạn đã được phép đăng kí khóa luận trên hệ thống\n Trân trọng thông báo!'
             };
 
             // send mail with defined transport object
-            transporter.sendMail(mailOptions, function(error, info){
-                if(error){
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
                     console.log(error);
                     res.json({
-                        msg : "Thất bại"
+                        msg: "Thất bại"
                     })
-                }else
+                } else
                     res.json({
-                        msg:"Thành công"
+                        msg: "Thành công"
                     })
             });
         }
-    },function (err) {
+    }, function (err) {
         res.json({
             msg: "Hệ thống có lỗi, vui lòng kiểm tra lại"
         })
@@ -105,83 +106,83 @@ router.get('/sendmailtosinhvienduocdangki',utility.reqIsAuthen,utility.reqIsKhoa
 
 })
 //test mo cong dang ki khoa luan
-router.get('/testopenport',utility.reqIsAuthen,utility.reqIsKhoa,utility.checkOpenPortDK,function (req,res) {
+router.get('/testopenport', utility.reqIsAuthen, utility.reqIsKhoa, utility.checkOpenPortDK, function (req, res) {
     var openPortDK = require('../../config/config_Khoa_moDangKi.json');
-    switch ('fit'){
-        case 'fit':{
+    switch ('fit') {
+        case 'fit': {
             res.json({
-                trangthai : openPortDK.fit
+                trangthai: openPortDK.fit
             })
             break;
         }
-        case 'fet':{
+        case 'fet': {
             res.json({
-                trangthai : openPortDK.fet
+                trangthai: openPortDK.fet
             })
             break;
         }
-        case 'fema':{
+        case 'fema': {
             res.json({
-                trangthai : openPortDK.fema
+                trangthai: openPortDK.fema
             })
             break;
         }
-        case 'fepn':{
+        case 'fepn': {
             res.json({
-                trangthai : openPortDK.fepn
+                trangthai: openPortDK.fepn
             })
             break;
         }
     }
 
 })
-router.get('/openorclose',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.get('/openorclose', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     var openPortDK = require('../../config/config_Khoa_moDangKi.json');
-    switch (req.user.id){
-        case 'fit':{
-            if (openPortDK.fit){
+    switch (req.user.id) {
+        case 'fit': {
+            if (openPortDK.fit) {
                 res.json({
-                    status : "open"
+                    status: "open"
                 })
-            }else{
+            } else {
                 res.json({
-                    status : "close"
-                })
-            }
-            break;
-        }
-        case 'fet':{
-            if (openPortDK.fet){
-                res.json({
-                    status : "open"
-                })
-            }else{
-                res.json({
-                    status : "close"
+                    status: "close"
                 })
             }
             break;
         }
-        case 'fema':{
-            if (openPortDK.fema){
+        case 'fet': {
+            if (openPortDK.fet) {
                 res.json({
-                    status : "open"
+                    status: "open"
                 })
-            }else{
+            } else {
                 res.json({
-                    status : "close"
+                    status: "close"
                 })
             }
             break;
         }
-        case 'fepn':{
-            if (openPortDK.fepn){
+        case 'fema': {
+            if (openPortDK.fema) {
                 res.json({
-                    status : "open"
+                    status: "open"
                 })
-            }else{
+            } else {
                 res.json({
-                    status : "close"
+                    status: "close"
+                })
+            }
+            break;
+        }
+        case 'fepn': {
+            if (openPortDK.fepn) {
+                res.json({
+                    status: "open"
+                })
+            } else {
+                res.json({
+                    status: "close"
                 })
             }
             break;
@@ -190,72 +191,72 @@ router.get('/openorclose',utility.reqIsAuthen,utility.reqIsKhoa,function (req,re
 })
 //Mo hoac dong cong dang ki
 //van dang dung body.id ==> phai chuyen sang user.id
-router.post('/openportdk',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.post('/openportdk', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     var openPortDK = require('../../config/config_Khoa_moDangKi.json');
-    if(req.body.permission){
-        if(req.body.permission == 'open'){
-            switch (req.user.id){
-                case 'fit':{
+    if (req.body.permission) {
+        if (req.body.permission == 'open') {
+            switch (req.user.id) {
+                case 'fit': {
                     openPortDK.fit = true;
                     break;
                 }
-                case 'fet':{
+                case 'fet': {
                     openPortDK.fet = true;
                     break;
                 }
-                case 'fema':{
+                case 'fema': {
                     openPortDK.fema = true;
                     break;
                 }
-                case 'fepn':{
+                case 'fepn': {
                     openPortDK.fepn = true;
                     break;
                 }
             }
             res.json({
                 msg: 'đã mở cổng đăng kí',
-                status :"opened"
+                status: "opened"
             })
 
-        }else if(req.body.permission == 'close'){
-            switch (req.user.id){
-                case 'fit':{
+        } else if (req.body.permission == 'close') {
+            switch (req.user.id) {
+                case 'fit': {
                     openPortDK.fit = false;
                     break;
                 }
-                case 'fet':{
+                case 'fet': {
                     openPortDK.fet = false
                     break;
                 }
-                case 'fema':{
+                case 'fema': {
                     openPortDK.fema = false;
                     break;
                 }
-                case 'fepn':{
+                case 'fepn': {
                     openPortDK.fepn = false;
                     break;
                 }
             }
             res.json({
                 msg: 'đã đóng cổng đăng kí',
-                status : "closed"
+                status: "closed"
             })
         }
-    }else {
-        switch (req.user.id){
-            case 'fit':{
+    } else {
+        switch (req.user.id) {
+            case 'fit': {
                 openPortDK.fit = false;
                 break;
             }
-            case 'fet':{
+            case 'fet': {
                 openPortDK.fet = false
                 break;
             }
-            case 'fema':{
+            case 'fema': {
                 openPortDK.fema = false;
                 break;
             }
-            case 'fepn':{
+            case 'fepn': {
                 openPortDK.fepn = false;
                 break;
             }
@@ -267,56 +268,80 @@ router.post('/openportdk',utility.reqIsAuthen,utility.reqIsKhoa,function (req,re
 })
 
 /**
+ * Xuất file word
+ */
+router.post("/exportDeNghi", utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
+    models.DeTai.getDeTaiAndSinhVienAndGiangVienForExport(req.user.id, models, function (data) {
+        var arrayTile = ["Tên học viên", "Tên đề tài", "Giảng viên hướng dẫn"];
+        var rowData = [];
+        for (var i = 0; i < data.length; i++) {
+            rowData.push([data[i].dataValues.SinhVien.tenSinhVien,
+                data[i].dataValues.tenDeTai, data[i].dataValues.GiangVien.tenGiangVien]);
+        }
+        var title = "DANH SÁCH SINH VIÊN ĐƯỢC ĐỀ NGHỊ ĐĂNG KÍ KHÓA LUẬN TỐT NGHIỆP";
+        exportFile.createFile(title,arrayTile,rowData,"denghi");
+        res.json({
+            msg : " Xuất file thành công"
+        })
+
+    }, function () {
+        res.json({
+            msg: "Xuất file thất bại"
+        })
+    })
+});
+
+/**
  * Kiếm tra đóng cổng rồi chót đề tài
  * xóa tất cả các đề tài chưa được chấp nhận
  * module 3 chốt đề tài được chấp nhập
  * Khoa khóa danh sách
  */
-router.get('/chotdetaiduocnhapnhan',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.get('/chotdetaiduocnhapnhan', utility.reqIsAuthen, utility.reqIsKhoa, function (req, res) {
     models.DeTai.chotDeTaiDuocChapNhan(function (detai) {
         res.json({
-            msg : "Chốt đề tài thành công",
-            data : detai,
-            status : 200
+            msg: "Chốt đề tài thành công",
+            data: detai,
+            status: 200
         })
-    },function (err) {
+    }, function (err) {
         res.json({
-            msg : "Chốt đề tài thất bại",
-            error : err,
-            status : 500
+            msg: "Chốt đề tài thất bại",
+            error: err,
+            status: 500
         })
     })
 })
-function updateSinhVienDuocDangki(data,req,res,next) {
+function updateSinhVienDuocDangki(data, req, res, next) {
     var svs = new Array();
     // validate data
     //
     //start
-    for(var i=0;i<data.length;i++){
-        if(validateUpdateSinhVien(data[i])){
+    for (var i = 0; i < data.length; i++) {
+        if (validateUpdateSinhVien(data[i])) {
             var sv = {
-                id : data[i].id,
-                tenSinhVien : data[i].tenSinhVien.trim(),
+                id: data[i].id,
+                tenSinhVien: data[i].tenSinhVien.trim(),
                 duocDangKiKhoaLuanKhong: 1
             }
             svs.push(sv)
         }
         else {
             res.json({
-                msg : "import data false! please check again !",
-                situation : i
+                msg: "import data false! please check again !",
+                situation: i
             })
         }
     }
     //update
-    models.SinhVien.updateSinhVienDuocDangKi(svs,function () {
+    models.SinhVien.updateSinhVienDuocDangKi(svs, function () {
         console.log("Update thanh cong")
         return next();
-    },function (position) {
+    }, function (position) {
 
         res.json({
-            msg : "import data false! please check again",
-            position : position
+            msg: "import data false! please check again",
+            position: position
         })
     })
 }

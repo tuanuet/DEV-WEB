@@ -53,7 +53,8 @@ $(document).ready(function(){
                         url: '/users/khoa/chotdetaiduocnhapnhan',
                         type: 'GET',
                         success: function (data) {
-                           alert(data.msg)
+                           alert(data.msg);
+
                         }
                     });
                 }
@@ -72,12 +73,10 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 	function exportFile() {
-        if ()
             $.ajax({
-                url: '/Utility/exportFile',
+                url: '/users/khoa/exportDeNghi',
                 type: 'POST',
-                contentType: 'application/json',
-                success: function (data) {
+                success: function () {
                 }
             })
     }
@@ -89,6 +88,9 @@ $(document).ready(function(){
         <div class="caption caption-md">
             <i class="icon-globe theme-font hide"></i>
             <span class="caption-subject font-blue-madison bold uppercase">Đăng ký đề tài</span>
+        </div>
+        <div class="tools">
+            <button class="btn green" onclick="exportFile()">Xuất công văn</button>
         </div>
     </div>
     <div class="portlet-body" style="margin-bottom: 100px;">
