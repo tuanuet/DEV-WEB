@@ -73,7 +73,7 @@ router.get('/settings',utility.reqIsAuthen,utility.reqIsSV,function (req,res) {
 
 })
 //render trang dang ki cho sinh vien
-router.get('/dangkikhoaluan',function (req,res) {
+router.get('/dangkikhoaluan',utility.checkOpenPortDK,function (req,res) {
     res.render('student/SVdangkidetai', {
         title: "Đăng kí đề tài",
     })

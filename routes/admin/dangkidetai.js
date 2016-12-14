@@ -52,10 +52,11 @@ router.post('/updatesinhvienbyid',utility.reqIsAuthen,utility.reqIsKhoa,function
 /*
  * Thay đổi trang thai tu ko đc dang kí thanh duoc dang ki
  * */
+
 router.post('/updatesinhvien',utility.reqIsAuthen,
     utility.reqIsKhoa,
     multipartMiddleware,
-    utility.getArrayFromXlsx,
+    getArrayFromXlsx,
     updateSinhVienDuocDangki,
     function (req, res) {
         res.json({
@@ -135,11 +136,11 @@ router.get('/testopenport',utility.reqIsAuthen,utility.reqIsKhoa,utility.checkOp
 
 })
 //Mo hoac dong cong dang ki
-router.post('/openport',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+router.post('/openport',function (req,res) {
     var openPortDK = require('../../config/config_Khoa_moDangKi.json');
     if(req.body.permission){
         if(req.body.permission == 'open'){
-            switch (req.user.id){
+            switch (req.body.id){
                 case 'fit':{
                     openPortDK.fit = true;
                     break;
@@ -263,6 +264,63 @@ function updateSinhVienDuocDangki(data,req,res,next) {
             position : position
         })
     })
+}
+//return ojbj from xlxs
+function getArrayFromXlsx(req, res, next) {
+
+    var file = req.files.file;
+
+    // Tên file
+    var originalFilename = file.name;
+    console.log("Ten file vua up: " + originalFilename)
+    // File type
+    var fileType = file.type.split('/')[1];
+
+    // File size
+    var fileSize = file.size;
+    // Đường dẫn lưu ảnh
+    var pathUpload = __dirname + '/xlsx/' + originalFilename;
+
+    // START READ XLSX DATA
+    //doc du lieu tu xlsx dua ve object
+    var workbook = XLSX.readFile(file.path);
+    var sheet_name_list = workbook.SheetNames;
+    var data = [];
+    sheet_name_list.forEach(function (y) {
+        var worksheet = workbook.Sheets[y];
+        var headers = {};
+
+        for (z in worksheet) {
+            if (z[0] === '!') continue;
+            //parse out the column, row, and value
+            var tt = 0;
+            for (var i = 0; i < z.length; i++) {
+                if (!isNaN(z[i])) {
+                    tt = i;
+                    break;
+                }
+            }
+            ;
+            var col = z.substring(0, tt);
+            var row = parseInt(z.substring(tt));
+            var value = worksheet[z].v;
+
+            //store header names
+            if (row == 1 && value) {
+                headers[col] = value;
+                continue;
+            }
+
+            if (!data[row]) data[row] = {};
+            data[row][headers[col]] = value;
+        }
+
+        //drop those first two rows which are empty
+        data.shift();
+        data.shift();
+    });
+
+    return next(data);
 }
 function validateUpdateSinhVien(data) {
     return (
