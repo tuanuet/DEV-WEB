@@ -71,16 +71,17 @@ $(document).ready(function(){
 </script>
 
 
-<script type="text/javascript">
-	function exportFile() {
-            $.ajax({
-                url: '/users/khoa/exportDeNghi',
-                type: 'POST',
-                success: function () {
-                }
-            })
-    }
-</script>
+<!--<script type="text/javascript">-->
+	<!--function exportFile() {-->
+            <!--$.ajax({-->
+                <!--url: '/users/khoa/exportDeNghi',-->
+                <!--type: 'POST',-->
+                <!--success: function (data) {-->
+                    <!--console.log(data.msg)-->
+                <!--}-->
+            <!--})-->
+    <!--}-->
+<!--</script>-->
 
 <!-- Bắt đầu đoạn hiển thị sau khi kick chi tiết-->
 <div class="portlet light">
@@ -90,7 +91,10 @@ $(document).ready(function(){
             <span class="caption-subject font-blue-madison bold uppercase">Đăng ký đề tài</span>
         </div>
         <div class="tools">
-            <button class="btn green" onclick="exportFile()">Xuất công văn</button>
+            <form action="/users/khoa/exportDeNghi" method="post">
+                <input class="btn green" type="submit" value="Xuất công văn"/>
+            </form>
+
         </div>
     </div>
     <div class="portlet-body" style="margin-bottom: 100px;">

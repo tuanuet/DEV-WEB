@@ -118,7 +118,7 @@ function createTable(arrayTile, rowData) {
     return table;
 }
 
-module.exports.createFile = function (titleTable, arrayTile, rowData, nameFile) {
+module.exports.createFile = function (titleTable, arrayTile, rowData, nameFile,next) {
     //Tên bảng
     var pObj = docx.createP({align: 'center'});
     pObj.addLineBreak(); //Ngắt dòng
@@ -131,7 +131,5 @@ module.exports.createFile = function (titleTable, arrayTile, rowData, nameFile) 
     var FILENAME = nameFile + ".doc";
     var out = fs.createWriteStream(FILENAME);
     docx.generate(out);
-    out.on('close', function () {
-        console.log(FILENAME)
-    });
+    out.on('close',next);
 }

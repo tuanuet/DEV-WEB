@@ -11,6 +11,7 @@ var multipartMiddleware = multipart();
 var validator = require('validator')
 var exportFile = require('../../Utility/exportFIle')
 var nodemailer = require('nodemailer');
+var fs = require('fs')
 var smtpTransport = {
     host: "ctmail.vnu.edu.vn", // hostname
     secure: false, // use SSL
@@ -280,11 +281,13 @@ router.post("/exportDeNghi", utility.reqIsAuthen, utility.reqIsKhoa, function (r
                 data[i].dataValues.tenDeTai, data[i].dataValues.GiangVien.tenGiangVien]);
         }
         var title = "DANH SÁCH SINH VIÊN ĐƯỢC ĐỀ NGHỊ ĐĂNG KÍ KHÓA LUẬN TỐT NGHIỆP";
-        exportFile.createFile(title,arrayTile,rowData,"denghi");
-        console.log("xxx");
-        res.json({
-            msg : " Xuất file thành công"
-        })
+        exportFile.createFile(title,arrayTile,rowData,"denghi",function () {
+            var path = utility.getMainHost(__dirname)+ "denghi.doc"
+            console.log(path)
+            res.sendFile(path)
+        });
+
+
 
     }, function () {
         res.json({

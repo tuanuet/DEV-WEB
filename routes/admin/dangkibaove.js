@@ -256,10 +256,12 @@ router.post("/exportSvDuocBaoVe", utility.reqIsAuthen, utility.reqIsKhoa, functi
                 data[i].dataValues.tenDeTai, data[i].dataValues.GiangVien.tenGiangVien]);
         }
         var title = "DANH SÁCH SINH VIÊN ĐƯỢC BẢO VỆ KHÓA LUẬN";
-        exportFile.createFile(title, arrayTile,rowData,"danhsachhocviendcbaove");
-        res.json({
-            msg : " Xuất file thành công"
-        })
+        exportFile.createFile(title, arrayTile,rowData,"danhsachhocviendcbaove",function () {
+            var path = utility.getMainHost(__dirname)+ "danhsachhocviendcbaove.doc"
+            console.log(path)
+            res.sendFile(path)
+        });
+
     },function (err) {
         res.json({
             msg  : 'Xuất file lỗi'

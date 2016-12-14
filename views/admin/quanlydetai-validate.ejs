@@ -142,8 +142,10 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-offset-6 col-sm-offset-6 col-xs-offset-6">
-                                                <button type="button" id="deleteDeTai" class="btn btn-danger">Xóa đề tài không hợp lệ</button>
-                                                <button type="button" class="btn btn-primary" onclick="exportFile()">Xuất danh sách học viên</button>
+                                                <form action="/users/khoa/exportSvDuocBaoVe" method="post">
+                                                    <button type="button" id="deleteDeTai" class="btn btn-danger">Xóa đề tài không hợp lệ</button>
+                                                    <input type="submit" class="btn btn-primary" value="Xuất danh sách"/>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -235,14 +237,14 @@
         Profile.init(); // init page demo
     });
 
-    function exportFile() {
-        $.ajax({
-            url: '/users/khoa/exportSvDuocBaoVe',
-            type: 'POST',
-            success: function () {
-            }
-        })
-    }
+//    function exportFile() {
+//        $.ajax({
+//            url: '/users/khoa/exportSvDuocBaoVe',
+//            type: 'POST',
+//            success: function () {
+//            }
+//        })
+//    }
 </script>
 <!-- END JAVASCRIPTS -->
 </body>
