@@ -295,6 +295,20 @@ module.exports = function (sequelize, DataTypes) {
                 }, {
                     where : {id : idDeTai}
                 }).then(callbback)
+            },
+            getAllDeTaiHasIDHoiDong : function(idHD, callback) {
+                this.findAll({
+                    where : {
+                        HoiDongId : idHD
+                    }
+                }).then(callback)
+            },
+            getHoiDongOfDeTai : function(idDT, callback) {
+                this.findOne({
+                    where : {
+                        id : idDT
+                    }
+                }).then(callback)
             }
         }
     });

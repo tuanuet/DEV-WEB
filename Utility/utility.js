@@ -280,3 +280,24 @@ module.exports.randomMatKhau =function()
     });
 }
 
+module.exports.isThuKy = function(idGV, next) {
+    models.ChucVuTrongHoiDong.getAllHoiDongOfGV(idGV, function (data) {
+        var array = [];
+        if(data) {
+            array.push(data[0].HoiDongId);
+            for(var i = 1; i < data.length; i++) {
+                var check= false;
+                for(var j = 0; j < array.length; j++) {
+                    if(data[i].HoiDongId == array[j])
+                        check = true;
+                }
+                if(!check) {
+                    array.push(data[i].HoiDongId);
+                }
+            }
+        }
+        console.log("Toan : " + array);
+        return next(array);
+    })
+}
+

@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                this.hasOne(models.PhanBien)
+                this.hasOne(models.PhanBien);
                 this.hasMany(models.ChucVuTrongHoiDong);
             },
             getAllChucVu : function (callback) {

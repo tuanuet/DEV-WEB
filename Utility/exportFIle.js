@@ -41,7 +41,7 @@ pObj.addText('Hà Nội, ngày 19 tháng 6 năm 2016', {italic: true});
 var pObj = docx.createP();
 pObj.options.align = 'center';
 pObj.addText('QUYẾT ĐỊNH' , {font_size: 14, bold: true });
-pObj.addLineBreak(); //Ngắt dòng
+pObj.addLineBreak();
 pObj.addText('Về việc duyệt điều kiện và danh sách sinh viên thuộc Khoa Công nghệ Thông tin làm khóa luận tốt nghiệp' , {font_size: 12 });
 pObj.addLineBreak(); //Ngắt dòng
 pObj.addText('(bảo vệ đợt 1 năm 2016)');
@@ -51,12 +51,12 @@ pObj.addText('---------------------------------------')
 var pObj = docx.createP();
 pObj.options.align = 'center';
 pObj.addText('HIỆU TRƯỞNG', {font_size: 14, bold: true });
-pObj.addLineBreak(); //Ngắt dòng
+pObj.addLineBreak();
 pObj.addText('TRƯỜNG ĐẠI HỌC CÔNG NGHỆ' , {font_size: 14, bold: true });
 
 var pObj = docx.createP();
 pObj.addText('   Căn cứ Quy định về Tổ chức hoạt động của cá đơn vị thành viên và đơn vị trực thuộc Đại học Quốc gia Hà Nội ban hành theo nghị quyết số 3568/QĐ-ĐHQGHN ngày 08/10/2014 của Giám đốc Đại học Quốc gia Hà Nội;')
-pObj.addLineBreak(); //Ngắt dòng
+pObj.addLineBreak();
 pObj.addLineBreak(); //Ngắt dòng
 pObj.addText('   Căn cứ "Quy chế đào tạo đại học ở Đại học Quốc gia Hà Nội" ban hành theo Quyết định số 3079/QĐ-ĐHQGHN ngày 26/10/2010 và được sửa đổi, bổ sung theo Quyết định số 685/QĐ-ĐHQGHN ngày 08/03/2013 của Giám đốc Đại học Quốc gia Hà Nội;')
 
