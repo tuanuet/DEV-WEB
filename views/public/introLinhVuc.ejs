@@ -4,121 +4,133 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-<!-- BEGIN HEAD-->
-<% include ../template/head-link.ejs %>
-<!-- END HEAD-->
-<!--BEGIN BODY -->
-<body class="page-header-menu-fixed">
-<link href="/assets/admin/pages/css/profile.css" rel="stylesheet" type="text/css"/>
-<!-- BEGIN NAV -->
-<% include ../template/nav.ejs %>
-<!-- END NAV -->
-<!-- BEGIN PAGE CONTAINER -->
-<div class="page-container">
-    <div class="page-head container">
-        <div class="page-title">
-            <h1>
-                <%= title%>
-            </h1>
-        </div>
-    </div>
-    <div class="page-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="profile-sidebar" style="width: 250px;">
-                        <!-- PORTLET MAIN -->
-                        <div class="portlet light profile-sidebar-portlet">
-                            <!--  BEGIN TITLE SIDEBAR -->
-                            <div class="profile-usertitle">
-                                <div class="profile-usertitle-name">
-                                    <a href="<%= linhvucData.id %>">
-                                        <%= linhvucData.tenLinhVuc %>
-                                    </a>
-                                </div>
-                            </div>
-                            <!--  BEGIN TITLE SIDEBAR -->
-                            <!-- SIDEBAR MENU -->
-                            <div class="profile-usermenu">
-                                <ul class="nav">
-                                    <% for(var i = 0; i < linhvucData.LinhVucs.length; i++) {%>
-                                    <li>
-                                        <a href="#<%= linhvucData.LinhVucs[i].id %>"
-                                           id="<%= linhvucData.LinhVucs[i].id %>" onclick="submitData(this)">
-                                            <%= linhvucData.LinhVucs[i].tenLinhVuc %>
-                                        </a>
-                                    </li>
-                                    <% } %>
-                                </ul>
-                            </div>
-                            <!-- END MENU -->
-                        </div>
-                        <!-- END PORTLET MAIN -->
-                    </div>
-                    <!-- BEGIN LIST LECTURES -->
-                    <div class="col-md-9">
-                        <div class="portlet light">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    <span class="caption-subject bold uppercase">Danh sách giảng viên</span>
-                                </div>
-                            </div>
-                            <div class="portlet-body">
-                                <div class="row thumbnails" id="body-display-gv">
-                                    <% for(var i = 0; i < linhvucData.GiangViens.length; i++) { %>
-                                    <!-- BEGIN LECTURES -->
-                                    <div class="col-md-4">
-                                        <div class="meet-our-team <%= linhvucData.GiangViens[i].id %>">
-                                            <a href="/intro/giangvien/<%= linhvucData.GiangViens[i].id%>">
-                                                <img src="<%= linhvucData.GiangViens[i].avatar == null ? "/assets/admin/pages/media/pages/3.jpg" : linhvucData.GiangViens[i].avatar %>" class="img-responsive">
-                                                <h3 style="text-align: center"><%= linhvucData.GiangViens[i].tenGiangVien %></h3>
+    <!-- BEGIN HEAD-->
+    <% include ../template/head-link.ejs %>
+    <!-- END HEAD-->
+    <!--BEGIN BODY -->
+    <body class="page-header-menu-fixed">
+        <link href="/assets/admin/pages/css/profile.css" rel="stylesheet" type="text/css"/>
+        <!-- BEGIN NAV -->
+        <% include ../template/nav.ejs %>
+        <!-- END NAV -->
+        <!-- BEGIN PAGE CONTAINER -->
+        <div class="page-container">
+            <div class="page-head container">
+                <div class="page-title">
+                    <h1>
+                    <%= title %>
+                    </h1>
+                </div>
+            </div>
+            <div class="page-content">
+                <div class="container">
+                    <!-- BEGIN PAGE CONTENT INNER -->
+                    <div class="row margin-top-10">
+                        <div class="col-md-12">
+                            <!-- BEGIN PROFILE SIDEBAR -->
+                            <div class="profile-sidebar" style="width: 250px;">
+                                <!-- PORTLET MAIN -->
+                                <div class="portlet light profile-sidebar-portlet">
+                                    <!--  BEGIN TITLE SIDEBAR -->
+                                    <div class="profile-usertitle">
+                                        <div class="profile-usertitle-name">
+                                            <a href="<%= linhvucData.id %>">
+                                                <%= linhvucData.tenLinhVuc %>
                                             </a>
                                         </div>
                                     </div>
-                                    <!-- END LECTURES -->
-                                    <% }%>
+                                    <!--  BEGIN TITLE SIDEBAR -->
+                                    <!-- SIDEBAR MENU -->
+                                    <div class="profile-usermenu">
+                                        <ul class="nav">
+                                            <% for(var i = 0; i < linhvucData.LinhVucs.length; i++) {%>
+                                            <li>
+                                                <a href="#<%= linhvucData.LinhVucs[i].id %>"
+                                                    id="<%= linhvucData.LinhVucs[i].id %>" onclick="submitData(this)">
+                                                    <%= linhvucData.LinhVucs[i].tenLinhVuc %>
+                                                </a>
+                                            </li>
+                                            <% } %>
+                                        </ul>
+                                    </div>
+                                    <!-- END MENU -->
                                 </div>
+                                <!-- END PORTLET MAIN -->
+                            </div>
+                            <!-- END BEGIN PROFILE SIDEBAR -->
+                            <!-- BEGIN PROFILE CONTENT -->
+                            <div class="profile-content">
+                                <div class="row">
+                                    <div class="col-md-12" id="showContentHere">
+                                        <!-- Bắt đầu đoạn hiển thị sau khi kick chi tiết-->
+                                        <div class="portlet light">
+                                            <div class="portlet-title">
+                                                <div class="caption">
+                                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                                    <span class="caption-subject bold uppercase">Danh sách giảng viên</span>
+                                                </div>
+                                            </div>
+                                            <div class="portlet-body">
+                                                <div class="row thumbnails" id="body-display-gv">
+                                                    <% for(var i = 0; i < linhvucData.GiangViens.length; i++) { %>
+                                                    <!-- BEGIN LECTURES -->
+                                                    <div class="col-md-4">
+                                                        <div class="meet-our-team <%= linhvucData.GiangViens[i].id %>">
+                                                            <a href="/intro/giangvien/<%= linhvucData.GiangViens[i].id%>">
+                                                                <img src="<%= linhvucData.GiangViens[i].avatar == null ? "/assets/admin/pages/media/pages/3.jpg" : linhvucData.GiangViens[i].avatar %>" class="img-responsive">
+                                                                <h3 style="text-align: center"><%= linhvucData.GiangViens[i].tenGiangVien %></h3>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- END LECTURES -->
+                                                    <% }%>
+                                                </div>
+                                            </div>
+                                            
+                                            </div> <!-- End portlet light -->
+                                            
+                                            <!-- Kết thúc đoạn hiển thị sau khi kick chi tiết-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END PROFILE CONTENT -->
                             </div>
                         </div>
+                        <!-- END PAGE CONTENT INNER -->
                     </div>
-                    <!-- END LIST LECTURES -->
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<!-- END PAGE CONTAINER -->
-<!-- BEGIN FOOTER -->
-<% include ../template/footer.ejs %>
-<% include ../template/foot-link.ejs %>
-<script >
-        function submitData(evt) {
+            <!-- END PAGE CONTAINER -->
+            <!-- BEGIN FOOTER -->
+            <% include ../template/footer.ejs %>
+            <% include ../template/foot-link.ejs %>
+            <script >
+            function submitData(evt) {
             var id = {
-                id: evt.id
+            id: evt.id
             }
             $.ajax({
-                url: '/intro/fetchGV',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(id),
-                success: function (data) {
-                    var temp = "";
-                    console.log(data.GiangViens[0]);
-                    for(var i = 0 ; i < data.GiangViens.length; i++) {
-                        temp += "<div class=\"col-md-4\"><div class=\"meetour-team\"><a href=\"/intro/giangvien/";
-                        temp += data.GiangViens[i].id;
-                        temp += "\"><h3>" + data.GiangViens[i].tenGiangVien;
-                        temp += "</h3><img src=\"";
-                        temp += data.GiangViens[i].avatar == null ? "" : data.GiangViens[i].avatar;
-                        temp += "\" class=\"img-responsive\"></a></div></div>";
-                    }
-                    $('#body-display-gv').html(temp);
-                }
+            url: '/intro/fetchGV',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(id),
+            success: function (data) {
+            var temp = "";
+            console.log(data.GiangViens[0]);
+            for(var i = 0 ; i < data.GiangViens.length; i++) {
+            temp += "<div class=\"col-md-4\"><div class=\"meetour-team\"><a href=\"/intro/giangvien/";
+                temp += data.GiangViens[i].id;
+                temp += "\"><img src=\"";
+                temp += data.GiangViens[i].avatar == null ? "/assets/admin/pages/media/pages/3.jpg" : data.GiangViens[i].avatar;
+                temp += "\" class=\"img-responsive\"><h3>" + data.GiangViens[i].tenGiangVien;
+            temp += "</h3></a></div></div>";
+            }
+            $('#body-display-gv').html(temp);
+            }
             })
-        }
-</script>
-<!-- END FOOTER -->
-</body>
-<!-- END BODY-->
-</html>
+            }
+            </script>
+            <!-- END FOOTER -->
+        </body>
+        <!-- END BODY-->
+    </html>

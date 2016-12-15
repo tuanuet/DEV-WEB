@@ -57,13 +57,7 @@ function updateInfor() {
         contentType: 'application/json',
         data: JSON.stringify(gv),
         success: function (datajson) {
-            console.log(datajson);
-            $("#addNoti").text(datajson.msg);
-            if (datajson.result == true) {
-                check = true;
-            } else {
-                check = false;
-            }
+            alert("Update thành công")
         }
 
     });
