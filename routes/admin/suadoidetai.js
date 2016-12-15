@@ -109,7 +109,8 @@ router.get('/quanlysuadetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req
         page = 0;
     }
     models.ChangeDeTai.getCountDeTai(function (result) {
-        if(result!=0){
+        console.log(result)
+        if(result.count!=0){
             //pagination limt = 10
             var soPage = result.count/10;
             models.ChangeDeTai.getDeTaiAndSinhVienAndGiangVien(req.user.id,page,models,function (newData) {
