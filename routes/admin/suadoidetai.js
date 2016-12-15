@@ -27,8 +27,6 @@ var transporter = nodemailer.createTransport(smtpTransport);
  * MODULE 4 KHOA LAM
  * Sửa dổi đề tài
  */
-
-
 //trang admin quan lý để tài
 router.get('/quanlyrutdetai',utility.reqIsAuthen,utility.reqIsKhoa,getArrDeTaiXinRut,function (data,req,res,next) {
     console.log(data)
@@ -48,6 +46,44 @@ router.get('/quanlyrutdetai',utility.reqIsAuthen,utility.reqIsKhoa,getArrDeTaiXi
     })
 
 })
+//truong chap nhan xoa de tai
+router.get('/truongchapnhanxoa',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
+    console.log("abc")
+    models.DeTaiXoa.findAll({}).then(function (dtx) {
+        //xoa tat ca cac hang trong DeTaiXoa
+        models.DeTaiXoa.destroy({
+            where : {}
+        })
+        console.log(dtx)
+        if(dtx.length!=0){
+            var arr = new Array();
+            for(var i=0;i<dtx.length;i++){
+                arr.push(dtx[i].dataValues.DeTaiId)
+            }
+            var dem =0;
+            for(var i=0;i<dtx.length;i++){
+                dem++;
+                models.DeTai.destroy({
+                    where : {id : arr[i]}
+                }).then(function () {
+                    if(dem==dtx.length){
+                        res.json({
+                            msg : "Rút đề tài thành công"
+                        })
+                    }
+                })
+            }
+        }else{
+            res.render('error',{
+                title : "Không có đề tài xin rút "
+            })
+        }
+    }).catch(function () {
+        res.render('error',{
+            title : "Hệ thồng sinh lỗi "
+        })
+    })
+})
 //Nha truong chap nhan đơn
 router.get('/rutdangki',function (req,res) {
     models.DeTai.deleteBulkDeTaiBySinhVienId(SinhVienIds,function () {
@@ -63,10 +99,7 @@ router.get('/rutdangki',function (req,res) {
         })
     })
 })
-//xuất file DOC hủy đề tài
-router.get('/xuatdenghihuydetai',function () {
 
-})
 //trang admin quan lý để tài
 router.get('/quanlysuadetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req,res) {
     var page;
@@ -76,7 +109,7 @@ router.get('/quanlysuadetai',utility.reqIsAuthen,utility.reqIsKhoa,function (req
         page = 0;
     }
     models.ChangeDeTai.getCountDeTai(function (result) {
-        if(result==0){
+        if(result!=0){
             //pagination limt = 10
             var soPage = result.count/10;
             models.ChangeDeTai.getDeTaiAndSinhVienAndGiangVien(req.user.id,page,models,function (newData) {
@@ -266,8 +299,12 @@ router.get('/truongchapnhansua',utility.reqIsAuthen,utility.reqIsKhoa,function (
     models.ChangeDeTai.findAll({}).then(function (detai) {
         if(detai){
             models.DeTai.updateDeTaiSuaDoi(detai,function () {
-                res.json({
-                    msg : "Dữ liệu đã được cập nhật"
+                models.ChangeDeTai.destroy({
+                    where : {}
+                }).then(function () {
+                    res.json({
+                        msg : "Dữ liệu đã được cập nhật"
+                    })
                 })
             },function (err) {
                 res.json({
