@@ -112,6 +112,11 @@ module.exports = function (sequelize, DataTypes) {
                     })
                 }
             },
+            deleteDeTaiBySinhVienId:function (svID,success,failure) {
+                this.destroy({
+                    where : {SinhVienId : svID}
+                }).then(success).catch(failure)
+            },
             chotDeTaiDuocChapNhan : function (khoaId,models,success,failure) {
                 this.findAll({
                     where : {duocGiangVienChapNhan : 1},
@@ -298,7 +303,7 @@ module.exports = function (sequelize, DataTypes) {
             getAllDeTaiDuocBaoVe : function (callback) {
                 this.findAll({
                     where : {
-                        duocBaoVeKhong : 1
+                        nopHoSoChua : 1
                     }
                 }).then(callback)
             },

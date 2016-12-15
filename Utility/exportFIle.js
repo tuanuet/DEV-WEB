@@ -83,8 +83,6 @@ pObj.addLineBreak();
 pObj.addLineBreak();
 pObj.addText('Nguyễn Việt Hà', {bold: true, font_size: 13});
 
-docx.putPageBreak(); //Ngắt trang
-
 var tieuDe2 = [
     [{ ///Tùy chọn của các cột 
         val: "ĐẠI HỌC QUỐC GIA HÀ NỘI",
