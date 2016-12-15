@@ -28,6 +28,13 @@ $(document).ready(function(){
                 if(data.status == "opened"){
                     $("#off").show();
                     $("#on").hide();
+                    $.ajax({
+                        url: '/users/khoa/sendmailtosinhvienduocdangki',
+                        type: 'GET',
+                        success: function (data) {
+                            alert(data.msg);
+                        }
+                    });
 				}
 				else{
                     alert("có lỗi trên hệ thống")
@@ -57,6 +64,7 @@ $(document).ready(function(){
 
                         }
                     });
+
                 }
                 else{
                     alert("có lỗi trên hệ thống")

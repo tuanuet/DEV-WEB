@@ -91,11 +91,11 @@ router.get('/sendmailtosinhvienduocdangki',utility.reqIsAuthen,utility.reqIsKhoa
                 if(error){
                     console.log(error);
                     res.json({
-                        msg : "Thất bại"
+                        msg : "gửi mail thất bại"
                     })
                 }else
                     res.json({
-                        msg:"Thành công"
+                        msg:"gửi mail thành công"
                     })
             });
         }
