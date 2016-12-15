@@ -59,12 +59,29 @@ pObj.options.align = 'center';
 pObj.addText('HIỆU TRƯỞNG', {font_size: 14, bold: true});
 pObj.addLineBreak();
 pObj.addText('TRƯỜNG ĐẠI HỌC CÔNG NGHỆ', {font_size: 14, bold: true});
+pObj.addLineBreak();
 
 var pObj = docx.createP();
 pObj.addText('   Căn cứ Quy định về Tổ chức hoạt động của cá đơn vị thành viên và đơn vị trực thuộc Đại học Quốc gia Hà Nội ban hành theo nghị quyết số 3568/QĐ-ĐHQGHN ngày 08/10/2014 của Giám đốc Đại học Quốc gia Hà Nội;')
 pObj.addLineBreak();
 pObj.addLineBreak(); //Ngắt dòng
 pObj.addText('   Căn cứ "Quy chế đào tạo đại học ở Đại học Quốc gia Hà Nội" ban hành theo Quyết định số 3079/QĐ-ĐHQGHN ngày 26/10/2010 và được sửa đổi, bổ sung theo Quyết định số 685/QĐ-ĐHQGHN ngày 08/03/2013 của Giám đốc Đại học Quốc gia Hà Nội;')
+
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addLineBreak();
+var pObj = docx.createP({ align: 'right' }); 
+pObj.addText('HIỆU TRƯỞNG' , {bold: true, font_size: 13});
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addLineBreak();
+pObj.addText('Nguyễn Việt Hà', {bold: true, font_size: 13});
 
 docx.putPageBreak(); //Ngắt trang
 
